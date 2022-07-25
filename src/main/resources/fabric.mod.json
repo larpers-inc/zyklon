@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "zyklon",
+  "version": "0.01b",
+
+  "name": "Zyklon",
+  "description": "top secret",
+  "authors": [
+    "Vp"
+  ],
+  "contact": {
+    "homepage": "https://fbi.gov",
+    "sources": "https://github.com/larpers-inc/zyklon"
+  },
+
+  "license": "licences :clown:",
+  "icon": "assets/zyklon/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "me.vp.zyklon.Zyklon"
+    ]
+  },
+  "mixins": [
+    "zyklon.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.6",
+    "fabric": "*",
+    "minecraft": "~1.19",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
