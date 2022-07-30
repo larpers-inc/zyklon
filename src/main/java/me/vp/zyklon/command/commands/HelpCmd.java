@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class HelpCmd extends Command {
 
     public HelpCmd() {
-        super("Help", "Tells you all the commands.", "help", "h");
+        super("help", "Tells you all the commands.", "help", "h");
     }
 
     @Override
