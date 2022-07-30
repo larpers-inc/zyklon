@@ -16,11 +16,21 @@ public class ModuleManager {
     public ModuleManager() {
         modules = new ArrayList<>();
 
+        modules.add(new Aura());
         modules.add(new Clickgui());
         modules.add(new FakePlayer());
+        modules.add(new Fly());
         modules.add(new Fullbright());
         modules.add(new Hud());
+        modules.add(new Jesus());
+        modules.add(new NoFall());
+        modules.add(new NoSlow());
+        modules.add(new SafeWalk());
+        modules.add(new Sneak());
+        modules.add(new Spider());
         modules.add(new Sprint());
+        modules.add(new Step());
+        modules.add(new Velocity());
     }
 
     public boolean isModuleEnabled(String name) {

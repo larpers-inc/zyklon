@@ -14,7 +14,7 @@ import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
@@ -27,7 +27,6 @@ import java.text.DecimalFormat;
 
 public class Hud extends Module {
     public final BooleanSetting watermark = new BooleanSetting("Watermark", this, true);
-    public final BooleanSetting logo = new BooleanSetting("Logo", this, true);
     public final BooleanSetting arraylist = new BooleanSetting("ArrayList", this, true);
     public final BooleanSetting fps = new BooleanSetting("Fps", this, false);
     public final BooleanSetting ping = new BooleanSetting("Ping", this, false);
@@ -43,7 +42,7 @@ public class Hud extends Module {
 
     public Hud() {
         super("Hud", "Renders stuff on screen.", GLFW.GLFW_KEY_UNKNOWN, Category.CLIENT);
-        this.addSettings(watermark, logo, arraylist, fps, ping, speed, coords, netherCoords, facing, paperDoll, targetHud);
+        this.addSettings(watermark, arraylist, fps, ping, speed, coords, netherCoords, facing, paperDoll, targetHud);
     }
 
     @Subscribe
@@ -52,7 +51,7 @@ public class Hud extends Module {
 
         // Watermark
         if (watermark.isEnabled()) {
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, Zyklon.name + " " + Zyklon.version, 1, 1, Color.MAGENTA.getRGB());
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, Zyklon.name + " " + Zyklon.version, 1, 1, 0x64b9fa);
         }
 
         /* Logo
@@ -98,13 +97,10 @@ public class Hud extends Module {
             }
 
             final String overWorld = "XYZ [" + decimalFormat.format(cx) + ", " + decimalFormat.format(cy) + ", " + decimalFormat.format(cz) + "]";
-            final String nether = "XYZ [" + decimalFormat.format(cx / 8) + ", " + decimalFormat.format(cy) + ", " + decimalFormat.format(cz / 8) + "]";
+            final String nether = Formatting.DARK_RED + "[" + decimalFormat.format(cx / 8) + ", " + decimalFormat.format(cz / 8) + "]";
 
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, overWorld, 1, netherCoords.enabled ? mc.getWindow().getScaledHeight() - 20
-                    : mc.getWindow().getScaledHeight() - 10, Color.LIGHT_GRAY.getRGB());
-
-            if (netherCoords.isEnabled())
-                DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, nether, 1, mc.getWindow().getScaledHeight() - 10, Color.RED.getRGB());
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, netherCoords.enabled ? overWorld + " " + nether
+            : overWorld, 1, mc.getWindow().getScaledHeight() - 10, Color.LIGHT_GRAY.getRGB());
         }
 
         // Facing
@@ -112,7 +108,7 @@ public class Hud extends Module {
             String facing = mc.player.getHorizontalFacing().name().substring(0, 1).toUpperCase()
                     + mc.player.getHorizontalFacing().name().substring(1).toLowerCase();
 
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, facing, 1, coords.enabled ? mc.getWindow().getScaledHeight() - 30
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, facing, 1, coords.enabled ? mc.getWindow().getScaledHeight() - 20
                     : mc.getWindow().getScaledHeight() - 10, Color.LIGHT_GRAY.getRGB());
         }
 
@@ -124,7 +120,7 @@ public class Hud extends Module {
                 if (mod.isEnabled()) {
                     DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, mod.getName(),
                             mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(mod.getName()), 1 + (iteration * 10),
-                            Color.MAGENTA.getRGB());
+                            0x64b9fa);
                     iteration++;
                 }
             }
@@ -150,7 +146,7 @@ public class Hud extends Module {
             int y = mc.getWindow().getScaledHeight() - 65;
             PlayerListEntry playerListEntry = mc.getNetworkHandler().getPlayerListEntry(target.getUuid());
             int targetLatency = playerListEntry == null ? 0 : playerListEntry.getLatency();
-            String info = target.getEntityName() + " || " + targetLatency + "ms";
+            String info = target.getEntityName() + " | " + targetLatency + "ms";
             String health = String.format("%.1f", target.getHealth() + target.getAbsorptionAmount()) + " health";
             String location = String.format("%.1f", mc.player.distanceTo(target)) + "m";
 

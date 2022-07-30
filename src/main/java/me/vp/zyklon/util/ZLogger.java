@@ -41,7 +41,6 @@ public class ZLogger {
 		try {
 			MinecraftClient.getInstance().inGameHud.getChatHud()
 			.addMessage(getText(WARN_COLOR)
-					//.append("\u00a7e\u00a7lWARN: \u00a7e")
 					.append(((MutableText) t).styled(s -> s.withColor(WARN_COLOR))));
 		} catch (Exception e) {
 			logger.log(Level.WARN, t.getString());

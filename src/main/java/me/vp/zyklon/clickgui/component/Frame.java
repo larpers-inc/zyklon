@@ -28,15 +28,15 @@ public class Frame {
 		this.components = new ArrayList<>();
 		this.category = cat;
 		this.width = 88;
-		this.x = 5;
-		this.y = 5;
+        this.x = getX();
+        this.y = getY();
 		this.barHeight = 13;
 		this.dragX = 0;
 		this.open = false;
 		this.isDragging = false;
 		int tY = this.barHeight;
 
-		for(Module mod : Zyklon.INSTANCE.moduleManager.getModules()) {
+		for (Module mod : Zyklon.INSTANCE.moduleManager.getModules()) {
 			if (!mod.getCategory().equals(cat)) continue;
 			Button modButton = new Button(mod, this, tY, open);
 			this.components.add(modButton);

@@ -20,6 +20,6 @@ public class TelemetrySenderMixin {
 
 		ci.cancel();
 
-		ZLogger.info("gazzed mojang telemetry.");
+		ZLogger.logger.info("gazzed mojang telemetry.");
 	}
 }

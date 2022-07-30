@@ -56,14 +56,14 @@ public final class Zyklon implements ModInitializer {
         settingManager = new SettingManager();
         ZLogger.logger.info("setting system initialized.");
 
+        configManager = new ConfigManager();
+        ZLogger.logger.info("config manager initialized.");
+
         moduleManager = new ModuleManager();
         ZLogger.logger.info("module system initialized.");
 
         commandManager = new CommandManager();
         ZLogger.logger.info("command system initialized.");
-
-        configManager = new ConfigManager();
-        ZLogger.logger.info("config manager initialized.");
 
 
         long finishTime = System.currentTimeMillis() - startTime;

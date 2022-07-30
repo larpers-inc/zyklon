@@ -29,7 +29,7 @@ public class MinecraftClientMixin {
     private void onClose(CallbackInfo ci) {
         try {
             Zyklon.INSTANCE.configManager.save();
-            ZLogger.info("saved configs on exit.");
+            ZLogger.logger.info("saved configs on exit.");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -5,11 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import me.vp.zyklon.Zyklon;
-import me.vp.zyklon.command.commands.HelpCmd;
+import me.vp.zyklon.command.commands.*;
+import me.vp.zyklon.util.ZLogger;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 public class CommandManager {
@@ -20,6 +20,7 @@ public class CommandManager {
     public CommandManager() {
         commands = new ArrayList<>();
 
+        commands.add(new FriendCmd());
         commands.add(new HelpCmd());
     }
 
@@ -41,7 +42,7 @@ public class CommandManager {
                 }
             }
             if (!commandFound) {
-                addChatMessage(Formatting.RED + "command not found, use" + Formatting.RESET + prefix + "help " + "" + Formatting.RED + "for help.");
+                ZLogger.error(Formatting.RED + "command not found, use" + Formatting.RESET + prefix + "help " + "" + Formatting.RED + "for help.");
             }
         }
     }
@@ -68,29 +69,4 @@ public class CommandManager {
         }
         return null;
     }
-
-
-    public void addCustomChatMessage(String message) {
-        MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(Text.literal(message));
-    }
-
-
-    @SuppressWarnings("resource")
-    public static void addChatMessage(String message) {
-        String messageWithPre = Formatting.DARK_PURPLE + "[" + Zyklon.name + "]" + Formatting.GRAY + ": " + message;
-        Text textComponentString = Text.literal(messageWithPre);
-
-        MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(textComponentString);
-    }
-
-
-    @SuppressWarnings("resource")
-    public void correctUsageMsg(String name, String syntax) {
-        String usage = Formatting.RED + "correct usage of " + name + " command -> " + Formatting.GRAY + prefix + syntax;
-        String message = Formatting.DARK_PURPLE + "[" + Zyklon.name + "]" + Formatting.GRAY + ": " + usage;
-        Text textComponentString = Text.literal(message);
-
-        MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(textComponentString);
-    }
-
 }

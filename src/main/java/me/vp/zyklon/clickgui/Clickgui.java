@@ -50,7 +50,7 @@ public class Clickgui extends Screen {
         matrixStack.push();
         matrixStack.translate(mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), 0);
         DrawableHelper.drawStringWithShadow(matrixStack, textRenderer, Zyklon.name + " " + Zyklon.version + " by Vp",
-                mc.textRenderer.getWidth(Zyklon.name + " " + Zyklon.version + " by Vp") - 40, -mc.textRenderer.fontHeight, Color.MAGENTA.getRGB());
+                mc.textRenderer.getWidth(Zyklon.name + " " + Zyklon.version + " by Vp") - 40, -mc.textRenderer.fontHeight, 0x64b9fa);
         RenderSystem.enableBlend();
         RenderSystem.enableDepthTest();
         matrixStack.pop();

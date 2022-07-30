@@ -4,6 +4,7 @@ import me.vp.zyklon.Zyklon;
 import me.vp.zyklon.clickgui.component.Frame;
 import me.vp.zyklon.module.Module;
 import me.vp.zyklon.setting.settings.*;
+import me.vp.zyklon.util.Friends;
 import me.vp.zyklon.util.ZLogger;
 import net.minecraft.client.MinecraftClient;
 
@@ -27,6 +28,7 @@ public class ConfigManager {
         saveSettings();
         saveClickgui();
         savePrefix();
+        saveFriends();
     }
 
     private void writeFile(ArrayList<String> toSave, File file) {
@@ -112,11 +114,28 @@ public class ConfigManager {
         try {
             File file = new File(MainDirectory, "clickgui.txt");
             ArrayList<String> toSave = new ArrayList<>();
+            ArrayList<Frame> frames = new ArrayList<>();
+            for (Module.Category category : Module.Category.values()) {
+                Frame frame = new Frame(category);
+                frames.add(frame);
+            }
 
+            frames.forEach(frame -> toSave.add(frame.category + ":" + frame.getX() + ":" + frame.getY()));
             writeFile(toSave, file);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void saveFriends() {
+        try {
+            File file = new File(MainDirectory, "friends.txt");
+            ArrayList<String> toSave = new ArrayList<>();
+            ArrayList<String> friends = Friends.getInstance().friends;
+
+            friends.forEach(friend -> toSave.add(Friends.getFriend(friend)));
+            writeFile(toSave, file);
+        } catch (Exception e) {e.printStackTrace();}
     }
 
     // ---------- Load ----------
@@ -125,6 +144,7 @@ public class ConfigManager {
         loadSettings();
         loadClickgui();
         loadPrefix();
+        loadFriends();
     }
 
     public void loadModules() {
@@ -204,10 +224,16 @@ public class ConfigManager {
             String line;
             while ((line = br.readLine()) != null) {
                 String curLine = line.trim();
-                String name = curLine.split(":")[0];
                 String x = curLine.split(":")[1];
                 String y = curLine.split(":")[2];
+                ArrayList<Frame> frames = new ArrayList<>();
+                for (Module.Category category : Module.Category.values()) {
+                    Frame frame = new Frame(category);
+                    frames.add(frame);
 
+                    frame.setX(Integer.parseInt(x));
+                    frame.setY(Integer.parseInt(y));
+                }
             }
             br.close();
         } catch (Exception e) {
@@ -231,5 +257,21 @@ public class ConfigManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void loadFriends() {
+        try {
+            File file = new File(MainDirectory, "friends.txt");
+            FileInputStream fstream = new FileInputStream(file.getAbsolutePath());
+            DataInputStream in = new DataInputStream(fstream);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                Friends.getInstance().addFriend(line);
+                ZLogger.info("Added friend, " + line);
+            }
+            br.close();
+        } catch (Exception e) {e.printStackTrace();}
     }
 }
