@@ -133,7 +133,7 @@ public class ConfigManager {
             ArrayList<String> toSave = new ArrayList<>();
             ArrayList<String> friends = Friends.getInstance().friends;
 
-            friends.forEach(friend -> toSave.add(Friends.getFriend(friend)));
+            friends.forEach(friend -> toSave.add(Friends.getInstance().getFriend(friend)));
             writeFile(toSave, file);
         } catch (Exception e) {e.printStackTrace();}
     }

@@ -7,6 +7,7 @@ import net.minecraft.entity.mob.AmbientEntity;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
+import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.SnowGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractFireballEntity;
@@ -15,7 +16,8 @@ import net.minecraft.entity.projectile.ShulkerBulletEntity;
 public class EntityUtils {
 
     public static boolean isAnimal(Entity e) {
-        return e instanceof AmbientEntity
+        return e instanceof PassiveEntity
+                || e instanceof AmbientEntity
                 || e instanceof WaterCreatureEntity
                 || e instanceof IronGolemEntity
                 || e instanceof SnowGolemEntity;

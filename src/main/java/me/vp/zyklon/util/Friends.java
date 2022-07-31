@@ -29,7 +29,7 @@ public class Friends {
         return friends.contains(name);
     }
 
-    public static String getFriend(String name) {
+    public String getFriend(String name) {
         return name;
     }
 

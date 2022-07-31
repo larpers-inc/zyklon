@@ -33,8 +33,6 @@ public final class Zyklon implements ModInitializer {
     public CommandManager commandManager;
     public ConfigManager configManager;
 
-    public static final Object syncronize = new Object();
-
 
     @Override
     public void onInitialize() {

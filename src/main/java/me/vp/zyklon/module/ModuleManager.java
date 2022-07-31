@@ -17,6 +17,7 @@ public class ModuleManager {
         modules = new ArrayList<>();
 
         modules.add(new Aura());
+        modules.add(new AutoIgnite());
         modules.add(new Clickgui());
         modules.add(new FakePlayer());
         modules.add(new Fly());

@@ -1,10 +1,12 @@
 package me.vp.zyklon.clickgui.component.components;
 
+import me.vp.zyklon.Zyklon;
 import me.vp.zyklon.clickgui.component.Component;
 import me.vp.zyklon.clickgui.component.Frame;
 import me.vp.zyklon.clickgui.component.components.sub.*;
 import me.vp.zyklon.clickgui.component.components.sub.Checkbox;
 import me.vp.zyklon.module.Module;
+import me.vp.zyklon.module.modules.Clickgui;
 import me.vp.zyklon.setting.Setting;
 import me.vp.zyklon.setting.settings.BooleanSetting;
 import me.vp.zyklon.setting.settings.ModeSetting;
@@ -64,19 +66,29 @@ public class Button extends Component {
     @Override
     public void renderComponent(MatrixStack matrixStack, TextRenderer textRenderer) {
         DrawableHelper.fill(matrixStack, parent.getX(), this.parent.getY() + this.offset, parent.getX() + parent.getWidth(), this.parent.getY() + 12 + this.offset, this.isHovered
-                ? (this.mod.isEnabled() ? new Color(255, 0, 255, 191).darker().getRGB()
-                : new Color(15, 15, 15, 191).getRGB()) : (this.mod.isEnabled() ? new Color(255, 0, 255, 191).getRGB()
+                ? (this.mod.isEnabled() ? new Color(0, 208, 255, 191).darker().getRGB()
+                : new Color(15, 15, 15, 191).getRGB()) : (this.mod.isEnabled() ? new Color(0, 208, 255, 191).getRGB()
                 : new Color(30, 30, 30, 191).getRGB()));
+        DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, Text.of(this.mod.getName()), (parent.getX() + 2) + 2,
+                (parent.getY() + offset + 2) + 1, new Color(255, 255, 255).getRGB());
 
-        DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, Text.of(this.mod.getName()), (parent.getX() + 2) + 2, (parent.getY() + offset + 2) + 1, new Color(255, 255, 255).getRGB());
         if (this.subcomponents.size() > 2)
-            DrawableHelper.drawStringWithShadow(matrixStack, textRenderer, this.open ? "-" : "+", (parent.getX() + parent.getWidth() - 10), (parent.getY() + offset) + 4, new Color(255, 255, 255, 255).getRGB());
+            DrawableHelper.drawStringWithShadow(matrixStack, textRenderer, this.open ? "-" : "+", (parent.getX() + parent.getWidth() - 10),
+                    (parent.getY() + offset) + 4, new Color(255, 255, 255, 255).getRGB());
+
+        Clickgui clickgui = (Clickgui) Zyklon.INSTANCE.moduleManager.getModule("ClickGui");
+        if (this.isHovered && clickgui.showDesc.isEnabled()) {
+            DrawableHelper.drawTextWithShadow(matrixStack, textRenderer,
+                    Text.of(this.mod.getDescription()), (parent.getX() + 2) + 95, (parent.getY() + this.offset + 5), new Color(255, 255, 255).getRGB());
+        }
+
         if (this.open) {
             if (!this.subcomponents.isEmpty()) {
                 for (Component comp : this.subcomponents) {
                     comp.renderComponent(matrixStack, textRenderer);
                 }
-                DrawableHelper.fill(matrixStack, parent.getX() + 2, parent.getY() + this.offset + 12, parent.getX() + 3, parent.getY() + this.offset + ((this.subcomponents.size() + 1) * 12), new Color(255, 0, 255, 191).getRGB());
+                DrawableHelper.fill(matrixStack, parent.getX() + 2, parent.getY() + this.offset + 12, parent.getX() + 3,
+                        parent.getY() + this.offset + ((this.subcomponents.size() + 1) * 12), new Color(0, 208, 255, 191).getRGB());
             }
         }
     }
