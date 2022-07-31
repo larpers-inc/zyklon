@@ -44,7 +44,7 @@ public class SettingManager {
                 }
             }
         }
-        ZLogger.error("Setting NOT found: '" + name + "'!");
+        ZLogger.logger.error("Setting not found: '" + name + "'!");
         return null;
     }
 }

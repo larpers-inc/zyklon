@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "client": [
     "BlockCollisionSpliteratorMixin",
+    "BlockMixin",
+    "ClientBrandRetrivierMixin",
     "ClientConnectionMixin",
     "ClientPlayerEntityMixin",
     "EntityMixin",
@@ -15,7 +17,8 @@
     "MinecraftClientMixin",
     "TelemetrySenderMixin",
     "TitleScreenMixin",
-    "WorldRendererMixin"
+    "WorldRendererMixin",
+    "PlayerMoveC2SPacketAccessor"
   ],
   "mixinPriority" : 899,
   "injectors": {

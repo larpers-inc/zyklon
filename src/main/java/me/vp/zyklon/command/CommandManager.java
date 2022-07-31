@@ -21,8 +21,11 @@ public class CommandManager {
         commands = new ArrayList<>();
 
         commands.add(new FriendCmd());
+        commands.add(new HClipCmd());
         commands.add(new HelpCmd());
         commands.add(new ServerCmd());
+        commands.add(new VClipCmd());
+        commands.add(new XrayCmd());
     }
 
     public static void callCommandReturn(String input) {

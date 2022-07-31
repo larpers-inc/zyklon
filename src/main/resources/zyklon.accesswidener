@@ -16,3 +16,6 @@ accessible    field    net/minecraft/network/packet/s2c/play/ExplosionS2CPacket 
 mutable       field    net/minecraft/network/packet/s2c/play/ExplosionS2CPacket    playerVelocityY    F
 accessible    field    net/minecraft/network/packet/s2c/play/ExplosionS2CPacket    playerVelocityZ    F
 mutable       field    net/minecraft/network/packet/s2c/play/ExplosionS2CPacket    playerVelocityZ    F
+
+# ====== AutoFish =======
+accessible    field    net/minecraft/entity/projectile/FishingBobberEntity    CAUGHT_FISH    Lnet/minecraft/entity/data/TrackedData;

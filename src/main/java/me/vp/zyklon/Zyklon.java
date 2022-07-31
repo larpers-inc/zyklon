@@ -7,6 +7,7 @@ import me.vp.zyklon.module.ModuleManager;
 import me.vp.zyklon.setting.ConfigManager;
 import me.vp.zyklon.setting.FriendManager;
 import me.vp.zyklon.setting.SettingManager;
+import me.vp.zyklon.setting.XRayManager;
 import me.vp.zyklon.util.ZLogger;
 
 import net.fabricmc.api.ModInitializer;
@@ -34,6 +35,7 @@ public final class Zyklon implements ModInitializer {
     public CommandManager commandManager;
     public ConfigManager configManager;
     public FriendManager friendManager;
+    public XRayManager xrayManager;
 
 
     @Override
@@ -65,6 +67,9 @@ public final class Zyklon implements ModInitializer {
         moduleManager = new ModuleManager();
         ZLogger.logger.info("module system initialized.");
 
+        xrayManager = new XRayManager();
+        ZLogger.logger.info("xray manager initialized.");
+
         commandManager = new CommandManager();
         ZLogger.logger.info("command system initialized.");
 
@@ -82,6 +87,9 @@ public final class Zyklon implements ModInitializer {
 
         friendManager.load();
         ZLogger.logger.info("friends loaded.");
+
+        xrayManager.load();
+        ZLogger.logger.info("xray loaded.");
 
         long finishTime = System.currentTimeMillis() - startTime;
         ZLogger.logger.info("phase 2 of zyklon initialized in " + finishTime + "ms.");

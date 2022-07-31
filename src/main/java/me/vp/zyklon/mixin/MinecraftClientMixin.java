@@ -6,13 +6,16 @@ import me.vp.zyklon.util.ZLogger;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.RunArgs;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MinecraftClient.class)
-public class MinecraftClientMixin {
+public abstract class MinecraftClientMixin {
+
+    @Shadow public abstract boolean isWindowFocused();
 
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;setOverlay(Lnet/minecraft/client/gui/screen/Overlay;)V", shift = At.Shift.BEFORE))
     public void init(RunArgs args, CallbackInfo callback) {
@@ -33,5 +36,11 @@ public class MinecraftClientMixin {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Inject(method = "getFramerateLimit", at = @At("HEAD"), cancellable = true)
+    private void onGetFramerateLimit(CallbackInfoReturnable<Integer> info) {
+        if (Zyklon.INSTANCE.moduleManager.getModule("UnfocusedCPU").isEnabled()
+                && !isWindowFocused()) info.setReturnValue(1);
     }
 }

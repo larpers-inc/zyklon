@@ -16,7 +16,10 @@ public class ModuleManager {
     public ModuleManager() {
         modules = new ArrayList<>();
 
+        modules.add(new AntiHunger());
         modules.add(new Aura());
+        modules.add(new AutoEat());
+        modules.add(new AutoFish());
         modules.add(new AutoIgnite());
         modules.add(new Clickgui());
         modules.add(new FakePlayer());
@@ -31,7 +34,11 @@ public class ModuleManager {
         modules.add(new Spider());
         modules.add(new Sprint());
         modules.add(new Step());
+        modules.add(new UnfocusedCPU());
+        modules.add(new VanillaSpoof());
         modules.add(new Velocity());
+        modules.add(new XCarry());
+        modules.add(new XRay());
     }
 
     public boolean isModuleEnabled(String name) {

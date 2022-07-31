@@ -5,6 +5,8 @@ import me.vp.zyklon.command.Command;
 import me.vp.zyklon.setting.FriendManager;
 import me.vp.zyklon.util.ZLogger;
 
+import static me.vp.zyklon.command.CommandManager.prefix;
+
 public class FriendCmd extends Command {
     public FriendCmd() {
         super("friend", "add/remove friends.", "friend <add/remove/list>", "friends");
@@ -12,7 +14,10 @@ public class FriendCmd extends Command {
 
     @Override
     public void onCommand(String[] args, String command) {
-        if (args.length == 0) return;
+        if (args.length == 0) {
+            ZLogger.error("Usage: " + prefix + "friend <add/remove/list>");
+            return;
+        }
 
         if (args[0].equalsIgnoreCase("list")) {
             ZLogger.info("Friends: " + Zyklon.INSTANCE.friendManager.getFriends());
