@@ -1,11 +1,14 @@
 package me.vp.zyklon.command;
 
+import net.minecraft.client.MinecraftClient;
+
 import java.util.Arrays;
 import java.util.List;
 
 public abstract class Command {
     public String name, description, syntax;
     public List<String> aliases;
+    public static MinecraftClient mc = MinecraftClient.getInstance();
 
     public Command(String name, String description, String syntax, String... aliases) {
         this.name = name;

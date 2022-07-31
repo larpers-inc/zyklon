@@ -5,6 +5,7 @@ import me.vp.zyklon.command.CommandManager;
 import me.vp.zyklon.module.Module;
 import me.vp.zyklon.module.ModuleManager;
 import me.vp.zyklon.setting.ConfigManager;
+import me.vp.zyklon.setting.FriendManager;
 import me.vp.zyklon.setting.SettingManager;
 import me.vp.zyklon.util.ZLogger;
 
@@ -32,6 +33,7 @@ public final class Zyklon implements ModInitializer {
     public SettingManager settingManager;
     public CommandManager commandManager;
     public ConfigManager configManager;
+    public FriendManager friendManager;
 
 
     @Override
@@ -57,6 +59,9 @@ public final class Zyklon implements ModInitializer {
         configManager = new ConfigManager();
         ZLogger.logger.info("config manager initialized.");
 
+        friendManager = new FriendManager();
+        ZLogger.logger.info("friend manager initialized.");
+
         moduleManager = new ModuleManager();
         ZLogger.logger.info("module system initialized.");
 
@@ -74,6 +79,9 @@ public final class Zyklon implements ModInitializer {
 
         configManager.load();
         ZLogger.logger.info("configs loaded.");
+
+        friendManager.load();
+        ZLogger.logger.info("friends loaded.");
 
         long finishTime = System.currentTimeMillis() - startTime;
         ZLogger.logger.info("phase 2 of zyklon initialized in " + finishTime + "ms.");

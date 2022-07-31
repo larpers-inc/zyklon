@@ -4,7 +4,6 @@ import me.vp.zyklon.Zyklon;
 import me.vp.zyklon.clickgui.component.Frame;
 import me.vp.zyklon.module.Module;
 import me.vp.zyklon.setting.settings.*;
-import me.vp.zyklon.util.Friends;
 import me.vp.zyklon.util.ZLogger;
 import net.minecraft.client.MinecraftClient;
 
@@ -28,7 +27,6 @@ public class ConfigManager {
         saveSettings();
         saveClickgui();
         savePrefix();
-        saveFriends();
     }
 
     private void writeFile(ArrayList<String> toSave, File file) {
@@ -127,24 +125,12 @@ public class ConfigManager {
         }
     }
 
-    public void saveFriends() {
-        try {
-            File file = new File(MainDirectory, "friends.txt");
-            ArrayList<String> toSave = new ArrayList<>();
-            ArrayList<String> friends = Friends.getInstance().friends;
-
-            friends.forEach(friend -> toSave.add(Friends.getInstance().getFriend(friend)));
-            writeFile(toSave, file);
-        } catch (Exception e) {e.printStackTrace();}
-    }
-
     // ---------- Load ----------
     public void load() {
         loadModules();
         loadSettings();
         loadClickgui();
         loadPrefix();
-        loadFriends();
     }
 
     public void loadModules() {
@@ -257,21 +243,5 @@ public class ConfigManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void loadFriends() {
-        try {
-            File file = new File(MainDirectory, "friends.txt");
-            FileInputStream fstream = new FileInputStream(file.getAbsolutePath());
-            DataInputStream in = new DataInputStream(fstream);
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-
-            String line;
-            while ((line = br.readLine()) != null) {
-                Friends.getInstance().addFriend(line);
-                ZLogger.info("Added friend, " + line);
-            }
-            br.close();
-        } catch (Exception e) {e.printStackTrace();}
     }
 }

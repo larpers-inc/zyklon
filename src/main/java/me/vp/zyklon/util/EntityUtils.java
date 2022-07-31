@@ -1,5 +1,7 @@
 package me.vp.zyklon.util;
 
+import me.vp.zyklon.Zyklon;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -37,7 +39,7 @@ public class EntityUtils {
     }
 
     public static boolean isFriend(Entity e) {
-        return e instanceof PlayerEntity && Friends.getInstance().isFriend(e.getName().getString());
+        return e instanceof PlayerEntity && Zyklon.INSTANCE.friendManager.getFriends().contains(e.getName().getString());
     }
 
     public static boolean isAttackable(Entity e, boolean ignoreFriends) {

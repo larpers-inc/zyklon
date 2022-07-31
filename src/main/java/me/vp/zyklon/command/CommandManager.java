@@ -22,6 +22,7 @@ public class CommandManager {
 
         commands.add(new FriendCmd());
         commands.add(new HelpCmd());
+        commands.add(new ServerCmd());
     }
 
     public static void callCommandReturn(String input) {
