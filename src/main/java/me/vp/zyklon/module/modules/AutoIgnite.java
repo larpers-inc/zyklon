@@ -65,7 +65,7 @@ public class AutoIgnite extends Module {
 
                     if (footBlock != null) {
                         Vec3d pos = new Vec3d(blockPos.getX(), blockPos.getY(), blockPos.getZ());
-                        BlockHitResult hitResult = new BlockHitResult(pos, Direction.UP, blockPos, false);
+                        BlockHitResult hitResult = new BlockHitResult(pos, Direction.UP, blockPos.down(), false);
                         mc.interactionManager.interactBlock(mc.player, hand, hitResult);
                     }
                 }

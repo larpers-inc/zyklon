@@ -36,7 +36,8 @@ public class Checkbox extends Component {
 		DrawableHelper.fill(matrixStack, parent.parent.getX() + 1 + 5, parent.parent.getY() + offset + 3, parent.parent.getX() + 9 + 3, parent.parent.getY() + offset + 9,  new Color(89, 89, 89, 191).getRGB());
 		DrawableHelper.drawStringWithShadow(matrixStack, textRenderer, setting.name, (parent.parent.getX()) + 17, (parent.parent.getY() + offset + 2) + 1, new Color(255, 255, 255, 255).getRGB());
 		if (setting.isEnabled()) {
-			DrawableHelper.fill(matrixStack, parent.parent.getX() + 1 + 5, parent.parent.getY() + offset + 3, parent.parent.getX() + 9 + 3, parent.parent.getY() + offset + 9,  new Color(234, 0, 255, 191).getRGB());
+			DrawableHelper.fill(matrixStack, parent.parent.getX() + 1 + 5, parent.parent.getY() + offset + 3,
+					parent.parent.getX() + 9 + 3, parent.parent.getY() + offset + 9,  new Color(0, 208, 255, 191).getRGB());
 		}
 	}
 

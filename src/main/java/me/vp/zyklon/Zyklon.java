@@ -52,7 +52,7 @@ public final class Zyklon implements ModInitializer {
     ╱╱╱╱╱╭━╯┃
     ╱╱╱╱╱╰━━╯ 0.01b
 
-        ~ by Vp
+        ~ by larpers @ Larpers Inc.
         """);
 
         settingManager = new SettingManager();
@@ -72,7 +72,6 @@ public final class Zyklon implements ModInitializer {
 
         commandManager = new CommandManager();
         ZLogger.logger.info("command system initialized.");
-
 
         long finishTime = System.currentTimeMillis() - startTime;
         ZLogger.logger.info("ratted in " + finishTime + "ms.");

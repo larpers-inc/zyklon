@@ -2,7 +2,7 @@ package me.vp.zyklon.module.modules;
 
 import me.vp.zyklon.event.events.PacketEvent;
 import me.vp.zyklon.event.events.TickEvent;
-import me.vp.zyklon.mixin.PlayerMoveC2SPacketAccessor;
+import me.vp.zyklon.mixin.accessor.PlayerMoveC2SPacketAccessor;
 import me.vp.zyklon.module.Module;
 import me.vp.zyklon.setting.settings.BooleanSetting;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;

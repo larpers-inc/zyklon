@@ -117,7 +117,7 @@ public class Clickgui extends Screen {
 
     @Override
     public boolean shouldPause() {
-        return true;
+        return false;
     }
 
     @Override

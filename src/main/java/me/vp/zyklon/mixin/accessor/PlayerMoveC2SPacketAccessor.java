@@ -1,4 +1,4 @@
-package me.vp.zyklon.mixin;
+package me.vp.zyklon.mixin.accessor;
 
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import org.spongepowered.asm.mixin.Mixin;
