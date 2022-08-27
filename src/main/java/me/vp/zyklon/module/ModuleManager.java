@@ -18,20 +18,14 @@ public class ModuleManager {
 
         modules.add(new AntiHunger());
         modules.add(new Aura());
-        modules.add(new AutoBedBomb());
-        modules.add(new AutoBreed());
         modules.add(new AutoEat());
         modules.add(new AutoFish());
         modules.add(new AutoIgnite());
-        modules.add(new AutoRespawn());
-        modules.add(new AutoTotem());
-        modules.add(new AutoWalk());
-        modules.add(new BlockEsp());
         modules.add(new Clickgui());
-        modules.add(new Esp());
         modules.add(new FakePlayer());
         modules.add(new Fly());
         modules.add(new Fullbright());
+        modules.add(new GameWindowTitle());
         modules.add(new Hud());
         modules.add(new Jesus());
         modules.add(new NoFall());

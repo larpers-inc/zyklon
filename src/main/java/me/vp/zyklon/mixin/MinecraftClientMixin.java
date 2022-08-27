@@ -25,7 +25,9 @@ public abstract class MinecraftClientMixin {
 
     @Inject(method = "getWindowTitle", at = @At("TAIL"), cancellable = true)
     public void getWindowTitle(CallbackInfoReturnable<String> cir) {
-        cir.setReturnValue(Zyklon.name + " " + Zyklon.version + " - (" + cir.getReturnValue() + ")");
+        if (Zyklon.INSTANCE.moduleManager.getModule("GameWindowTitle").isEnabled())
+            cir.setReturnValue(Zyklon.name + " " + Zyklon.version + " - (" + cir.getReturnValue() + ")");
+        else cir.setReturnValue(cir.getReturnValue());
     }
 
     @Inject(at = {@At(value = "HEAD")}, method = {"close()V"})

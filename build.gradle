@@ -19,10 +19,6 @@ repositories {
             url = "https://jitpack.io"
         }
         maven {
-            name = "meteor-maven-snapshots"
-            url = "https://maven.meteordev.org/snapshots"
-        }
-        maven {
             url 'https://maven.quantumclient.org/releases'
         }
     }
@@ -35,8 +31,6 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     implementation "org.quantumclient:Energy:1.0"
-    modImplementation "baritone:fabric:${project.baritone_version}"
-    include "baritone:fabric:${project.baritone_version}"
 
 }
 

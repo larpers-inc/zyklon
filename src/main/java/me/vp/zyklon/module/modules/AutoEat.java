@@ -1,6 +1,5 @@
 package me.vp.zyklon.module.modules;
 
-import baritone.api.BaritoneAPI;
 import me.vp.zyklon.Zyklon;
 import me.vp.zyklon.event.events.TickEvent;
 import me.vp.zyklon.module.Module;
