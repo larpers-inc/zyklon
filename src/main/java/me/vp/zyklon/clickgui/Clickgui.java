@@ -11,6 +11,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 
 public class Clickgui extends Screen {
     MinecraftClient mc = MinecraftClient.getInstance();
+    private final Identifier logo = new Identifier("zyklon", "zyklonwaifu.png");
+
     public static ArrayList<Frame> frames;
 
     public Clickgui() {
@@ -46,13 +49,10 @@ public class Clickgui extends Screen {
                 comp.updateComponent(mouseX, mouseY);
             }
         });
-
         matrixStack.push();
-        matrixStack.translate(mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), 0);
-        DrawableHelper.drawStringWithShadow(matrixStack, textRenderer, Zyklon.name + " " + Zyklon.version + " by Vp",
-                mc.textRenderer.getWidth(Zyklon.name + " " + Zyklon.version + " by Vp") - 40, -mc.textRenderer.fontHeight, 0x64b9fa);
         RenderSystem.enableBlend();
-        RenderSystem.enableDepthTest();
+        RenderSystem.setShaderTexture(0, logo);
+        DrawableHelper.drawTexture(matrixStack, 570, mc.getWindow().getScaledHeight() - 100, 0, 0, 150, 150, 150, 150);
         matrixStack.pop();
     }
 
