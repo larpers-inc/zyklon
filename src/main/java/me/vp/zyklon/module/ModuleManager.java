@@ -23,6 +23,7 @@ public class ModuleManager {
         modules.add(new AutoIgnite());
         modules.add(new BlockEsp());
         modules.add(new Clickgui());
+        modules.add(new EntityEsp());
         modules.add(new FakePlayer());
         modules.add(new Fly());
         modules.add(new Fullbright());
