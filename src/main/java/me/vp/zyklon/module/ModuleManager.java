@@ -21,6 +21,7 @@ public class ModuleManager {
         modules.add(new AutoEat());
         modules.add(new AutoFish());
         modules.add(new AutoIgnite());
+        modules.add(new BlockEsp());
         modules.add(new Clickgui());
         modules.add(new FakePlayer());
         modules.add(new Fly());

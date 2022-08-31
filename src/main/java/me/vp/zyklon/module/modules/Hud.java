@@ -198,8 +198,4 @@ public class Hud extends Module {
         double percent = 100 / (target.getMaxHealth() / value);
         return (int) (170 / 100 * percent);
     }
-
-    private int rColor() {
-        return (int) (Math.random() * 0xFFFFFF);
-    }
 }

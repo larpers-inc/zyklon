@@ -52,7 +52,7 @@ public class Clickgui extends Screen {
         matrixStack.push();
         RenderSystem.enableBlend();
         RenderSystem.setShaderTexture(0, logo);
-        DrawableHelper.drawTexture(matrixStack, 570, mc.getWindow().getScaledHeight() - 100, 0, 0, 150, 150, 150, 150);
+        DrawableHelper.drawTexture(matrixStack, 580, mc.getWindow().getScaledHeight() - 140, 0, 0, 150, 150, 150, 150);
         matrixStack.pop();
     }
 
