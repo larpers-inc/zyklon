@@ -22,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 public final class Zyklon implements ModInitializer {
     public static Zyklon INSTANCE;
     public static String name = "Zyklon";
-    public static final String version = "0.01b";
+    public static final String version = "0.02b";
     public static final MinecraftClient mc = MinecraftClient.getInstance();
 
     public Zyklon() {
@@ -50,9 +50,9 @@ public final class Zyklon implements ModInitializer {
     ╭╯━╰━┫╰━╯┃╭╮┫╰┫╰╯┃┃┃┃
     ╰━━━━┻━╮╭┻╯╰┻━┻━━┻╯╰╯
     ╱╱╱╱╱╭━╯┃
-    ╱╱╱╱╱╰━━╯ 0.01b
+    ╱╱╱╱╱╰━━╯
 
-        ~ by larpers @ Larpers Inc.
+        ~ written by Vp.
         """);
 
         settingManager = new SettingManager();

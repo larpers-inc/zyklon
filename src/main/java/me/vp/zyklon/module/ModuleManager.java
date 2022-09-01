@@ -37,6 +37,7 @@ public class ModuleManager {
         modules.add(new Spider());
         modules.add(new Sprint());
         modules.add(new Step());
+        modules.add(new Tracers());
         modules.add(new UnfocusedCPU());
         modules.add(new VanillaSpoof());
         modules.add(new Velocity());

@@ -4,7 +4,6 @@ import io.netty.channel.ChannelHandlerContext;
 import me.vp.zyklon.Zyklon;
 import me.vp.zyklon.command.CommandManager;
 import me.vp.zyklon.event.events.PacketEvent;
-import net.minecraft.class_7648;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
@@ -23,8 +22,8 @@ public class ClientConnectionMixin {
         if (event.isCancelled()) ci.cancel();
     }
 
-	@Inject(method = "send(Lnet/minecraft/network/Packet;Lnet/minecraft/class_7648;)V", at = @At("HEAD"), cancellable = true)
-	private void packetSend(Packet<?> packet, class_7648 packetCallback, CallbackInfo ci) {
+	@Inject(method = "send(Lnet/minecraft/network/Packet;)V", at = @At("HEAD"), cancellable = true)
+	private void packetSend(Packet<?> packet, CallbackInfo ci) {
         if (packet instanceof ChatMessageC2SPacket pack) {
             if (pack.chatMessage().startsWith(CommandManager.prefix)) {
 				CommandManager.callCommandReturn(pack.chatMessage());

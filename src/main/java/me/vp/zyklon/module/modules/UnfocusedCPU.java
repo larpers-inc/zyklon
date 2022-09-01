@@ -8,5 +8,7 @@ public class UnfocusedCPU extends Module {
     public UnfocusedCPU() {
         super("UnfocusedCPU", "Caps fps to 1 when unfocused.", GLFW.GLFW_KEY_UNKNOWN, Category.CLIENT);
     }
+
+    /* MinecraftClientMixin.java */
 }
 

@@ -17,7 +17,7 @@ import java.awt.*;
 public class TitleScreenMixin {
     @Inject(method = "render", at = @At("RETURN"), cancellable = true)
     private void render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        DrawableHelper.drawStringWithShadow(matrices, Zyklon.mc.textRenderer, Zyklon.name + " " + Zyklon.version + " by larpers", 1, 1, Color.CYAN.getRGB());
+        DrawableHelper.drawStringWithShadow(matrices, Zyklon.mc.textRenderer, Zyklon.name + " " + Zyklon.version + " written by Vp", 1, 1, Color.CYAN.getRGB());
         ci.cancel();
     }
 }

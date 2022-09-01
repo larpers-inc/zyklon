@@ -22,10 +22,11 @@ public class BlockEsp extends Module {
     public final BooleanSetting dispensers = new BooleanSetting("Dispensers", this, false);
     public final BooleanSetting hoppers = new BooleanSetting("Hoppers", this, false);
     public final BooleanSetting spawners = new BooleanSetting("Spawners", this, false);
+    public final BooleanSetting beds = new BooleanSetting("Beds", this, false);
 
     public BlockEsp() {
         super("BlockEsp", "See blocks trought walls.", GLFW.GLFW_KEY_UNKNOWN, Category.RENDER);
-        this.addSettings(chests, echests, shulkers, furnaces, brewingStands, dispensers, hoppers, spawners);
+        this.addSettings(chests, echests, shulkers, furnaces, brewingStands, dispensers, hoppers, spawners, beds);
     }
 
     @Subscribe
@@ -47,6 +48,8 @@ public class BlockEsp extends Module {
                 RenderUtils.draw3DBox(event.getMatrix(), new Box(blockEntity.getPos()), new Color(255, 0, 59), 0.2f);
             else if (blockEntity instanceof MobSpawnerBlockEntity && spawners.isEnabled())
                 RenderUtils.draw3DBox(event.getMatrix(), new Box(blockEntity.getPos()), new Color(255, 0, 255), 0.2f);
+            else if (blockEntity instanceof BedBlockEntity && beds.isEnabled())
+                RenderUtils.draw3DBox(event.getMatrix(), new Box(blockEntity.getPos()), new Color(144, 0, 0), 0.2f);
         }
     }
 }
