@@ -8,6 +8,7 @@ import me.vp.zyklon.util.EntityUtils;
 import me.vp.zyklon.util.RenderUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.decoration.EndCrystalEntity;
 import org.lwjgl.glfw.GLFW;
 import org.quantumclient.energy.Subscribe;
 
@@ -19,10 +20,11 @@ public class EntityEsp extends Module {
     public final BooleanSetting hostiles = new BooleanSetting("Hostiles", this, true);
     public final BooleanSetting animals = new BooleanSetting("Animals", this, false);
     public final BooleanSetting items = new BooleanSetting("Items", this, true);
+    public final BooleanSetting endCrystals = new BooleanSetting("EndCrystals", this, false);
 
     public EntityEsp() {
         super("EntityEsp", "See entities trought walls and shit.", GLFW.GLFW_KEY_UNKNOWN, Category.RENDER);
-        this.addSettings(players, friends, hostiles, animals, items);
+        this.addSettings(players, friends, hostiles, animals, items, endCrystals);
     }
 
     @Subscribe
@@ -36,9 +38,10 @@ public class EntityEsp extends Module {
                 RenderUtils.draw3DBox(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(255, 0, 255), 0.2f);
             else if (EntityUtils.isAnimal(entity) && animals.isEnabled())
                 RenderUtils.draw3DBox(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(0, 255, 0), 0.2f);
-            else if (entity instanceof ItemEntity && items.isEnabled()) {
+            else if (entity instanceof ItemEntity && items.isEnabled())
                 RenderUtils.draw3DBox(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(255, 255, 0), 0.2f);
-            }
+            else if (entity instanceof EndCrystalEntity && endCrystals.isEnabled())
+                RenderUtils.draw3DBox(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(50, 0, 125), 0.2f);
         }
     }
 }
