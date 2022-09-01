@@ -30,7 +30,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    implementation "org.quantumclient:Energy:1.0"
+    modImplementation "org.quantumclient:Energy:1.0"
 
 }
 
