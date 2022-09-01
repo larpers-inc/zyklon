@@ -31,17 +31,17 @@ public class EntityEsp extends Module {
     public void onRender(WorldRenderEvent.Post event) {
         for (Entity entity : mc.world.getEntities()) {
             if (EntityUtils.isOtherServerPlayer(entity) && players.isEnabled())
-                RenderUtils.draw3DBox(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(255, 0, 0), 0.2f);
+                RenderUtils.drawOutline(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(255, 0, 0), 0.2f);
             else if (EntityUtils.isFriend(entity) && friends.isEnabled())
-                RenderUtils.draw3DBox(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(0, 155, 0), 0.2f);
+                RenderUtils.drawOutline(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(0, 155, 0), 0.2f);
             else if (EntityUtils.isMob(entity) && hostiles.isEnabled())
-                RenderUtils.draw3DBox(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(255, 0, 255), 0.2f);
+                RenderUtils.drawOutline(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(255, 0, 255), 0.2f);
             else if (EntityUtils.isAnimal(entity) && animals.isEnabled())
-                RenderUtils.draw3DBox(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(0, 255, 0), 0.2f);
+                RenderUtils.drawOutline(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(0, 255, 0), 0.2f);
             else if (entity instanceof ItemEntity && items.isEnabled())
-                RenderUtils.draw3DBox(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(255, 255, 0), 0.2f);
+                RenderUtils.drawOutline(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(255, 255, 0), 0.2f);
             else if (entity instanceof EndCrystalEntity && endCrystals.isEnabled())
-                RenderUtils.draw3DBox(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(50, 0, 125), 0.2f);
+                RenderUtils.drawOutline(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(50, 0, 125), 0.2f);
         }
     }
 }
