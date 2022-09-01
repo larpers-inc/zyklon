@@ -7,7 +7,7 @@ import me.vp.zyklon.setting.settings.NumberSetting;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.ExplosionS2CPacket;
 import org.lwjgl.glfw.GLFW;
-import org.quantumclient.energy.Subscribe;
+import me.vp.zyklon.eventbus.Subscribe;
 
 public class Velocity extends Module {
     public final NumberSetting velocityX = new NumberSetting("VelocityX", this, 0, 0, 100, 1);

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.vp.zyklon.event.events.KeyPressEvent;
+import me.vp.zyklon.eventbus.Subscribe;
 import me.vp.zyklon.module.modules.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
-import org.quantumclient.energy.Subscribe;
 
 public class ModuleManager {
     public ArrayList<Module> modules;

@@ -1,8 +1,7 @@
 package me.vp.zyklon;
 
-import me.vp.zyklon.command.Command;
 import me.vp.zyklon.command.CommandManager;
-import me.vp.zyklon.module.Module;
+import me.vp.zyklon.eventbus.EventBus;
 import me.vp.zyklon.module.ModuleManager;
 import me.vp.zyklon.setting.ConfigManager;
 import me.vp.zyklon.setting.FriendManager;
@@ -14,7 +13,6 @@ import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.client.MinecraftClient;
 
-import org.quantumclient.energy.EventBus;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

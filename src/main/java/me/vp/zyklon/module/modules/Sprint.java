@@ -4,7 +4,7 @@ import me.vp.zyklon.event.events.TickEvent;
 import me.vp.zyklon.module.Module;
 import me.vp.zyklon.setting.settings.ModeSetting;
 import org.lwjgl.glfw.GLFW;
-import org.quantumclient.energy.Subscribe;
+import me.vp.zyklon.eventbus.Subscribe;
 
 public class Sprint extends Module {
     public final ModeSetting mode = new ModeSetting("Mode", this, "Legit", "Legit", "Rage");

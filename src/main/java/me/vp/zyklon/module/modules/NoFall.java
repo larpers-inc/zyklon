@@ -4,7 +4,7 @@ import me.vp.zyklon.event.events.TickEvent;
 import me.vp.zyklon.module.Module;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import org.lwjgl.glfw.GLFW;
-import org.quantumclient.energy.Subscribe;
+import me.vp.zyklon.eventbus.Subscribe;
 
 public class NoFall extends Module {
     public NoFall() {

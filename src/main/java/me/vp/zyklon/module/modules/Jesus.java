@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShapes;
 import org.lwjgl.glfw.GLFW;
-import org.quantumclient.energy.Subscribe;
+import me.vp.zyklon.eventbus.Subscribe;
 
 public class Jesus extends Module {
     public final ModeSetting mode = new ModeSetting("Mode", this, "Static", "Static", "Dolphin");

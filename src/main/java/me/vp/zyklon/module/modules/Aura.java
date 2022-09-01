@@ -6,6 +6,7 @@ import me.vp.zyklon.module.Module;
 import me.vp.zyklon.setting.settings.BooleanSetting;
 import me.vp.zyklon.setting.settings.NumberSetting;
 import me.vp.zyklon.util.EntityUtils;
+import me.vp.zyklon.util.ZLogger;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.projectile.AbstractFireballEntity;
@@ -13,7 +14,7 @@ import net.minecraft.entity.projectile.ShulkerBulletEntity;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.Hand;
 import org.lwjgl.glfw.GLFW;
-import org.quantumclient.energy.Subscribe;
+import me.vp.zyklon.eventbus.Subscribe;
 
 import java.util.Comparator;
 import java.util.List;
@@ -59,7 +60,9 @@ public class Aura extends Module {
                     }
                 }
             }
-        } catch (Exception e) {e.printStackTrace();}
+        } catch (Exception e) {
+            ZLogger.logger.warn(e.getMessage());
+        }
     }
 
 

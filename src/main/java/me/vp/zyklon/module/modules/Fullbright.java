@@ -5,7 +5,7 @@ import me.vp.zyklon.module.Module;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import org.lwjgl.glfw.GLFW;
-import org.quantumclient.energy.Subscribe;
+import me.vp.zyklon.eventbus.Subscribe;
 
 public class Fullbright extends Module {
     public Fullbright() {

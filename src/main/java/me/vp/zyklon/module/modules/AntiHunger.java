@@ -2,13 +2,13 @@ package me.vp.zyklon.module.modules;
 
 import me.vp.zyklon.event.events.PacketEvent;
 import me.vp.zyklon.event.events.TickEvent;
+import me.vp.zyklon.eventbus.Subscribe;
 import me.vp.zyklon.mixin.accessor.PlayerMoveC2SPacketAccessor;
 import me.vp.zyklon.module.Module;
 import me.vp.zyklon.setting.settings.BooleanSetting;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import org.lwjgl.glfw.GLFW;
-import org.quantumclient.energy.Subscribe;
 
 public class AntiHunger extends Module {
     public final BooleanSetting water = new BooleanSetting("DisableOnWater", this, true);

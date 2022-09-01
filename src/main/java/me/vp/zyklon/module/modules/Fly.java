@@ -6,7 +6,7 @@ import me.vp.zyklon.setting.settings.NumberSetting;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.glfw.GLFW;
-import org.quantumclient.energy.Subscribe;
+import me.vp.zyklon.eventbus.Subscribe;
 
 public class Fly extends Module {
     public final NumberSetting speed = new NumberSetting("Speed", this, 2, 1, 10, 1);

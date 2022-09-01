@@ -18,9 +18,6 @@ repositories {
             name = "jitpack.io"
             url = "https://jitpack.io"
         }
-        maven {
-            url 'https://maven.quantumclient.org/releases'
-        }
     }
 }
 
@@ -29,9 +26,6 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-    modImplementation "org.quantumclient:Energy:1.0"
-
 }
 
 loom {

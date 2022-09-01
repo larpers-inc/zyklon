@@ -4,7 +4,7 @@ import me.vp.zyklon.event.events.TickEvent;
 import me.vp.zyklon.module.Module;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.glfw.GLFW;
-import org.quantumclient.energy.Subscribe;
+import me.vp.zyklon.eventbus.Subscribe;
 
 public class Spider extends Module {
 

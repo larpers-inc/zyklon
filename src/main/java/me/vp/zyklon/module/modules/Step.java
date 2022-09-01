@@ -6,7 +6,7 @@ import me.vp.zyklon.setting.settings.BooleanSetting;
 import me.vp.zyklon.setting.settings.NumberSetting;
 import net.minecraft.util.math.Box;
 import org.lwjgl.glfw.GLFW;
-import org.quantumclient.energy.Subscribe;
+import me.vp.zyklon.eventbus.Subscribe;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

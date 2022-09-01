@@ -6,7 +6,7 @@ import me.vp.zyklon.module.Module;
 import me.vp.zyklon.setting.settings.ModeSetting;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import org.lwjgl.glfw.GLFW;
-import org.quantumclient.energy.Subscribe;
+import me.vp.zyklon.eventbus.Subscribe;
 
 public class Sneak extends Module {
     public final ModeSetting mode = new ModeSetting("Mode", this, "Legit", "Legit", "Packet");

@@ -10,7 +10,7 @@ import net.minecraft.item.FoodComponent;
 import net.minecraft.item.FoodComponents;
 import net.minecraft.util.Hand;
 import org.lwjgl.glfw.GLFW;
-import org.quantumclient.energy.Subscribe;
+import me.vp.zyklon.eventbus.Subscribe;
 
 public class AutoEat extends Module {
     public final BooleanSetting hunger = new BooleanSetting("hunger", this, true);
