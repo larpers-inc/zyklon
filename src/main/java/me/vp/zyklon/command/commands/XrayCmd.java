@@ -18,13 +18,13 @@ public class XrayCmd extends Command {
 
     @Override
     public void onCommand(String[] args, String command) {
-        if (!Desktop.isDesktopSupported()) {
+        if (!Desktop.isDesktopSupported())
             ZLogger.error("Desktop is not supported.");
-        }
         else
             try {
+                Desktop desktop = Desktop.getDesktop();
                 if (file.exists())
-                    Desktop.getDesktop().open(file);
+                    desktop.open(file);
             } catch (Exception e) {
                 e.printStackTrace();
                 ZLogger.error("Could not open the file.");

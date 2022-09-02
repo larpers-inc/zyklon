@@ -36,13 +36,14 @@ public class Hud extends Module {
     public final BooleanSetting facing = new BooleanSetting("Facing", this, false);
     public final BooleanSetting paperDoll = new BooleanSetting("Paperdoll", this, false);
     public final BooleanSetting targetHud = new BooleanSetting("TargetHud", this, false);
+    public final BooleanSetting inventory = new BooleanSetting("Inventory", this, false);
     private PlayerEntity target;
     private boolean found;
     float temp = 10000;
 
     public Hud() {
         super("Hud", "Renders stuff on screen.", GLFW.GLFW_KEY_UNKNOWN, Category.CLIENT);
-        this.addSettings(watermark, arraylist, fps, ping, speed, coords, netherCoords, facing, paperDoll, targetHud);
+        this.addSettings(watermark, arraylist, fps, ping, speed, coords, netherCoords, facing, paperDoll, targetHud, inventory);
     }
 
     @Subscribe
@@ -55,11 +56,11 @@ public class Hud extends Module {
         }
 
         /* Logo
-        if (logo.isEnabled()) {
-            RenderSystem.setShaderTexture(0,);
-            RenderSystem.enableBlend();
-            DrawableHelper.drawTexture(event.getMatrix(), 5, watermark.enabled ? 10 : 5, 0, 0, 50, 50, 50, 50);
-        } */
+if (logo.isEnabled()) {
+RenderSystem.setShaderTexture(0,);
+RenderSystem.enableBlend();
+DrawableHelper.drawTexture(event.getMatrix(), 5, watermark.enabled ? 10 : 5, 0, 0, 50, 50, 50, 50);
+} */
 
         // Fps
         if (fps.isEnabled()) {
@@ -106,10 +107,10 @@ public class Hud extends Module {
         // Facing
         if (facing.isEnabled()) {
             String facing = mc.player.getHorizontalFacing().name().substring(0, 1).toUpperCase()
-                    + mc.player.getHorizontalFacing().name().substring(1).toLowerCase();
+                            + mc.player.getHorizontalFacing().name().substring(1).toLowerCase();
 
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, facing, 1, coords.enabled ? mc.getWindow().getScaledHeight() - 20
-                    : mc.getWindow().getScaledHeight() - 10, Color.LIGHT_GRAY.getRGB());
+            : mc.getWindow().getScaledHeight() - 10, Color.LIGHT_GRAY.getRGB());
         }
 
         // ArrayList
@@ -119,8 +120,8 @@ public class Hud extends Module {
                 Module mod = Zyklon.INSTANCE.moduleManager.modules.get(i);
                 if (mod.isEnabled()) {
                     DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, mod.getName(),
-                            mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(mod.getName()), 1 + (iteration * 10),
-                            0x64b9fa);
+                                                        mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(mod.getName()), 1 + (iteration * 10),
+                                                        0x64b9fa);
                     iteration++;
                 }
             }
@@ -136,6 +137,23 @@ public class Hud extends Module {
                 RenderSystem.enableDepthTest();
                 event.getMatrix().pop();
             }
+        }
+
+        // Inventory
+        if (inventory.isEnabled()) {
+            int x = mc.getWindow().getScaledWidth() - 550;
+            int y = mc.getWindow().getScaledHeight() - 120;
+
+            DrawableHelper.fill(event.getMatrix(), x + 145, y, x, y + 50, new Color(0, 0, 0, 100).getRGB());
+
+            for (int i = 0; i < 27; i++) {
+                ItemStack itemStack = mc.player.getInventory().main.get(i + 9);
+                int offSetX = x + (i % 9) * 16;
+                int offSetY = y + (i / 9) * 16;
+                mc.getItemRenderer().renderGuiItemIcon(itemStack, offSetX, offSetY);
+                mc.getItemRenderer().renderGuiItemOverlay(mc.textRenderer, itemStack, offSetX, offSetY);
+            }
+            mc.getItemRenderer().zOffset = 0.0F;
         }
 
         // TargetHud
@@ -165,7 +183,6 @@ public class Hud extends Module {
                 mc.getItemRenderer().renderGuiItemIcon(target.getMainHandStack(), x + 80, y + 30);
                 mc.getItemRenderer().renderGuiItemIcon(target.getOffHandStack(), x + 100, y + 30);
                 InventoryScreen.drawEntity(x + 130, y + 62, 25, -MathHelper.wrapDegrees(target.prevYaw + (target.getYaw() - target.prevYaw) * mc.getTickDelta()), -target.getPitch(), target);
-
                 DrawableHelper.fill(event.getMatrix(), x + 5, y + 50, x + getWidth(target.getAbsorptionAmount() + target.getHealth()) + 10, y + 60,
                                     getColor(36, 100 / 36f * target.getHealth() + target.getAbsorptionAmount()).getRGB());
             }
