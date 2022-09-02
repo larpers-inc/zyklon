@@ -168,6 +168,7 @@ public class RenderUtils {
         BufferBuilder bufferbuilder = tessellator.getBuffer();
 
         setup3D();
+        RenderSystem.setShader(GameRenderer::getPositionShader);
         RenderSystem.setShaderColor(color.getRed(), color.getGreen(), color.getBlue(), 1.0f);
         RenderSystem.defaultBlendFunc();
 

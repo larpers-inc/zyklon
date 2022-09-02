@@ -25,7 +25,7 @@ public class Clickgui extends Screen {
     private final Identifier logo = new Identifier("zyklon", "zyklonwaifu.png");
 
     public static ArrayList<Frame> frames;
-    private ArrayList<Snow> snowList;
+    private final ArrayList<Snow> snowList;
 
     public Clickgui() {
         super(Text.literal(Zyklon.name));
@@ -47,6 +47,10 @@ public class Clickgui extends Screen {
 
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        me.vp.zyklon.module.modules.Clickgui clickgui = (me.vp.zyklon.module.modules.Clickgui) Zyklon.INSTANCE.moduleManager.getModule("ClickGui");
+        Random random = new Random();
+
+        // Frames
         frames.forEach(frame -> {
             frame.renderFrame(matrixStack, textRenderer);
             frame.updatePosition(mouseX, mouseY);
@@ -54,17 +58,15 @@ public class Clickgui extends Screen {
                 comp.updateComponent(mouseX, mouseY);
             }
         });
-        me.vp.zyklon.module.modules.Clickgui clickgui = (me.vp.zyklon.module.modules.Clickgui) Zyklon.INSTANCE.moduleManager.getModule("ClickGui");
-        Random random = new Random();
-
-        /* Anime Girladasdhashasdjhasdasdasdas
+        
+        // Anime Girladasdhashasdjhasdasdasdas
         if (clickgui.waifu.isEnabled()) {
             RenderSystem.enableBlend();
             RenderSystem.setShaderTexture(0, logo);
             DrawableHelper.drawTexture(matrixStack, 580, mc.getWindow().getScaledHeight() - 140, 0, 0, 150, 150, 150, 150);
             RenderSystem.disableBlend();
             RenderSystem.disableTexture();
-        } */
+        }
 
         // Snow effect
         if (!snowList.isEmpty() && clickgui.snow.isEnabled()) {
