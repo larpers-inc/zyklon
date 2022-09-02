@@ -1,10 +1,12 @@
 package me.vp.zyklon.clickgui;
 
 import me.vp.zyklon.Zyklon;
+import me.vp.zyklon.clickgui.effect.Snow;
 import me.vp.zyklon.module.Module.Category;
 import me.vp.zyklon.clickgui.component.Frame;
 import me.vp.zyklon.clickgui.component.Component;
 
+import me.vp.zyklon.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
@@ -16,16 +18,19 @@ import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Clickgui extends Screen {
     MinecraftClient mc = MinecraftClient.getInstance();
     private final Identifier logo = new Identifier("zyklon", "zyklonwaifu.png");
 
     public static ArrayList<Frame> frames;
+    private ArrayList<Snow> snowList;
 
     public Clickgui() {
         super(Text.literal(Zyklon.name));
         frames = new ArrayList<>();
+        snowList = new ArrayList<>();
         int frameX = 5;
 
         for (Category category : Category.values()) {
@@ -49,11 +54,36 @@ public class Clickgui extends Screen {
                 comp.updateComponent(mouseX, mouseY);
             }
         });
-        matrixStack.push();
-        RenderSystem.enableBlend();
-        RenderSystem.setShaderTexture(0, logo);
-        DrawableHelper.drawTexture(matrixStack, 580, mc.getWindow().getScaledHeight() - 140, 0, 0, 150, 150, 150, 150);
-        matrixStack.pop();
+        me.vp.zyklon.module.modules.Clickgui clickgui = (me.vp.zyklon.module.modules.Clickgui) Zyklon.INSTANCE.moduleManager.getModule("ClickGui");
+        Random random = new Random();
+
+        /* Anime Girladasdhashasdjhasdasdasdas
+        if (clickgui.waifu.isEnabled()) {
+            RenderSystem.enableBlend();
+            RenderSystem.setShaderTexture(0, logo);
+            DrawableHelper.drawTexture(matrixStack, 580, mc.getWindow().getScaledHeight() - 140, 0, 0, 150, 150, 150, 150);
+            RenderSystem.disableBlend();
+            RenderSystem.disableTexture();
+        } */
+
+        // Snow effect
+        if (!snowList.isEmpty() && clickgui.snow.isEnabled()) {
+            snowList.forEach(Snow::Update);
+
+            if (!clickgui.snow.isEnabled()) snowList.clear();
+            if (snowList.size() >= 120) {
+                for (int i = 120; i < snowList.size(); i++) {
+                    snowList.remove(i);
+                }
+            }
+        }
+
+        for (int i = 0; i < 100; ++i) {
+            for (int y = 0; y < 3; ++y) {
+                Snow snow = new Snow(25 * i, y * -50, random.nextInt(3) + 1, random.nextInt(2) + 1);
+                snowList.add(snow);
+            }
+        }
     }
 
 

@@ -156,8 +156,8 @@ DrawableHelper.drawTexture(event.getMatrix(), 5, watermark.enabled ? 10 : 5, 0, 
 
                 if (is.isDamaged()) {
                     int barLength = Math.round(13.0F - is.getDamage() * 13.0F / is.getMaxDamage());
-                    DrawableHelper.fill(event.getMatrix(), curX + 2, y + 18, curX + 15, y + 19, 0xff000000);
-                    DrawableHelper.fill(event.getMatrix(), curX + 2, y + 18, curX + 2 + barLength, y + 18, durcolor);
+                    DrawableHelper.fill(event.getMatrix(), curX + 2, y + 17, curX + 15, y + 19, 0xff000000);
+                    DrawableHelper.fill(event.getMatrix(), curX + 2, y + 17, curX + 2 + barLength, y + 18, durcolor);
                 }
 
             }

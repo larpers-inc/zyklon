@@ -1,16 +1,17 @@
 {
   "schemaVersion": 1,
   "id": "zyklon",
-  "version": "0.01b",
+  "version": "0.02b",
 
   "name": "Zyklon",
-  "description": "top secret",
+  "description": "I hate my life",
   "authors": [
     "Vp",
     "larper"
   ],
+
   "contact": {
-    "homepage": "https://fbi.gov",
+    "homepage": "https://bigrat.monster",
     "sources": "https://github.com/larpers-inc/zyklon"
   },
 

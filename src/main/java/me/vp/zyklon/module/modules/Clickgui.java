@@ -6,10 +6,12 @@ import org.lwjgl.glfw.GLFW;
 
 public class Clickgui extends Module {
     public final BooleanSetting showDesc = new BooleanSetting("ShowDesc", this, true);
+    public final BooleanSetting snow = new BooleanSetting("SnowEffect", this, true);
+    //public final BooleanSetting waifu = new BooleanSetting("Waifu", this, true);
 
     public Clickgui() {
         super("Clickgui", "Opens the gui.", GLFW.GLFW_KEY_RIGHT_SHIFT, Category.CLIENT);
-        this.addSettings(showDesc);
+        this.addSettings(showDesc, snow);
     }
 
     @Override

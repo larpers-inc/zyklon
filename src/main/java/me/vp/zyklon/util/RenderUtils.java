@@ -163,6 +163,25 @@ public class RenderUtils {
         clean3D();
     }
 
+    public static void drawRect(float x, float y, float w, float h, Color color) {
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferbuilder = tessellator.getBuffer();
+
+        setup3D();
+        RenderSystem.setShaderColor(color.getRed(), color.getGreen(), color.getBlue(), 1.0f);
+        RenderSystem.defaultBlendFunc();
+
+        bufferbuilder.begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
+        {
+            bufferbuilder.vertex(x, h, 0.0D).color(color.getRed(), color.getGreen(), color.getBlue(), 1.0f).next();
+            bufferbuilder.vertex(w, h, 0.0D).color(color.getRed(), color.getGreen(), color.getBlue(), 1.0f).next();
+            bufferbuilder.vertex(w, y, 0.0D).color(color.getRed(), color.getGreen(), color.getBlue(), 1.0f).next();
+            bufferbuilder.vertex(x, y, 0.0D).color(color.getRed(), color.getGreen(), color.getBlue(), 1.0f).next();
+        }
+        tessellator.draw();
+        clean3D();
+    }
+
     public static Vec3d getInterpolationOffset(Entity e) {
         if (MinecraftClient.getInstance().isPaused()) return Vec3d.ZERO;
         double tickDelta = MinecraftClient.getInstance().getTickDelta();

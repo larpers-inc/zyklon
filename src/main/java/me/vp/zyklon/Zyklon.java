@@ -92,8 +92,8 @@ public final class Zyklon implements ModInitializer {
         ZLogger.logger.info("phase 2 of zyklon initialized in " + finishTime + "ms.");
     }
 
-    private static String getBuildDay() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+    private static String getDay() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDateTime now = LocalDateTime.now();
         return dtf.format(now);
     }
