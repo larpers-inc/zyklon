@@ -22,7 +22,7 @@ public class EntityEsp extends Module {
     public final BooleanSetting endCrystals = new BooleanSetting("EndCrystals", this, false);
 
     public EntityEsp() {
-        super("EntityEsp", "See entities trought walls and shit.", GLFW.GLFW_KEY_UNKNOWN, Category.RENDER);
+        super("EntityEsp", "Draws boxes around entities.", GLFW.GLFW_KEY_UNKNOWN, Category.RENDER);
         this.addSettings(players, friends, hostiles, animals, items, endCrystals);
     }
 
@@ -41,7 +41,6 @@ public class EntityEsp extends Module {
                 RenderUtils.drawOutline(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(255, 255, 0), 0.2f);
             else if (entity instanceof EndCrystalEntity && endCrystals.isEnabled())
                 RenderUtils.drawOutline(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(50, 0, 125), 0.2f);
-
         }
     }
 }

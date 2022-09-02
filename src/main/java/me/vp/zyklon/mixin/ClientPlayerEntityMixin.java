@@ -2,6 +2,7 @@ package me.vp.zyklon.mixin;
 
 import com.mojang.authlib.GameProfile;
 import me.vp.zyklon.Zyklon;
+import me.vp.zyklon.event.events.PlayerPacketEvent;
 import me.vp.zyklon.event.events.SwingHandEvent;
 import me.vp.zyklon.event.events.TickEvent;
 import me.vp.zyklon.module.modules.NoSlow;
@@ -23,6 +24,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
     MinecraftClient mc = MinecraftClient.getInstance();
+    private PlayerPacketEvent preEvent;
+
     @Shadow
     private ClientPlayNetworkHandler networkHandler;
     private ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
