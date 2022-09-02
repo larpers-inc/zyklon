@@ -3,6 +3,7 @@ package me.vp.zyklon.module;
 import me.vp.zyklon.Zyklon;
 import me.vp.zyklon.setting.Setting;
 import me.vp.zyklon.setting.settings.KeybindSetting;
+import me.vp.zyklon.util.ZLogger;
 import net.minecraft.client.MinecraftClient;
 
 import java.util.ArrayList;
@@ -100,12 +101,16 @@ public abstract class Module {
         Zyklon.INSTANCE.EVENT_BUS.register(this);
         onEnable();
         setEnabled(true);
+        if (Zyklon.INSTANCE.moduleManager.isModuleEnabled("ToggleInfo"))
+            ZLogger.info(this.getName() + " enabled!");
     }
 
     public void disable() {
         Zyklon.INSTANCE.EVENT_BUS.unregister(this);
         onDisable();
         setEnabled(false);
+        if (Zyklon.INSTANCE.moduleManager.isModuleEnabled("ToggleInfo"))
+            ZLogger.warn(this.getName() + " disabled!");
     }
 
     public void onTick() {

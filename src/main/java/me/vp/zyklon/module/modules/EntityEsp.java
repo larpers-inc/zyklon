@@ -1,6 +1,5 @@
 package me.vp.zyklon.module.modules;
 
-import me.vp.zyklon.event.events.RenderEntityEvent;
 import me.vp.zyklon.event.events.WorldRenderEvent;
 import me.vp.zyklon.module.Module;
 import me.vp.zyklon.setting.settings.BooleanSetting;
@@ -42,6 +41,7 @@ public class EntityEsp extends Module {
                 RenderUtils.drawOutline(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(255, 255, 0), 0.2f);
             else if (entity instanceof EndCrystalEntity && endCrystals.isEnabled())
                 RenderUtils.drawOutline(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(50, 0, 125), 0.2f);
+
         }
     }
 }

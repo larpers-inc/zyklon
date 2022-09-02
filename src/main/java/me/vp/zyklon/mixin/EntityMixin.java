@@ -4,9 +4,12 @@ import me.vp.zyklon.Zyklon;
 import me.vp.zyklon.event.events.PlayerPushedEvent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(Entity.class)
@@ -23,5 +26,12 @@ public class EntityMixin {
 			args.set(2, event.getPushZ());
 		}
 	}
+
+    @Inject(at = { @At("HEAD") }, method = "isInvisibleTo(Lnet/minecraft/entity/player/PlayerEntity;)V", cancellable = true)
+    private void isInvisibleTo(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
+    	if (Zyklon.INSTANCE.moduleManager.isModuleEnabled("AntiInvis")) {
+    		cir.setReturnValue(false);
+        }
+    }
 
 }

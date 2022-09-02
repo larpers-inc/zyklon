@@ -17,11 +17,17 @@ public class ModuleManager {
         modules = new ArrayList<>();
 
         modules.add(new AntiHunger());
+        modules.add(new AntiInvis());
         modules.add(new Aura());
+        modules.add(new AutoCritical());
         modules.add(new AutoEat());
         modules.add(new AutoFish());
         modules.add(new AutoIgnite());
+        modules.add(new AutoParkour());
+        modules.add(new AutoRespawn());
         modules.add(new BlockEsp());
+        modules.add(new BlockHighlight());
+        modules.add(new BreadCrumbs());
         modules.add(new Clickgui());
         modules.add(new EntityEsp());
         modules.add(new FakePlayer());
@@ -32,11 +38,14 @@ public class ModuleManager {
         modules.add(new Jesus());
         modules.add(new NoFall());
         modules.add(new NoSlow());
+        modules.add(new NoSwing());
+        modules.add(new Nuker());
         modules.add(new SafeWalk());
         modules.add(new Sneak());
         modules.add(new Spider());
         modules.add(new Sprint());
         modules.add(new Step());
+        modules.add(new ToggleInfo());
         modules.add(new Tracers());
         modules.add(new UnfocusedCPU());
         modules.add(new VanillaSpoof());
