@@ -37,13 +37,14 @@ public class Hud extends Module {
     public final BooleanSetting paperDoll = new BooleanSetting("Paperdoll", this, false);
     public final BooleanSetting targetHud = new BooleanSetting("TargetHud", this, false);
     public final BooleanSetting inventory = new BooleanSetting("Inventory", this, false);
+    public final BooleanSetting armor = new BooleanSetting("Armor", this, true);
     private PlayerEntity target;
     private boolean found;
     float temp = 10000;
 
     public Hud() {
         super("Hud", "Renders stuff on screen.", GLFW.GLFW_KEY_UNKNOWN, Category.CLIENT);
-        this.addSettings(watermark, arraylist, fps, ping, speed, coords, netherCoords, facing, paperDoll, targetHud, inventory);
+        this.addSettings(watermark, arraylist, fps, ping, speed, coords, netherCoords, facing, paperDoll, targetHud, inventory, armor);
     }
 
     @Subscribe
@@ -136,6 +137,29 @@ DrawableHelper.drawTexture(event.getMatrix(), 5, watermark.enabled ? 10 : 5, 0, 
                 InventoryScreen.drawEntity(arraylist.enabled ? mc.getWindow().getScaledWidth() - 80 : mc.getWindow().getScaledWidth() - 20, 50, 25, -yaw, -pitch, mc.player);
                 RenderSystem.enableDepthTest();
                 event.getMatrix().pop();
+            }
+        }
+
+        // Armor
+        if (armor.isEnabled()) {
+            int x = mc.getWindow().getScaledWidth() - 470;
+            int y = mc.getWindow().getScaledHeight() - 60;
+            for (int count = 0; count < mc.player.getInventory().armor.size(); count++) {
+                ItemStack is = mc.player.getInventory().armor.get(count);
+
+                if (is.isEmpty())
+                    continue;
+
+                int curX = x + count * 20;
+                mc.getItemRenderer().renderGuiItemIcon(is, curX, y + 4);
+                int durcolor = is.isDamageable() ? 0xff000000 | MathHelper.hsvToRgb(((float) (is.getMaxDamage() - is.getDamage()) / is.getMaxDamage()) / 3.0F, 1.0F, 1.0F) : 0;
+
+                if (is.isDamaged()) {
+                    int barLength = Math.round(13.0F - is.getDamage() * 13.0F / is.getMaxDamage());
+                    DrawableHelper.fill(event.getMatrix(), curX + 2, y + 18, curX + 15, y + 19, 0xff000000);
+                    DrawableHelper.fill(event.getMatrix(), curX + 2, y + 18, curX + 2 + barLength, y + 18, durcolor);
+                }
+
             }
         }
 
