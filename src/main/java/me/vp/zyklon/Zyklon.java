@@ -13,14 +13,10 @@ import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.client.MinecraftClient;
 
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public final class Zyklon implements ModInitializer {
     public static Zyklon INSTANCE;
     public static String name = "Zyklon";
-    public static final String version = "0.02b";
+    public static final String version = "0.3b";
     public static final MinecraftClient mc = MinecraftClient.getInstance();
 
     public Zyklon() {
@@ -91,11 +87,4 @@ public final class Zyklon implements ModInitializer {
         long finishTime = System.currentTimeMillis() - startTime;
         ZLogger.logger.info("phase 2 of zyklon initialized in " + finishTime + "ms.");
     }
-
-    private static String getDay() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDateTime now = LocalDateTime.now();
-        return dtf.format(now);
-    }
-
 }

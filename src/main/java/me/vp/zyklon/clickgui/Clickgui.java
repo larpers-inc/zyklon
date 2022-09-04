@@ -22,7 +22,7 @@ import java.util.Random;
 
 public class Clickgui extends Screen {
     MinecraftClient mc = MinecraftClient.getInstance();
-    private final Identifier logo = new Identifier("zyklon", "zyklonwaifu.png");
+    private final Identifier waifu = new Identifier("zyklon", "zyklonwaifu.png");
 
     public static ArrayList<Frame> frames;
     private final ArrayList<Snow> snowList;
@@ -64,7 +64,7 @@ public class Clickgui extends Screen {
         // Anime Girladasdhashasdjhasdasdasdas
         if (clickgui.waifu.isEnabled()) {
             RenderSystem.enableBlend();
-            RenderSystem.setShaderTexture(0, logo);
+            RenderSystem.setShaderTexture(0, waifu);
             DrawableHelper.drawTexture(matrixStack, 580, mc.getWindow().getScaledHeight() - 140, 0, 0, 150, 150, 150, 150);
             RenderSystem.disableBlend();
             RenderSystem.disableTexture();

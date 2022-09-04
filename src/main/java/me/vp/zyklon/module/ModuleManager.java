@@ -43,6 +43,7 @@ public class ModuleManager {
         modules.add(new Nuker());
         modules.add(new SafeWalk());
         modules.add(new Sneak());
+        modules.add(new Speed());
         modules.add(new Spider());
         modules.add(new Sprint());
         modules.add(new Step());
