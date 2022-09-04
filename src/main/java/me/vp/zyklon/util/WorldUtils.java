@@ -59,4 +59,21 @@ public class WorldUtils {
         return null;
     }
 
+    public static boolean doesBoxCollide(Box box) {
+        for (int x = (int) Math.floor(box.minX); x < Math.ceil(box.maxX); x++) {
+            for (int y = (int) Math.floor(box.minY); y < Math.ceil(box.maxY); y++) {
+                for (int z = (int) Math.floor(box.minZ); z < Math.ceil(box.maxZ); z++) {
+                    int fx = x, fy = y, fz = z;
+                    if (mc.world.getBlockState(new BlockPos(x, y, z)).getCollisionShape(mc.world, new BlockPos(x, y, z)).getBoundingBoxes().stream()
+                            .anyMatch(b -> b.offset(fx, fy, fz).intersects(box))) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+
 }

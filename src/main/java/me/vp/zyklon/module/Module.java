@@ -101,7 +101,7 @@ public abstract class Module {
         Zyklon.INSTANCE.EVENT_BUS.register(this);
         onEnable();
         setEnabled(true);
-        if (Zyklon.INSTANCE.moduleManager.isModuleEnabled("ToggleInfo") && !Zyklon.INSTANCE.moduleManager.getModule("Clickgui").isEnabled())
+        if (Zyklon.INSTANCE.moduleManager.isModuleEnabled("ToggleInfo") && !this.getName().equalsIgnoreCase("Clickgui"))
             ZLogger.info(this.getName() + " enabled!");
     }
 
@@ -109,7 +109,7 @@ public abstract class Module {
         Zyklon.INSTANCE.EVENT_BUS.unregister(this);
         onDisable();
         setEnabled(false);
-        if (Zyklon.INSTANCE.moduleManager.isModuleEnabled("ToggleInfo") && !Zyklon.INSTANCE.moduleManager.getModule("Clickgui").isEnabled())
+        if (Zyklon.INSTANCE.moduleManager.isModuleEnabled("ToggleInfo") && !this.getName().equalsIgnoreCase("Clickgui"))
             ZLogger.warn(this.getName() + " disabled!");
     }
 

@@ -16,10 +16,10 @@ public class Frame {
 	public ArrayList<Component> components;
 	public Module.Category category;
 	private boolean open;
-	private int width;
+	private final int width;
 	private int y;
 	private int x;
-	private int barHeight;
+	private final int barHeight;
 	private boolean isDragging;
 	public int dragX;
 	public int dragY;
@@ -28,8 +28,8 @@ public class Frame {
 		this.components = new ArrayList<>();
 		this.category = cat;
 		this.width = 88;
-        this.x = getX();
-        this.y = getY();
+        this.x = 5;
+        this.y = 5;
 		this.barHeight = 13;
 		this.dragX = 0;
 		this.open = false;
@@ -42,6 +42,8 @@ public class Frame {
 			this.components.add(modButton);
 			tY += 12;
 		}
+
+		refresh();
 	}
 
 	public ArrayList<Component> getComponents() {

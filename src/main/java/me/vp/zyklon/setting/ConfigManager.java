@@ -1,6 +1,7 @@
 package me.vp.zyklon.setting;
 
 import me.vp.zyklon.Zyklon;
+import me.vp.zyklon.clickgui.Clickgui;
 import me.vp.zyklon.clickgui.component.Frame;
 import me.vp.zyklon.module.Module;
 import me.vp.zyklon.setting.settings.*;
@@ -112,13 +113,11 @@ public class ConfigManager {
         try {
             File file = new File(MainDirectory, "clickgui.txt");
             ArrayList<String> toSave = new ArrayList<>();
-            ArrayList<Frame> frames = new ArrayList<>();
-            for (Module.Category category : Module.Category.values()) {
-                Frame frame = new Frame(category);
-                frames.add(frame);
-            }
 
-            frames.forEach(frame -> toSave.add(frame.category + ":" + frame.getX() + ":" + frame.getY()));
+            Clickgui.getFrames().forEach(frame -> {
+                toSave.add(frame.category + ":" + frame.getX() + ":" + frame.getY() + ":" + frame.isOpen());
+            });
+
             writeFile(toSave, file);
         } catch (Exception e) {
             e.printStackTrace();
@@ -212,13 +211,13 @@ public class ConfigManager {
                 String curLine = line.trim();
                 String x = curLine.split(":")[1];
                 String y = curLine.split(":")[2];
-                ArrayList<Frame> frames = new ArrayList<>();
-                for (Module.Category category : Module.Category.values()) {
-                    Frame frame = new Frame(category);
-                    frames.add(frame);
+                String open = curLine.split(":")[3];
 
+                Frame frame = Clickgui.getFrameByCategory(curLine.strip().split(":")[0]);
+                if (frame != null) {
                     frame.setX(Integer.parseInt(x));
                     frame.setY(Integer.parseInt(y));
+                    frame.setOpen(Boolean.parseBoolean(open));
                 }
             }
             br.close();

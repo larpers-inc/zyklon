@@ -31,13 +31,15 @@ public class Clickgui extends Screen {
         super(Text.literal(Zyklon.name));
         frames = new ArrayList<>();
         snowList = new ArrayList<>();
-        int frameX = 5;
+        int frameX = 10;
+        int frameY = 10;
 
         for (Category category : Category.values()) {
             Frame frame = new Frame(category);
-            frame.setX(frameX);
             frames.add(frame);
-            frameX += frame.getWidth() + 1;
+            frame.setX(frameX);
+            frame.setY(frameY);
+            frameX += frame.getWidth() + 10;
         }
 
     }
@@ -124,8 +126,7 @@ public class Clickgui extends Screen {
             }
         }
 
-        if (keyCode == Zyklon.INSTANCE.moduleManager.getModule("Clickgui").keyCode.code) this.mc.setScreen(null);
-        else if (keyCode == GLFW.GLFW_KEY_ESCAPE) this.mc.setScreen(null);
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE) this.mc.setScreen(null);
 
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
@@ -155,6 +156,14 @@ public class Clickgui extends Screen {
     @Override
     public boolean shouldCloseOnEsc() {
         return true;
+    }
+
+    public static ArrayList<Frame> getFrames() {
+        return frames;
+    }
+
+    public static Frame getFrameByCategory(String cat) {
+        return frames.stream().filter(frame -> frame.category.name().equalsIgnoreCase(cat)).findAny().orElse(null);
     }
 
 }

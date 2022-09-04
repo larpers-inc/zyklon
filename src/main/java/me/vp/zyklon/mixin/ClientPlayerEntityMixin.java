@@ -5,6 +5,7 @@ import me.vp.zyklon.Zyklon;
 import me.vp.zyklon.event.events.PlayerPacketEvent;
 import me.vp.zyklon.event.events.SwingHandEvent;
 import me.vp.zyklon.event.events.TickEvent;
+import me.vp.zyklon.module.modules.EntityControl;
 import me.vp.zyklon.module.modules.NoSlow;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -28,7 +29,9 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 
     @Shadow
     private ClientPlayNetworkHandler networkHandler;
-    private ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
+	@Shadow
+	private float mountJumpStrength;
+	private ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
 		super(world, profile, null);
 	}
 
@@ -66,5 +69,12 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 	protected boolean clipAtLedge() {
 		return super.clipAtLedge()
 				|| Zyklon.INSTANCE.moduleManager.getModule("SafeWalk").isEnabled();
+	}
+
+	@Overwrite
+	public float getMountJumpStrength() {
+		EntityControl entityControl = (EntityControl) Zyklon.INSTANCE.moduleManager.getModule("EntityControl");
+		return Zyklon.INSTANCE.moduleManager.isModuleEnabled("EntityControl")
+				&& entityControl.maxJump.isEnabled() ? 1F : mountJumpStrength;
 	}
 }

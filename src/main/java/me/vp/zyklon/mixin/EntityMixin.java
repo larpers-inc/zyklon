@@ -2,6 +2,7 @@ package me.vp.zyklon.mixin;
 
 import me.vp.zyklon.Zyklon;
 import me.vp.zyklon.event.events.PlayerPushedEvent;
+import me.vp.zyklon.module.modules.EntityEsp;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,11 +28,20 @@ public class EntityMixin {
 		}
 	}
 
-    @Inject(at = { @At("HEAD") }, method = "isInvisibleTo(Lnet/minecraft/entity/player/PlayerEntity;)V", cancellable = true)
+
+    @Inject(at = { @At("HEAD") }, method = "isInvisibleTo", cancellable = true)
     private void isInvisibleTo(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
     	if (Zyklon.INSTANCE.moduleManager.isModuleEnabled("AntiInvis")) {
     		cir.setReturnValue(false);
         }
     }
+
+	@Inject(method = "isGlowing", at = @At("HEAD"), cancellable = true)
+	private void overrideIsGlowing(CallbackInfoReturnable<Boolean> cir) {
+		EntityEsp entityEsp = (EntityEsp) Zyklon.INSTANCE.moduleManager.getModule("EntityEsp");
+		if (entityEsp.mode.is("Glow"))
+			cir.setReturnValue(true);
+		else cir.setReturnValue(false);
+	}
 
 }

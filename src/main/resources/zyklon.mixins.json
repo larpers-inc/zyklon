@@ -15,6 +15,7 @@
     "FlowableFluidMixin",
     "IngameHudMixin",
     "KeyboardMixin",
+    "LlamaPigStriderEntityMixin",
     "MinecraftClientMixin",
     "TelemetrySenderMixin",
     "TitleScreenMixin",
