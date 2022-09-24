@@ -34,6 +34,7 @@ public class Hud extends Module {
     public final BooleanSetting coords = new BooleanSetting("Coords", this, true);
     public final BooleanSetting netherCoords = new BooleanSetting("NetherCoords", this, true);
     public final BooleanSetting facing = new BooleanSetting("Facing", this, false);
+    public final BooleanSetting durability = new BooleanSetting("Durability", this, false);
     public final BooleanSetting paperDoll = new BooleanSetting("Paperdoll", this, false);
     public final BooleanSetting targetHud = new BooleanSetting("TargetHud", this, false);
     public final BooleanSetting inventory = new BooleanSetting("Inventory", this, false);
@@ -44,7 +45,7 @@ public class Hud extends Module {
 
     public Hud() {
         super("Hud", "Renders stuff on screen.", GLFW.GLFW_KEY_UNKNOWN, Category.CLIENT);
-        this.addSettings(watermark, arraylist, fps, ping, speed, coords, netherCoords, facing, paperDoll, targetHud, inventory, armor);
+        this.addSettings(watermark, arraylist, fps, ping, speed, coords, netherCoords, facing, durability, paperDoll, targetHud, inventory, armor);
     }
 
     @Subscribe
@@ -56,12 +57,6 @@ public class Hud extends Module {
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, Zyklon.name + " " + Zyklon.version, 1, 1, 0x64b9fa);
         }
 
-        /* Logo
-if (logo.isEnabled()) {
-RenderSystem.setShaderTexture(0,);
-RenderSystem.enableBlend();
-DrawableHelper.drawTexture(event.getMatrix(), 5, watermark.enabled ? 10 : 5, 0, 0, 50, 50, 50, 50);
-} */
 
         // Fps
         if (fps.isEnabled()) {
@@ -112,6 +107,18 @@ DrawableHelper.drawTexture(event.getMatrix(), 5, watermark.enabled ? 10 : 5, 0, 
 
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, facing, 1, coords.enabled ? mc.getWindow().getScaledHeight() - 20
             : mc.getWindow().getScaledHeight() - 10, Color.LIGHT_GRAY.getRGB());
+        }
+
+        // Durability
+        if (durability.isEnabled()) {
+            ItemStack itemStack = mc.player.getMainHandStack();
+            int maxDamage = itemStack.getMaxDamage();
+            int damage = itemStack.getDamage();
+            int durability = maxDamage - damage;
+            int percent = (int) Math.round((double) durability / (double) maxDamage * 100);
+            String text = "Durability [" + percent + "%]";
+
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, text, 1, 90, Color.LIGHT_GRAY.getRGB());
         }
 
         // ArrayList
