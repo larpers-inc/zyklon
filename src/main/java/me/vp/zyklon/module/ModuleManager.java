@@ -29,6 +29,7 @@ public class ModuleManager {
         modules.add(new BlockHighlight());
         modules.add(new BreadCrumbs());
         modules.add(new Clickgui());
+        modules.add(new DeathLocation());
         modules.add(new EntityControl());
         modules.add(new EntityEsp());
         modules.add(new FakePlayer());
