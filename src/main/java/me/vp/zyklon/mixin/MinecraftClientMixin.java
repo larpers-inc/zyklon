@@ -12,6 +12,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Objects;
+
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
 
@@ -35,7 +37,7 @@ public abstract class MinecraftClientMixin {
         try {
             Zyklon.INSTANCE.configManager.save();
             ZLogger.logger.info("saved configs on exit.");
-            ZLogger.logger.info("Good bye, " + Zyklon.mc.player.getName().getString() + " !");
+            ZLogger.logger.info("Good bye, " + Objects.requireNonNull(Zyklon.mc.player).getName().getString() + " !");
         } catch (Exception e) {
             e.printStackTrace();
         }

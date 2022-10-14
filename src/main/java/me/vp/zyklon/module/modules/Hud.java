@@ -39,13 +39,14 @@ public class Hud extends Module {
     public final BooleanSetting targetHud = new BooleanSetting("TargetHud", this, false);
     public final BooleanSetting inventory = new BooleanSetting("Inventory", this, false);
     public final BooleanSetting armor = new BooleanSetting("Armor", this, true);
+    public final BooleanSetting rainbow = new BooleanSetting("Rainbow", this, false);
     private PlayerEntity target;
     private boolean found;
     float temp = 10000;
 
     public Hud() {
         super("Hud", "Renders stuff on screen.", GLFW.GLFW_KEY_UNKNOWN, Category.CLIENT);
-        this.addSettings(watermark, arraylist, fps, ping, speed, coords, netherCoords, facing, durability, paperDoll, targetHud, inventory, armor);
+        this.addSettings(watermark, arraylist, fps, ping, speed, coords, netherCoords, facing, durability, paperDoll, targetHud, inventory, armor, rainbow);
     }
 
     @Subscribe
@@ -54,13 +55,15 @@ public class Hud extends Module {
 
         // Watermark
         if (watermark.isEnabled()) {
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, Zyklon.name + " " + Zyklon.version, 1, 1, 0x64b9fa);
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, Zyklon.name + " " + Zyklon.version, 1, 1,
+                    rainbow.isEnabled() ? getRainbow() : 0x64b9fa);
         }
 
 
         // Fps
         if (fps.isEnabled()) {
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, "FPS [" + mc.fpsDebugString.split(" ", 2)[0] + "]", 1, 60, Color.LIGHT_GRAY.getRGB());
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, "FPS [" + mc.fpsDebugString.split(" ", 2)[0] + "]", 1, 60,
+                    rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
         }
 
         // Ping
@@ -68,7 +71,8 @@ public class Hud extends Module {
         int latency = playerEntry == null ? 0 : playerEntry.getLatency();
 
         if (ping.isEnabled()) {
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, "Ping [" + latency + "ms]", 1, 70, Color.LIGHT_GRAY.getRGB());
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, "Ping [" + latency + "ms]", 1, 70,
+                    rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
         }
 
         // Speed
@@ -78,7 +82,8 @@ public class Hud extends Module {
             final double speed = Math.abs(vec.length());
             final String speedString = "Speed [" + decimalFormat.format((speed)) + "km/h]";
 
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, speedString, 1, 80, Color.LIGHT_GRAY.getRGB());
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, speedString, 1, 80,
+                    rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
         }
 
         // Coords
@@ -97,7 +102,8 @@ public class Hud extends Module {
             final String nether = Formatting.DARK_RED + "[" + decimalFormat.format(cx / 8) + ", " + decimalFormat.format(cz / 8) + "]";
 
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, netherCoords.enabled ? overWorld + " " + nether
-            : overWorld, 1, mc.getWindow().getScaledHeight() - 10, Color.LIGHT_GRAY.getRGB());
+            : overWorld, 1, mc.getWindow().getScaledHeight() - 10,
+                    rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
         }
 
         // Facing
@@ -106,7 +112,8 @@ public class Hud extends Module {
                             + mc.player.getHorizontalFacing().name().substring(1).toLowerCase();
 
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, facing, 1, coords.enabled ? mc.getWindow().getScaledHeight() - 20
-            : mc.getWindow().getScaledHeight() - 10, Color.LIGHT_GRAY.getRGB());
+            : mc.getWindow().getScaledHeight() - 10,
+                    rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
         }
 
         // Durability
@@ -118,7 +125,8 @@ public class Hud extends Module {
             int percent = (int) Math.round((double) durability / (double) maxDamage * 100);
             String text = "Durability [" + percent + "%]";
 
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, text, 1, 90, Color.LIGHT_GRAY.getRGB());
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, text, 1, 90,
+                    rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
         }
 
         // ArrayList
@@ -129,7 +137,7 @@ public class Hud extends Module {
                 if (mod.isEnabled()) {
                     DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, mod.getName(),
                                                         mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(mod.getName()), 1 + (iteration * 10),
-                                                        0x64b9fa);
+                            rainbow.isEnabled() ? getRainbow() : 0x64b9fa);
                     iteration++;
                 }
             }
@@ -240,6 +248,11 @@ public class Hud extends Module {
         if (30 < percent && percent <= 70) return Color.YELLOW;
         if (percent > 70) return Color.GREEN;
         return null;
+    }
+
+    private static int getRainbow() {
+        double rainbowState = Math.ceil((System.currentTimeMillis() + 1) / 2) % 360;
+        return 0xff000000 | MathHelper.hsvToRgb((float) (rainbowState / 360.0), 1f, 1f);
     }
 
     private int getWidth(float value) {
