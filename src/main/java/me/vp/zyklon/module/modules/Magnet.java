@@ -44,7 +44,9 @@ public class Magnet extends Module {
         comparator = Comparator.comparing(mc.player::distanceTo);
 
         return items
-                .filter(entity -> entity instanceof ItemEntity && mc.player.distanceTo(entity) <= range.getValue())
+                .filter(entity -> entity instanceof ItemEntity
+                        && mc.player.distanceTo(entity) <= range.getValue()
+                        && mc.player.canSee(entity))
                 .sorted(comparator)
                 .limit(1L)
                 .collect(Collectors.toList());
