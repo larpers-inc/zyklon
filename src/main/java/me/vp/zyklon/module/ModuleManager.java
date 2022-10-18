@@ -16,6 +16,7 @@ public class ModuleManager {
     public ModuleManager() {
         modules = new ArrayList<>();
 
+        modules.add(new AirPlace());
         modules.add(new AntiHunger());
         modules.add(new AntiInvis());
         modules.add(new Aura());
@@ -25,6 +26,7 @@ public class ModuleManager {
         modules.add(new AutoIgnite());
         modules.add(new AutoParkour());
         modules.add(new AutoRespawn());
+        modules.add(new AutoWalk());
         modules.add(new BlockEsp());
         modules.add(new BlockHighlight());
         modules.add(new BreadCrumbs());
@@ -38,6 +40,7 @@ public class ModuleManager {
         modules.add(new GameWindowTitle());
         modules.add(new Hud());
         modules.add(new Jesus());
+        modules.add(new Magnet());
         modules.add(new NoFall());
         modules.add(new NoSlow());
         modules.add(new NoSwing());

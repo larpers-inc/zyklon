@@ -4,6 +4,7 @@
   "package": "me.vp.zyklon.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "accessor.MinecraftClientAccessor",
     "accessor.PlayerMoveC2SPacketAccessor",
     "BlockCollisionSpliteratorMixin",
     "BlockMixin",

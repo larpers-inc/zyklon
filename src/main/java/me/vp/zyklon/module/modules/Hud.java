@@ -110,8 +110,9 @@ public class Hud extends Module {
         if (facing.isEnabled()) {
             String facing = mc.player.getHorizontalFacing().name().substring(0, 1).toUpperCase()
                             + mc.player.getHorizontalFacing().name().substring(1).toLowerCase();
+            String axis = mc.player.getHorizontalFacing().getAxis().asString();
 
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, facing, 1, coords.enabled ? mc.getWindow().getScaledHeight() - 20
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, facing + " " + "[" + axis + "]", 1, coords.enabled ? mc.getWindow().getScaledHeight() - 20
             : mc.getWindow().getScaledHeight() - 10,
                     rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
         }
@@ -167,12 +168,12 @@ public class Hud extends Module {
 
                 int curX = x + count * 20;
                 mc.getItemRenderer().renderGuiItemIcon(is, curX, y + 4);
-                int durcolor = is.isDamageable() ? 0xff000000 | MathHelper.hsvToRgb(((float) (is.getMaxDamage() - is.getDamage()) / is.getMaxDamage()) / 3.0F, 1.0F, 1.0F) : 0;
+                int durColor = is.isDamageable() ? 0xff000000 | MathHelper.hsvToRgb(((float) (is.getMaxDamage() - is.getDamage()) / is.getMaxDamage()) / 3.0F, 1.0F, 1.0F) : 0;
 
                 if (is.isDamaged()) {
                     int barLength = Math.round(13.0F - is.getDamage() * 13.0F / is.getMaxDamage());
                     DrawableHelper.fill(event.getMatrix(), curX + 2, y + 17, curX + 15, y + 19, 0xff000000);
-                    DrawableHelper.fill(event.getMatrix(), curX + 2, y + 17, curX + 2 + barLength, y + 18, durcolor);
+                    DrawableHelper.fill(event.getMatrix(), curX + 2, y + 17, curX + 2 + barLength, y + 18, durColor);
                 }
 
             }
@@ -251,7 +252,7 @@ public class Hud extends Module {
     }
 
     private static int getRainbow() {
-        double rainbowState = Math.ceil((System.currentTimeMillis() + 1) / 2) % 360;
+        double rainbowState = Math.ceil((System.currentTimeMillis() + 5) / 2) % 360;
         return 0xff000000 | MathHelper.hsvToRgb((float) (rainbowState / 360.0), 1f, 1f);
     }
 

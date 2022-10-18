@@ -11,12 +11,12 @@
   ],
 
   "contact": {
-    "homepage": "https://bigrat.monster",
+    "homepage": "https://vili.dev",
     "sources": "https://github.com/larpers-inc/zyklon"
   },
 
   "license": "licences :clown:",
-  "icon": "assets/zyklon/icon.png",
+  "icon": "assets/zyklon/zyklonwaifu.png",
 
   "environment": "*",
   "entrypoints": {

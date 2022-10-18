@@ -22,6 +22,7 @@ public class Sprint extends Module {
 
     @Subscribe
     public void onTick(TickEvent event) {
+        if (mc.player.getHungerManager().getFoodLevel() <= 6) return;
         if (mode.is("Legit")) mc.options.sprintKey.setPressed(true);
         else if (mode.is("Rage")) mc.player.setSprinting(mc.player.forwardSpeed > 0 || mc.player.forwardSpeed < 0 || mc.player.sidewaysSpeed != 0);
     }
