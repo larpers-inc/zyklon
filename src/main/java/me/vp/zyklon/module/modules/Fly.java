@@ -13,12 +13,18 @@ import org.lwjgl.glfw.GLFW;
 import me.vp.zyklon.eventbus.Subscribe;
 
 public class Fly extends Module {
-    public final ModeSetting mode = new ModeSetting("Mode", this, "Static", "Static", "JetPack");
+    public final ModeSetting mode = new ModeSetting("Mode", this, "Static", "Static", "JetPack", "Creative");
     public final ModeSetting bypass = new ModeSetting("Bypass", this, "Off", "Off", "Packet", "Fall");
     public final NumberSetting speed = new NumberSetting("Speed", this, 2, 1, 10, 1);
     public Fly() {
         super("Fly", "Allows you to fly.", GLFW.GLFW_KEY_UNKNOWN, Category.MOVEMENT);
         this.addSettings(mode, bypass, speed);
+    }
+
+    @Override
+    public void onDisable() {
+        mc.player.getAbilities().flying = false;
+        mc.player.getAbilities().setFlySpeed(0.05f);
     }
 
     @Subscribe
@@ -54,7 +60,7 @@ public class Fly extends Module {
                 mc.player.setVelocity(vec);
             }
         }
-        else {
+        else if (mode.is("JetPack")) {
             if (InputUtil.isKeyPressed(mc.getWindow().getHandle(), InputUtil.fromTranslationKey(mc.options.jumpKey.getBoundKeyTranslationKey()).getCode())) {
 				mc.player.jump();
 			} else {
@@ -62,6 +68,10 @@ public class Fly extends Module {
 					mc.player.updatePosition(mc.player.getX(), mc.player.getY() - flySpeed / 10f, mc.player.getZ());
 				}
 			}
+        }
+        else if (mode.is("Creative")) {
+            mc.player.getAbilities().flying = true;
+            mc.player.getAbilities().setFlySpeed(flySpeed / 10f);
         }
     }
 }
