@@ -19,6 +19,7 @@ public class ModuleManager {
         modules.add(new AirPlace());
         modules.add(new AntiHunger());
         modules.add(new AntiInvis());
+        modules.add(new ArrowDodge());
         modules.add(new Aura());
         modules.add(new AutoCritical());
         modules.add(new AutoEat());
