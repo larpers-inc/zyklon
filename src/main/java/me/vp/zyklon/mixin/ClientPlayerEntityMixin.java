@@ -2,9 +2,7 @@ package me.vp.zyklon.mixin;
 
 import com.mojang.authlib.GameProfile;
 import me.vp.zyklon.Zyklon;
-import me.vp.zyklon.event.events.PlayerPacketEvent;
-import me.vp.zyklon.event.events.SwingHandEvent;
-import me.vp.zyklon.event.events.TickEvent;
+import me.vp.zyklon.event.events.*;
 import me.vp.zyklon.module.modules.EntityControl;
 import me.vp.zyklon.module.modules.NoSlow;
 import net.minecraft.client.MinecraftClient;
@@ -12,8 +10,10 @@ import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.MovementType;
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -31,11 +31,40 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
     private ClientPlayNetworkHandler networkHandler;
 	@Shadow
 	private float mountJumpStrength;
+	@Shadow
+	private void autoJump(float dx, float dz) {}
+
 	private ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
 		super(world, profile, null);
 	}
 
-    @Inject(method = "tick", at = @At("HEAD"))
+	@Inject(method = "sendMovementPackets", at = @At("HEAD"), cancellable = true)
+	private void sendMovementPackets(CallbackInfo info) {
+		SendMovementPacketsEvent event = new SendMovementPacketsEvent();
+		Zyklon.INSTANCE.EVENT_BUS.post(event);
+
+		if (event.isCancelled()) {
+			info.cancel();
+		}
+	}
+
+	@Inject(method = "move", at = @At("HEAD"), cancellable = true)
+	private void move(MovementType type, Vec3d movement, CallbackInfo info) {
+		ClientMoveEvent event = new ClientMoveEvent(type, movement);
+		Zyklon.INSTANCE.EVENT_BUS.post(event);
+
+		if (event.isCancelled()) {
+			info.cancel();
+		} else if (!type.equals(event.getType()) || !movement.equals(event.getVec())) {
+			double double_1 = this.getX();
+			double double_2 = this.getZ();
+			super.move(event.getType(), event.getVec());
+			this.autoJump((float) (this.getX() - double_1), (float) (this.getZ() - double_2));
+			info.cancel();
+		}
+	}
+
+	@Inject(method = "tick", at = @At("HEAD"))
     public void tick(CallbackInfo ci) {
         if (mc.player != null && mc.world != null) {
             Zyklon.INSTANCE.moduleManager.onTick();
@@ -53,7 +82,7 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 		return player.isUsingItem();
 	}
 
-    @Overwrite
+	@Overwrite
 	public void swingHand(Hand hand) {
 		SwingHandEvent event = new SwingHandEvent(hand);
 		Zyklon.INSTANCE.EVENT_BUS.post(event);

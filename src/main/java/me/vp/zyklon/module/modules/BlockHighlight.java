@@ -21,6 +21,7 @@ public class BlockHighlight extends Module {
 
     @Subscribe
     public void onRender(WorldRenderEvent.Post event) {
+        if (mc.world == null || mc.player == null) return;
         if (mc.crosshairTarget == null) return;
 
         BlockPos pos = ((BlockHitResult) mc.crosshairTarget).getBlockPos();

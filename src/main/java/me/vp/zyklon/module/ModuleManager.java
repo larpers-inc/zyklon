@@ -46,6 +46,7 @@ public class ModuleManager {
         modules.add(new NoSlow());
         modules.add(new NoSwing());
         modules.add(new Nuker());
+        modules.add(new PacketFly());
         modules.add(new SafeWalk());
         modules.add(new Sneak());
         modules.add(new Speed());
@@ -81,7 +82,7 @@ public class ModuleManager {
     }
 
     public List<Module> getEnabledModules() {
-        List<Module> modules = new ArrayList<Module>();
+        List<Module> modules = new ArrayList<>();
 
         for (Module m : modules) {
             if (m.isEnabled())
@@ -91,7 +92,7 @@ public class ModuleManager {
     }
 
     public List<Module> getModulesByCategory(Module.Category c) {
-        List<Module> modules = new ArrayList<Module>();
+        List<Module> modules = new ArrayList<>();
 
         for (Module m : modules) {
             if (m.getCategory() == c)

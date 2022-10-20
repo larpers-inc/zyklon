@@ -19,3 +19,9 @@ mutable       field    net/minecraft/network/packet/s2c/play/ExplosionS2CPacket 
 
 # ====== AutoFish =======
 accessible    field    net/minecraft/entity/projectile/FishingBobberEntity    CAUGHT_FISH    Lnet/minecraft/entity/data/TrackedData;
+
+# ====== PlayerPositionLookS2CPacket =====
+accessible    field    net/minecraft/network/packet/s2c/play/PlayerPositionLookS2CPacket    pitch    F
+mutable       field    net/minecraft/network/packet/s2c/play/PlayerPositionLookS2CPacket    pitch    F
+accessible    field    net/minecraft/network/packet/s2c/play/PlayerPositionLookS2CPacket    yaw    F
+mutable       field    net/minecraft/network/packet/s2c/play/PlayerPositionLookS2CPacket    yaw    F
