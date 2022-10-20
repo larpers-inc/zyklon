@@ -26,13 +26,19 @@ public class Magnet extends Module {
 
     @Subscribe
     public void onTick(TickEvent event) {
+        if (mc.player == null || mc.world == null) return;
+
         for (Entity entity : getItems()) {
             if (entity instanceof ItemEntity) {
                 double x = entity.getPos().getX();
                 double y = entity.getPos().getY();
                 double z = entity.getPos().getZ();
                 //ZLogger.info("Magnet: " + x + " " + y + " " + z);
-                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(x, y, z, true));
+
+                // Check if entity has a block above it
+                if (mc.world.getBlockState(entity.getBlockPos().up()).isAir()) {
+                    mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(x, y, z, true));
+                }
             }
         }
     }
@@ -48,7 +54,7 @@ public class Magnet extends Module {
                         && mc.player.distanceTo(entity) <= range.getValue()
                         && mc.player.canSee(entity))
                 .sorted(comparator)
-                .limit(1L)
+                .limit(1)
                 .collect(Collectors.toList());
     }
 

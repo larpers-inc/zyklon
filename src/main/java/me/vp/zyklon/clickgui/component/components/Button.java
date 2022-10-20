@@ -7,6 +7,7 @@ import me.vp.zyklon.clickgui.component.components.sub.*;
 import me.vp.zyklon.clickgui.component.components.sub.Checkbox;
 import me.vp.zyklon.module.Module;
 import me.vp.zyklon.module.modules.Clickgui;
+import me.vp.zyklon.module.modules.ToggleSound;
 import me.vp.zyklon.setting.Setting;
 import me.vp.zyklon.setting.settings.BooleanSetting;
 import me.vp.zyklon.setting.settings.ModeSetting;
@@ -14,7 +15,9 @@ import me.vp.zyklon.setting.settings.NumberSetting;
 
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 
 import java.awt.*;
@@ -126,6 +129,12 @@ public class Button extends Component {
         for (Component comp : this.subcomponents) {
             comp.mouseClicked(mouseX, mouseY, button);
         }
+        // Play a click sound
+        ToggleSound toggleSound = (ToggleSound) Zyklon.INSTANCE.moduleManager.getModule("ToggleSound");
+        if (isMouseOnButton(mouseX, mouseY) && button == 0 && toggleSound.isEnabled()) {
+            Zyklon.mc.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+        }
+
         super.mouseClicked(mouseX, mouseY, button);
     }
 

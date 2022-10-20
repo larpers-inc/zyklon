@@ -43,6 +43,7 @@ public class Hud extends Module {
     private PlayerEntity target;
     private boolean found;
     float temp = 10000;
+    private int y;
 
     public Hud() {
         super("Hud", "Renders stuff on screen.", GLFW.GLFW_KEY_UNKNOWN, Category.CLIENT);
@@ -51,6 +52,7 @@ public class Hud extends Module {
 
     @Subscribe
     public void onRender(RenderIngameHudEvent event) {
+        y = 40;
         if (mc.options.debugEnabled) return;
 
         // Watermark
@@ -62,8 +64,9 @@ public class Hud extends Module {
 
         // Fps
         if (fps.isEnabled()) {
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, "FPS [" + mc.fpsDebugString.split(" ", 2)[0] + "]", 1, 60,
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, "FPS [" + mc.fpsDebugString.split(" ", 2)[0] + "]", 1, y,
                     rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
+            y += 10;
         }
 
         // Ping
@@ -71,8 +74,9 @@ public class Hud extends Module {
         int latency = playerEntry == null ? 0 : playerEntry.getLatency();
 
         if (ping.isEnabled()) {
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, "Ping [" + latency + "ms]", 1, 70,
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, "Ping [" + latency + "ms]", 1, y,
                     rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
+            y += 10;
         }
 
         // Speed
@@ -82,8 +86,9 @@ public class Hud extends Module {
             final double speed = Math.abs(vec.length());
             final String speedString = "Speed [" + decimalFormat.format((speed)) + "km/h]";
 
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, speedString, 1, 80,
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, speedString, 1, y,
                     rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
+            y += 10;
         }
 
         // Coords
@@ -126,8 +131,9 @@ public class Hud extends Module {
             int percent = (int) Math.round((double) durability / (double) maxDamage * 100);
             String text = "Durability [" + percent + "%]";
 
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, text, 1, 90,
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, text, 1, y,
                     rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
+            y += 10;
         }
 
         // ArrayList
