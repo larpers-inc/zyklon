@@ -32,12 +32,12 @@ public abstract class MinecraftClientMixin {
         else cir.setReturnValue(cir.getReturnValue());
     }
 
-    @Inject(at = {@At(value = "RETURN")}, method = {"close()V"})
+    @Inject(at = {@At(value = "HEAD")}, method = {"close()V"})
     private void onClose(CallbackInfo ci) {
         try {
             Zyklon.INSTANCE.configManager.save();
             ZLogger.logger.info("saved configs on exit.");
-            ZLogger.logger.info("Good bye, " + Zyklon.mc.player.getName().getString() + " !");
+            ZLogger.logger.info("Good bye, " + Zyklon.mc.getSession().getUsername() + " !");
         } catch (Exception e) {
             e.printStackTrace();
         }

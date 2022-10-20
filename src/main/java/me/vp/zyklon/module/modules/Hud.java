@@ -8,10 +8,12 @@ import me.vp.zyklon.event.events.RenderIngameHudEvent;
 import me.vp.zyklon.module.Module;
 import me.vp.zyklon.setting.settings.BooleanSetting;
 
+import me.vp.zyklon.setting.settings.ModeSetting;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Formatting;
@@ -24,10 +26,12 @@ import me.vp.zyklon.eventbus.Subscribe;
 
 import java.awt.*;
 import java.text.DecimalFormat;
+import java.util.stream.Collectors;
 
 public class Hud extends Module {
     public final BooleanSetting watermark = new BooleanSetting("Watermark", this, true);
     public final BooleanSetting arraylist = new BooleanSetting("ArrayList", this, true);
+    public final BooleanSetting welcomer = new BooleanSetting("Welcomer", this, true);
     public final BooleanSetting fps = new BooleanSetting("Fps", this, false);
     public final BooleanSetting ping = new BooleanSetting("Ping", this, false);
     public final BooleanSetting speed = new BooleanSetting("Speed", this, false);
@@ -47,7 +51,7 @@ public class Hud extends Module {
 
     public Hud() {
         super("Hud", "Renders stuff on screen.", GLFW.GLFW_KEY_UNKNOWN, Category.CLIENT);
-        this.addSettings(watermark, arraylist, fps, ping, speed, coords, netherCoords, facing, durability, paperDoll, targetHud, inventory, armor, rainbow);
+        this.addSettings(watermark, arraylist, welcomer, fps, ping, speed, coords, netherCoords, facing, durability, paperDoll, targetHud, inventory, armor, rainbow);
     }
 
     @Subscribe
@@ -57,8 +61,16 @@ public class Hud extends Module {
 
         // Watermark
         if (watermark.isEnabled()) {
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, Zyklon.name + " " + Zyklon.version, 1, 1,
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, Zyklon.name + " " + Formatting.WHITE + Zyklon.version, 1, 1,
                     rainbow.isEnabled() ? getRainbow() : 0x64b9fa);
+        }
+
+        // Welcomer
+        if (welcomer.isEnabled()) {
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, "Welcome, " + Formatting.WHITE + mc.getSession().getUsername()
+                            + Formatting.RESET + "!", 1, y,
+                    rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
+            y += 10;
         }
 
 
@@ -142,8 +154,13 @@ public class Hud extends Module {
             for (int i = 0; i < Zyklon.INSTANCE.moduleManager.modules.size(); i++) {
                 Module mod = Zyklon.INSTANCE.moduleManager.modules.get(i);
                 if (mod.isEnabled()) {
-                    DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, mod.getName(),
-                                                        mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(mod.getName()), 1 + (iteration * 10),
+                    String key = InputUtil.fromKeyCode(mod.getKey(), -1).getLocalizedText().getString();
+                    String txt = mod.getName() + " [" + Formatting.WHITE + key + Formatting.RESET + "]";
+                    String txt2 = mod.getName();
+
+                    DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, mod.getKey() == GLFW.GLFW_KEY_UNKNOWN ? txt2 : txt,
+                                                        mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(mod.getKey() == GLFW.GLFW_KEY_UNKNOWN ? txt2 : txt),
+                            1 + (iteration * 10),
                             rainbow.isEnabled() ? getRainbow() : 0x64b9fa);
                     iteration++;
                 }
