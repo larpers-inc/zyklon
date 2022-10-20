@@ -27,21 +27,23 @@ public class Aura extends Module {
     public final BooleanSetting hostiles = new BooleanSetting("Hostiles", this, false);
     public final BooleanSetting friendly = new BooleanSetting("Friendly", this, false);
     public final BooleanSetting projectiles = new BooleanSetting("Projectiles", this, false);
-
     public final BooleanSetting raycast = new BooleanSetting("Raycast", this, true);
     public final BooleanSetting multiAura = new BooleanSetting("MultiAura", this, false);
     public final BooleanSetting itemSwitch = new BooleanSetting("ItemSwitch", this, true);
-    public final NumberSetting range = new NumberSetting("Range", this, 3, 0, 5, 0.5);
+    public final NumberSetting range = new NumberSetting("Range", this, 3.5, 1, 10, 0.1);
     public final BooleanSetting delay = new BooleanSetting("1.9 Delay", this, true);
+    public final BooleanSetting deathDisable = new BooleanSetting("DeathDisable", this, true);
+
     public Aura() {
         super("Aura", "Automatically attacks nearby entities.", GLFW.GLFW_KEY_UNKNOWN, Category.COMBAT);
-        this.addSettings(players, hostiles, friendly, projectiles, raycast, multiAura, itemSwitch, range, delay);
+        this.addSettings(players, hostiles, friendly, projectiles, raycast, multiAura, itemSwitch, range, delay, deathDisable);
     }
 
     @Subscribe
     public void onTick(TickEvent event) {
         if (mc.player == null || mc.world == null) return;
         if (mc.player.getAttackCooldownProgress(0) < 1 && delay.isEnabled()) return;
+        if (mc.player.getHealth() <= 0 && deathDisable.isEnabled()) this.disable();
 
         try {
             for (Entity entity : getTargets()) {

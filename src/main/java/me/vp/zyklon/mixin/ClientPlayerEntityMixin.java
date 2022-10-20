@@ -6,6 +6,7 @@ import me.vp.zyklon.event.events.*;
 import me.vp.zyklon.module.modules.EntityControl;
 import me.vp.zyklon.module.modules.NoSlow;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -14,6 +15,7 @@ import net.minecraft.entity.MovementType;
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,8 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
     MinecraftClient mc = MinecraftClient.getInstance();
-    private PlayerPacketEvent preEvent;
-
+	private Screen tempCurrentScreen;
     @Shadow
     private ClientPlayNetworkHandler networkHandler;
 	@Shadow
@@ -105,5 +106,14 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 		EntityControl entityControl = (EntityControl) Zyklon.INSTANCE.moduleManager.getModule("EntityControl");
 		return Zyklon.INSTANCE.moduleManager.isModuleEnabled("EntityControl")
 				&& entityControl.maxJump.isEnabled() ? 1F : mountJumpStrength;
+	}
+
+	@Inject(at = @At(value = "FIELD", target = "Lnet/minecraft/client/MinecraftClient;currentScreen:Lnet/minecraft/client/gui/screen/Screen;", opcode = Opcodes.GETFIELD,
+			ordinal = 0), method = {"updateNausea()V"})
+	private void beforeUpdateNausea(CallbackInfo ci) {
+		if (Zyklon.INSTANCE.moduleManager.getModule("PortalGui").isEnabled()) {
+			tempCurrentScreen = mc.currentScreen;
+			mc.currentScreen = null;
+		}
 	}
 }

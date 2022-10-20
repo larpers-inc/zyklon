@@ -15,7 +15,7 @@ import me.vp.zyklon.eventbus.Subscribe;
 public class Fly extends Module {
     public final ModeSetting mode = new ModeSetting("Mode", this, "Static", "Static", "JetPack", "Creative");
     public final ModeSetting bypass = new ModeSetting("Bypass", this, "Off", "Off", "Packet", "Fall");
-    public final NumberSetting speed = new NumberSetting("Speed", this, 2, 1, 10, 1);
+    public final NumberSetting speed = new NumberSetting("Speed", this, 2, 1, 10, 0.1);
     public Fly() {
         super("Fly", "Allows you to fly.", GLFW.GLFW_KEY_UNKNOWN, Category.MOVEMENT);
         this.addSettings(mode, bypass, speed);
@@ -38,13 +38,6 @@ public class Fly extends Module {
                 double motionY = mc.options.jumpKey.isPressed() ? 0.3 : 0;
                 riding.setVelocity(velocity.x, motionY, velocity.z);
             } else {
-                if (bypass.is("Packet")) {
-                    mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() - 0.069, mc.player.getZ(), false));
-                    mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.069, mc.player.getZ(), true));
-                }
-                else if (bypass.is("Fall"))
-                    mc.world.getBlockState(new BlockPos(new BlockPos(mc.player.getPos().add(0, -0.069, 0)))).getMaterial();
-
                 if (mc.options.sprintKey.isPressed()) flySpeed *= 1.5;
                 mc.player.setVelocity(new Vec3d(0, 0, 0));
                 mc.player.setMovementSpeed(flySpeed * 0.2f);
@@ -60,6 +53,7 @@ public class Fly extends Module {
                 mc.player.setVelocity(vec);
             }
         }
+
         else if (mode.is("JetPack")) {
             if (InputUtil.isKeyPressed(mc.getWindow().getHandle(), InputUtil.fromTranslationKey(mc.options.jumpKey.getBoundKeyTranslationKey()).getCode())) {
 				mc.player.jump();
@@ -69,9 +63,16 @@ public class Fly extends Module {
 				}
 			}
         }
+
         else if (mode.is("Creative")) {
             mc.player.getAbilities().flying = true;
             mc.player.getAbilities().setFlySpeed(flySpeed / 10f);
         }
+
+        if (bypass.is("Packet")) {
+            mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() - 0.069, mc.player.getZ(), false));
+            mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.069, mc.player.getZ(), true));
+        }
+        else if (bypass.is("Fall")) mc.world.getBlockState(new BlockPos(new BlockPos(mc.player.getPos().add(0, -0.069, 0)))).getMaterial();
     }
 }

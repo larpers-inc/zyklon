@@ -7,6 +7,7 @@ import me.vp.zyklon.util.RenderUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import org.lwjgl.glfw.GLFW;
@@ -22,7 +23,7 @@ public class BlockHighlight extends Module {
     @Subscribe
     public void onRender(WorldRenderEvent.Post event) {
         if (mc.world == null || mc.player == null) return;
-        if (mc.crosshairTarget == null) return;
+        if (mc.crosshairTarget == null || mc.crosshairTarget.getType() == HitResult.Type.ENTITY) return;
 
         BlockPos pos = ((BlockHitResult) mc.crosshairTarget).getBlockPos();
         BlockState state = mc.world.getBlockState(pos);

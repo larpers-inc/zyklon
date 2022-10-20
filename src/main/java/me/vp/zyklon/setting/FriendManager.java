@@ -74,4 +74,8 @@ public class FriendManager {
         friends.forEach(friend -> sb.append(friend).append(", "));
         return sb.toString();
     }
+
+    public Boolean isFriend(String name) {
+        return getFriends().contains(name);
+    }
 }

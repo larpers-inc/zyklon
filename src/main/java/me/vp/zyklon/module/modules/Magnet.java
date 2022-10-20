@@ -1,6 +1,7 @@
 package me.vp.zyklon.module.modules;
 
 import com.google.common.collect.Streams;
+import me.vp.zyklon.event.events.PacketEvent;
 import me.vp.zyklon.event.events.TickEvent;
 import me.vp.zyklon.eventbus.Subscribe;
 import me.vp.zyklon.module.Module;
@@ -37,7 +38,7 @@ public class Magnet extends Module {
 
                 // Check if entity has a block above it
                 if (mc.world.getBlockState(entity.getBlockPos().up()).isAir()) {
-                    mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(x, y, z, true));
+                    mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(x, y, z, mc.player.isOnGround()));
                 }
             }
         }

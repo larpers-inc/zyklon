@@ -82,7 +82,7 @@ public class Clickgui extends Screen {
             }
         }
 
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 80; ++i) {
             for (int y = 0; y < 3; ++y) {
                 Snow snow = new Snow(25 * i, y * -50, random.nextInt(3) + 1, random.nextInt(2) + 1);
                 snowList.add(snow);

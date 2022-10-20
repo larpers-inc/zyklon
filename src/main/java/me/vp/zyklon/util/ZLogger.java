@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.awt.*;
+
 public class ZLogger {
     public static final Logger logger = LogManager.getFormatterLogger("zyklon");
 
@@ -72,6 +74,24 @@ public class ZLogger {
 			MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(text);
 		} catch (Exception e) {
 			logger.log(Level.INFO, text.getString());
+		}
+	}
+
+	public static void trayMessage(String title, String message, TrayIcon.MessageType type) {
+		if (SystemTray.isSupported()) {
+			SystemTray tray = SystemTray.getSystemTray();
+			Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
+			TrayIcon trayIcon = new TrayIcon(image, "Zyklon");
+			trayIcon.setImageAutoSize(true);
+			trayIcon.setToolTip("Zyklon");
+			try {
+				tray.add(trayIcon);
+			} catch (AWTException e) {
+				e.printStackTrace();
+			}
+			trayIcon.displayMessage(title, message, type);
+		} else {
+			System.err.println("System tray not supported!");
 		}
 	}
 
