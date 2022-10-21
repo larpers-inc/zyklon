@@ -12,7 +12,10 @@ public class FakePlayer extends Module {
 
     @Override
     public void onEnable() {
-        if (mc.world == null && mc.player == null) return;
+        if (mc.world == null && mc.player == null) {
+            this.setEnabled(false);
+            return;
+        }
         FakePlayerUtil.spawn();
     }
 
