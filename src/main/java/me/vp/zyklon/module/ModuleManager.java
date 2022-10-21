@@ -34,6 +34,7 @@ public class ModuleManager {
         modules.add(new CameraClip());
         modules.add(new Clickgui());
         modules.add(new DeathLocation());
+        modules.add(new Derp());
         modules.add(new EntityControl());
         modules.add(new EntityEsp());
         modules.add(new FakePlayer());
