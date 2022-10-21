@@ -38,6 +38,7 @@ public class ModuleManager {
         modules.add(new EntityEsp());
         modules.add(new FakePlayer());
         modules.add(new Fly());
+        modules.add(new Freecam());
         modules.add(new Fullbright());
         modules.add(new GameWindowTitle());
         modules.add(new Hud());

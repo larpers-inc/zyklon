@@ -14,12 +14,13 @@ public class NoOverlay extends Module {
     public final BooleanSetting pumpkin = new BooleanSetting("Pumpkin", this, true);
     public final BooleanSetting powderedSnow = new BooleanSetting("PowderedSnow", this, true);
     public final BooleanSetting bossBar = new BooleanSetting("BossBar", this, true);
+    public final BooleanSetting portal = new BooleanSetting("PortalEffect", this, true);
     public final BooleanSetting status = new BooleanSetting("Status", this, false);
     public final BooleanSetting toast = new BooleanSetting("Toast", this, false);
 
     public NoOverlay() {
         super("NoOverlay", "Dont render overlays.", GLFW.GLFW_KEY_UNKNOWN, Category.RENDER);
-        this.addSettings(vignette, pumpkin, powderedSnow, bossBar, status, toast);
+        this.addSettings(vignette, pumpkin, powderedSnow, bossBar, portal, status, toast);
     }
 
     @Subscribe

@@ -9,6 +9,7 @@ import me.vp.zyklon.module.Module;
 import me.vp.zyklon.setting.settings.BooleanSetting;
 
 import me.vp.zyklon.setting.settings.ModeSetting;
+import me.vp.zyklon.util.EntityUtils;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -222,6 +223,8 @@ public class Hud extends Module {
         // TargetHud
         if (targetHud.isEnabled()) {
             if (target == null) return;
+            if (target.isDead()) return;
+            if (EntityUtils.isFriend(target)) return;
 
             int x = mc.getWindow().getScaledWidth() - 280;
             int y = mc.getWindow().getScaledHeight() - 65;

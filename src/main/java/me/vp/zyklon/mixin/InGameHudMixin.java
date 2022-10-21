@@ -2,10 +2,12 @@ package me.vp.zyklon.mixin;
 
 import me.vp.zyklon.Zyklon;
 import me.vp.zyklon.event.events.RenderIngameHudEvent;
+import me.vp.zyklon.module.modules.Freecam;
 import me.vp.zyklon.module.modules.NoOverlay;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,6 +15,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
@@ -61,5 +64,14 @@ public class InGameHudMixin {
 		NoOverlay noOverlay = (NoOverlay) Zyklon.INSTANCE.moduleManager.getModule("NoOverlay");
 
 		if (noOverlay != null && noOverlay.isEnabled() && noOverlay.vignette.isEnabled()) ci.cancel();
+	}
+
+	@Inject(method = "getCameraPlayer", at = @At("HEAD"), cancellable = true)
+	public void getCameraPlayer(CallbackInfoReturnable<PlayerEntity> cir) {
+		Freecam freecam = (Freecam) Zyklon.INSTANCE.moduleManager.getModule("Freecam");
+
+		if (freecam != null && freecam.isEnabled()) {
+			cir.setReturnValue(Zyklon.mc.player);
+		}
 	}
 }

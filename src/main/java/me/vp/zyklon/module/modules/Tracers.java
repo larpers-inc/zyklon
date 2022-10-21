@@ -38,9 +38,9 @@ public class Tracers extends Module {
                     .rotateY(-(float) Math.toRadians(camera.getYaw()));
             Vec3d end = RenderUtils.smoothen(entity).add(0, entity.getStandingEyeHeight(), 0);
 
-            if (EntityUtils.isOtherServerPlayer(entity) && players.isEnabled())
+            if (EntityUtils.isOtherServerPlayer(entity) && !EntityUtils.isFriend(entity) && players.isEnabled())
                 RenderUtils.draw3DLine(event.getMatrix(), start, end, new Color(255, 0, 0));
-            else if (EntityUtils.isFriend(entity) && friends.isEnabled())
+            else if (EntityUtils.isOtherServerPlayer(entity) && EntityUtils.isFriend(entity) && friends.isEnabled())
                 RenderUtils.draw3DLine(event.getMatrix(), start, end, new Color(0, 155, 0));
             else if (EntityUtils.isMob(entity) && hostiles.isEnabled())
                 RenderUtils.draw3DLine(event.getMatrix(), start, end, new Color(255, 0, 255));

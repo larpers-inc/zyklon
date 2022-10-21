@@ -4,6 +4,8 @@ import com.mojang.authlib.GameProfile;
 import me.vp.zyklon.Zyklon;
 import me.vp.zyklon.event.events.*;
 import me.vp.zyklon.module.modules.EntityControl;
+import me.vp.zyklon.module.modules.Freecam;
+import me.vp.zyklon.module.modules.NoOverlay;
 import me.vp.zyklon.module.modules.NoSlow;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -23,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
@@ -115,5 +118,19 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 			tempCurrentScreen = mc.currentScreen;
 			mc.currentScreen = null;
 		}
+	}
+
+	@Inject(method = "updateNausea", at = @At("HEAD"), cancellable = true)
+	public void updateNausea(CallbackInfo ci) {
+		NoOverlay noOverlay = (NoOverlay) Zyklon.INSTANCE.moduleManager.getModule("NoOverlay");
+
+		if (noOverlay != null && noOverlay.portal.isEnabled()) ci.cancel();
+	}
+
+	@Inject(method = "isCamera", at = @At("HEAD"), cancellable = true)
+	public void isCamera(CallbackInfoReturnable<Boolean> cir) {
+		Freecam freecam = (Freecam) Zyklon.INSTANCE.moduleManager.getModule("Freecam");
+
+		if (freecam != null && freecam.isEnabled()) cir.setReturnValue(true);
 	}
 }

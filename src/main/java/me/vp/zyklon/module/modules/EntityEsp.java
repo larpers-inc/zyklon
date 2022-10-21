@@ -33,9 +33,9 @@ public class EntityEsp extends Module {
         assert mc.world != null;
         for (Entity entity : mc.world.getEntities()) {
             if (mode.is("Outline")) {
-                if (EntityUtils.isOtherServerPlayer(entity) && players.isEnabled())
+                if (EntityUtils.isOtherServerPlayer(entity) && !EntityUtils.isFriend(entity) && players.isEnabled())
                     RenderUtils.drawOutline(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(255, 0, 0), 0.2f);
-                else if (EntityUtils.isFriend(entity) && friends.isEnabled())
+                else if (EntityUtils.isOtherServerPlayer(entity) && EntityUtils.isFriend(entity) && friends.isEnabled())
                     RenderUtils.drawOutline(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(0, 155, 0), 0.2f);
                 else if (EntityUtils.isMob(entity) && hostiles.isEnabled())
                     RenderUtils.drawOutline(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(255, 0, 255), 0.2f);

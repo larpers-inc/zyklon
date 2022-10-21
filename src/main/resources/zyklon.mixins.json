@@ -21,6 +21,7 @@
     "EntityMixin",
     "EntityRenderDispatcherMixin",
     "FlowableFluidMixin",
+    "GameRendererMixin",
     "InGameHudMixin",
     "InGameOverlayRendererMixin",
     "KeyboardMixin",
