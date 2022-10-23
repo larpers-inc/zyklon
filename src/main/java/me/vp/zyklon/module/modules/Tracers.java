@@ -10,6 +10,7 @@ import net.minecraft.client.render.Camera;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.glfw.GLFW;
 import me.vp.zyklon.eventbus.Subscribe;
@@ -22,11 +23,12 @@ public class Tracers extends Module {
     public final BooleanSetting hostiles = new BooleanSetting("Hostiles", this, true);
     public final BooleanSetting animals = new BooleanSetting("Animals", this, false);
     public final BooleanSetting items = new BooleanSetting("Items", this, true);
+    public final BooleanSetting projectiles = new BooleanSetting("Projectiles", this, false);
     public final BooleanSetting endCrystals = new BooleanSetting("EndCrystals", this, false);
 
     public Tracers() {
         super("Tracers", "Draws lines to entities positions.", GLFW.GLFW_KEY_UNKNOWN, Category.RENDER);
-        this.addSettings(players, friends, hostiles, animals, items, endCrystals);
+        this.addSettings(players, friends, hostiles, animals, items, projectiles, endCrystals);
     }
 
     @Subscribe
@@ -48,6 +50,8 @@ public class Tracers extends Module {
                 RenderUtils.draw3DLine(event.getMatrix(), start, end, new Color(0, 255, 0));
             else if (entity instanceof ItemEntity && items.isEnabled())
                 RenderUtils.draw3DLine(event.getMatrix(), start, end, new Color(255, 255, 0));
+            else if (entity instanceof ProjectileEntity && projectiles.isEnabled())
+                RenderUtils.draw3DLine(event.getMatrix(), start, end, new Color(255, 255, 255));
             else if (entity instanceof EndCrystalEntity && endCrystals.isEnabled())
                 RenderUtils.draw3DLine(event.getMatrix(), start, end, new Color(50, 0, 125));
         }

@@ -19,14 +19,18 @@ public class ModuleManager {
         modules.add(new AirPlace());
         modules.add(new AntiHunger());
         modules.add(new AntiInvis());
+        modules.add(new AntiKnockback());
         modules.add(new ArrowDodge());
         modules.add(new Aura());
+        modules.add(new AutoBedbomb());
         modules.add(new AutoCritical());
         modules.add(new AutoEat());
         modules.add(new AutoFish());
         modules.add(new AutoIgnite());
         modules.add(new AutoParkour());
         modules.add(new AutoRespawn());
+        modules.add(new AutoStaircase());
+        modules.add(new AutoTNT());
         modules.add(new AutoWalk());
         modules.add(new BlockEsp());
         modules.add(new BlockHighlight());
@@ -71,7 +75,6 @@ public class ModuleManager {
         modules.add(new Twerk());
         modules.add(new UnfocusedCPU());
         modules.add(new VanillaSpoof());
-        modules.add(new Velocity());
         modules.add(new VisualRange());
         modules.add(new XCarry());
         modules.add(new XRay());

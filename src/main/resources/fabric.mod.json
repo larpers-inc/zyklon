@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "id": "zyklon",
-  "version": "0.3.2plus",
+  "version": "0.3.3",
 
   "name": "Zyklon",
   "description": "Based",
   "authors": [
     "Vp",
-    "larper"
+    "egirl"
   ],
 
   "contact": {

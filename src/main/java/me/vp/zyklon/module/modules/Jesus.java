@@ -3,6 +3,7 @@ package me.vp.zyklon.module.modules;
 import me.vp.zyklon.event.events.BlockShapeEvent;
 import me.vp.zyklon.event.events.TickEvent;
 import me.vp.zyklon.module.Module;
+import me.vp.zyklon.setting.settings.BooleanSetting;
 import me.vp.zyklon.setting.settings.ModeSetting;
 import net.minecraft.entity.Entity;
 import net.minecraft.fluid.FluidState;
@@ -14,6 +15,7 @@ import me.vp.zyklon.eventbus.Subscribe;
 
 public class Jesus extends Module {
     public final ModeSetting mode = new ModeSetting("Mode", this, "Static", "Static", "Dolphin");
+
     public Jesus() {
         super("Jesus", "Walk on water like the holy jesus christ,", GLFW.GLFW_KEY_UNKNOWN, Category.MOVEMENT);
         this.addSettings(mode);
@@ -21,6 +23,8 @@ public class Jesus extends Module {
 
     @Subscribe
     public void onTick(TickEvent event) {
+        if (mc.world == null || mc.player == null) return;
+
         Entity entity = mc.player.getRootVehicle();
 
         if (entity.isSneaking() || entity.fallDistance > 3f) return;

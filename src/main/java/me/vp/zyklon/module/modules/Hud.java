@@ -128,7 +128,12 @@ public class Hud extends Module {
         if (facing.isEnabled()) {
             String facing = mc.player.getHorizontalFacing().name().substring(0, 1).toUpperCase()
                             + mc.player.getHorizontalFacing().name().substring(1).toLowerCase();
-            String axis = mc.player.getHorizontalFacing().getAxis().asString();
+            String axis = "";
+
+            if (facing.equals("North")) axis = "-Z";
+            else if (facing.equals("South")) axis = "+Z";
+            else if (facing.equals("East")) axis = "+X";
+            else if (facing.equals("West")) axis = "-X";
 
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, facing + " " + "[" + axis + "]", 1, coords.enabled ? mc.getWindow().getScaledHeight() - 20
             : mc.getWindow().getScaledHeight() - 10,
@@ -168,7 +173,7 @@ public class Hud extends Module {
             }
         }
 
-        // Paperdoll
+        // Paper-doll
         if (paperDoll.isEnabled()) {
             if (!(mc.player == null)) {
                 float yaw = MathHelper.wrapDegrees(mc.player.prevYaw + (mc.player.getYaw() - mc.player.prevYaw) * mc.getTickDelta());
@@ -222,7 +227,7 @@ public class Hud extends Module {
 
         // TargetHud
         if (targetHud.isEnabled()) {
-            if (target == null) return;
+            if (target == null || target == mc.player) return;
             if (target.isDead()) return;
             if (EntityUtils.isFriend(target)) return;
 

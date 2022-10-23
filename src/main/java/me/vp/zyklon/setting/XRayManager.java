@@ -77,6 +77,7 @@ public class XRayManager {
         blocks.add(Blocks.EMERALD_BLOCK.getTranslationKey());
         blocks.add(Blocks.DIAMOND_ORE.getTranslationKey());
         blocks.add(Blocks.DIAMOND_BLOCK.getTranslationKey());
+        blocks.add(Blocks.ANCIENT_DEBRIS.getTranslationKey());
         blocks.add(Blocks.GOLD_ORE.getTranslationKey());
         blocks.add(Blocks.GOLD_BLOCK.getTranslationKey());
         blocks.add(Blocks.IRON_ORE.getTranslationKey());
