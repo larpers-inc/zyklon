@@ -26,6 +26,7 @@ public class CommandManager {
         commands.add(new HClipCmd());
         commands.add(new HelpCmd());
         commands.add(new ServerCmd());
+        commands.add(new TpCmd());
         commands.add(new VClipCmd());
         commands.add(new XrayCmd());
     }
@@ -68,7 +69,7 @@ public class CommandManager {
     }
 
     public Command getCommand(String name) {
-        for (Command c : this.commands) {
+        for (Command c : commands) {
             if (c.getName().equalsIgnoreCase(name)) {
                 return c;
             }
