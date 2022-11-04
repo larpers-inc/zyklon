@@ -9,7 +9,7 @@ import static me.vp.zyklon.command.CommandManager.prefix;
 
 public class FriendCmd extends Command {
     public FriendCmd() {
-        super("friend", "add/remove friends.", "friend <add/remove/list>", "friends");
+        super("friend", "add/remove friends.", "friend <add/remove/list>", "friends", "f");
     }
 
     @Override

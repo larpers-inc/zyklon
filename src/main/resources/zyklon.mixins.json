@@ -6,6 +6,7 @@
   "client": [
     "accessor.MinecraftClientAccessor",
     "accessor.PlayerMoveC2SPacketAccessor",
+    "AbstractBlockMixin",
     "AdvancementToastMixin",
     "ArmorFeatureRendererMixin",
     "BackgroundRendererMixin",
@@ -20,6 +21,7 @@
     "EnchantingTableBlockEntityRendererMixin",
     "EntityMixin",
     "EntityRenderDispatcherMixin",
+    "EntityRendererMixin",
     "FlowableFluidMixin",
     "GameRendererMixin",
     "InGameHudMixin",

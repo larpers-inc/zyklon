@@ -42,6 +42,7 @@ public class ModuleManager {
         modules.add(new EntityControl());
         modules.add(new EntityEsp());
         modules.add(new FakePlayer());
+        modules.add(new FastRegen());
         modules.add(new Fly());
         modules.add(new Freecam());
         modules.add(new Fullbright());
@@ -50,6 +51,7 @@ public class ModuleManager {
         modules.add(new Jesus());
         modules.add(new Magnet());
         modules.add(new MiddleClickFriend());
+        modules.add(new Nametags());
         modules.add(new NoFall());
         modules.add(new NoFog());
         modules.add(new NoOverlay());

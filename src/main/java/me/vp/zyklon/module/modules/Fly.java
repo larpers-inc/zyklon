@@ -13,7 +13,7 @@ import org.lwjgl.glfw.GLFW;
 import me.vp.zyklon.eventbus.Subscribe;
 
 public class Fly extends Module {
-    public final ModeSetting mode = new ModeSetting("Mode", this, "Static", "Static", "JetPack", "Creative");
+    public final ModeSetting mode = new ModeSetting("Mode", this, "Static", "Static", "JetPack", "Vanilla");
     public final ModeSetting bypass = new ModeSetting("Bypass", this, "Off", "Off", "Packet", "Fall");
     public final NumberSetting speed = new NumberSetting("Speed", this, 2, 1, 10, 0.1);
     public Fly() {
@@ -64,13 +64,13 @@ public class Fly extends Module {
 			}
         }
 
-        else if (mode.is("Creative")) {
+        else if (mode.is("Vanilla")) {
             mc.player.getAbilities().flying = true;
             mc.player.getAbilities().setFlySpeed(flySpeed / 10f);
         }
 
         if (bypass.is("Packet")) {
-            mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() - 0.069, mc.player.getZ(), false));
+            mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() - 0.069, mc.player.getZ(), true));
             mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.069, mc.player.getZ(), true));
         }
         else if (bypass.is("Fall")) mc.world.getBlockState(new BlockPos(new BlockPos(mc.player.getPos().add(0, -0.069, 0)))).getMaterial();

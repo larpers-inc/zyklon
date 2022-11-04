@@ -25,7 +25,6 @@ import org.lwjgl.glfw.GLFW;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AutoBedbomb extends Module {
     public final NumberSetting delay = new NumberSetting("Delay", this, 4, 0.1, 10, 0.1);
@@ -41,17 +40,8 @@ public class AutoBedbomb extends Module {
 
     @Override
     public void onEnable() {
+        if (mc.player == null || mc.world == null) return;
         ticksPassed = 0;
-        if (mc.player == null || mc.world == null) {
-            super.setEnabled(false);
-            return;
-        }
-
-        int bedSlot = InventoryUtils.getSlot(true, i -> mc.player.getInventory().getStack(i).getItem() instanceof BedItem);
-
-        if (bedSlot == -1) {
-            ZLogger.warn("No beds in hotbar!");
-        }
     }
 
     @Override
@@ -106,7 +96,10 @@ public class AutoBedbomb extends Module {
             BlockPos blockPos = pair.getLeft();
             Direction direction = pair.getRight();
             currentSlot = mc.player.getInventory().selectedSlot;
-            mc.player.getInventory().selectedSlot = InventoryUtils.getSlot(true, i -> mc.player.getInventory().getStack(i).getItem() instanceof BedItem);
+            int bedSlot = InventoryUtils.getSlot(true, i -> mc.player.getInventory().getStack(i).getItem() instanceof BedItem);
+            if (bedSlot == -1) return;
+
+            mc.player.getInventory().selectedSlot = bedSlot;
             if (!(mc.world.getBlockState(blockPos)).getMaterial().isReplaceable()) continue;
             if (mc.world.getBlockState(blockPos.offset(direction)).getBlock() instanceof BedBlock)
                 mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, new BlockHitResult(Vec3d.of(blockPos.offset(direction)), Direction.DOWN, blockPos.offset(direction), true));

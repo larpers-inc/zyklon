@@ -36,7 +36,7 @@ public class Aura extends Module {
 
     public Aura() {
         super("Aura", "Automatically attacks nearby entities.", GLFW.GLFW_KEY_UNKNOWN, Category.COMBAT);
-        this.addSettings(players, hostiles, friendly, projectiles, raycast, multiAura, itemSwitch, range, delay, deathDisable);
+        this.addSettings(players, friends, hostiles, friendly, projectiles, raycast, multiAura, itemSwitch, range, delay, deathDisable);
     }
 
     @Subscribe

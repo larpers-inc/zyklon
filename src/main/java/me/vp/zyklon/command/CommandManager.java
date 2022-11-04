@@ -20,6 +20,8 @@ public class CommandManager {
     public CommandManager() {
         commands = new ArrayList<>();
 
+        commands.add(new ClearChatCmd());
+        commands.add(new ClearInventoryCmd());
         commands.add(new FriendCmd());
         commands.add(new HClipCmd());
         commands.add(new HelpCmd());
@@ -46,7 +48,7 @@ public class CommandManager {
                 }
             }
             if (!commandFound) {
-                ZLogger.error(Formatting.RED + "command not found, use" + Formatting.RESET + prefix + "help " + "" + Formatting.RED + "for help.");
+                ZLogger.error(Formatting.RED + "command not found, use " + Formatting.RESET + prefix + "help " + Formatting.RED + "for help.");
             }
         }
     }
@@ -60,7 +62,7 @@ public class CommandManager {
     }
 
     public void setCommandPrefix(String pre) {
-        this.prefix = pre;
+        prefix = pre;
 
         Zyklon.INSTANCE.configManager.save();
     }
