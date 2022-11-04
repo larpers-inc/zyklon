@@ -5,6 +5,7 @@ import me.vp.zyklon.event.events.PacketEvent;
 import me.vp.zyklon.event.events.TickEvent;
 import me.vp.zyklon.eventbus.Subscribe;
 import me.vp.zyklon.module.Module;
+import me.vp.zyklon.setting.settings.ModeSetting;
 import me.vp.zyklon.setting.settings.NumberSetting;
 import me.vp.zyklon.util.ZLogger;
 import net.minecraft.entity.Entity;
@@ -53,7 +54,9 @@ public class Magnet extends Module {
         return items
                 .filter(entity -> entity instanceof ItemEntity
                         && mc.player.distanceTo(entity) <= range.getValue()
-                        && mc.player.canSee(entity))
+                        && mc.player.canSee(entity)
+                        && !entity.isInsideWall()
+                        && !entity.isInLava())
                 .sorted(comparator)
                 .limit(1)
                 .collect(Collectors.toList());

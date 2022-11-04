@@ -19,9 +19,7 @@ public class ClearInventoryCmd extends Command {
             for (int i = 0; i < 36; i++) {
                 ItemStack itemStack = mc.player.getInventory().getStack(i);
                 if (!itemStack.isEmpty()) {
-                    for (int j = 0; j < itemStack.getCount(); j++) {
-                        mc.player.dropItem(itemStack, true);
-                    }
+                    mc.player.dropItem(itemStack, false);
                 }
             }
         }

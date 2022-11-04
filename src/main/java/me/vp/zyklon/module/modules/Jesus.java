@@ -14,11 +14,9 @@ import org.lwjgl.glfw.GLFW;
 import me.vp.zyklon.eventbus.Subscribe;
 
 public class Jesus extends Module {
-    public final ModeSetting mode = new ModeSetting("Mode", this, "Static", "Static", "Dolphin");
 
     public Jesus() {
-        super("Jesus", "Walk on water like the holy jesus christ,", GLFW.GLFW_KEY_UNKNOWN, Category.MOVEMENT);
-        this.addSettings(mode);
+        super("Jesus", "Walk on water like the holy jesus christ.", GLFW.GLFW_KEY_UNKNOWN, Category.MOVEMENT);
     }
 
     @Subscribe
@@ -43,8 +41,7 @@ public class Jesus extends Module {
 
     @Subscribe
     public void onBlockShape(BlockShapeEvent event) {
-        if (mode.is("Static")
-            && !mc.world.getFluidState(event.getPos()).isEmpty()
+        if (!mc.world.getFluidState(event.getPos()).isEmpty()
 			&& !mc.player.isSneaking()
 			&& !mc.player.isTouchingWater()
 			&& mc.player.getY() >= event.getPos().getY() + 0.9) {

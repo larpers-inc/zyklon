@@ -71,7 +71,14 @@ public class Frame {
 	}
 
 	public void renderFrame(MatrixStack matrixStack, TextRenderer textRenderer) {
+		// Draw frame
 		DrawableHelper.fill(matrixStack, this.x, this.y , this.x + this.width, this.y + this.barHeight, new Color(0, 0, 0, 191).getRGB());
+		// Fill outline of frame with cyan
+		DrawableHelper.fill(matrixStack, this.x, this.y, this.x + this.width, this.y + 1, new Color(0, 255, 255).getRGB());
+		DrawableHelper.fill(matrixStack, this.x, this.y, this.x + 1, this.y + this.barHeight, new Color(0, 255, 255).getRGB());
+		DrawableHelper.fill(matrixStack, this.x, this.y + this.barHeight, this.x + this.width, this.y + this.barHeight + 1, new Color(0, 255, 255).getRGB());
+		DrawableHelper.fill(matrixStack, this.x + this.width, this.y, this.x + this.width + 1, this.y + this.barHeight, new Color(0, 255, 255).getRGB());
+		// Draw text
 		DrawableHelper.drawCenteredText(matrixStack, textRenderer, this.category.name(), (this.x + 40) + 3, (int) ((this.y + 0.0f) * 1 + 4), new Color(255, 255, 255, 255).getRGB());
 		if (!this.components.isEmpty()) {
 			DrawableHelper.drawStringWithShadow(matrixStack, textRenderer,

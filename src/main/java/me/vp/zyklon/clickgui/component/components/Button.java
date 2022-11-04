@@ -68,10 +68,19 @@ public class Button extends Component {
 
     @Override
     public void renderComponent(MatrixStack matrixStack, TextRenderer textRenderer) {
+        // Draw the button
         DrawableHelper.fill(matrixStack, parent.getX(), this.parent.getY() + this.offset, parent.getX() + parent.getWidth(), this.parent.getY() + 12 + this.offset, this.isHovered
                 ? (this.mod.isEnabled() ? new Color(0, 208, 255, 191).darker().getRGB()
                 : new Color(15, 15, 15, 191).getRGB()) : (this.mod.isEnabled() ? new Color(0, 208, 255, 191).getRGB()
                 : new Color(30, 30, 30, 191).getRGB()));
+
+        // Draw outline of the button with cyan
+        DrawableHelper.fill(matrixStack, parent.getX(), this.parent.getY() + this.offset, parent.getX() + parent.getWidth(), this.parent.getY() + 1 + this.offset, new Color(0, 208, 255, 191).getRGB());
+        DrawableHelper.fill(matrixStack, parent.getX(), this.parent.getY() + this.offset, parent.getX() + 1, this.parent.getY() + 12 + this.offset, new Color(0, 208, 255, 191).getRGB());
+        DrawableHelper.fill(matrixStack, parent.getX(), this.parent.getY() + 12 + this.offset, parent.getX() + parent.getWidth(), this.parent.getY() + 13 + this.offset, new Color(0, 208, 255, 191).getRGB());
+        DrawableHelper.fill(matrixStack, parent.getX() + parent.getWidth() - 1, this.parent.getY() + this.offset, parent.getX() + parent.getWidth(), this.parent.getY() + 12 + this.offset, new Color(0, 208, 255, 191).getRGB());
+
+        // Draw text
         DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, Text.of(this.mod.getName()), (parent.getX() + 2) + 2,
                 (parent.getY() + offset + 2) + 1, new Color(255, 255, 255).getRGB());
 
@@ -92,6 +101,9 @@ public class Button extends Component {
                 }
                 DrawableHelper.fill(matrixStack, parent.getX() + 2, parent.getY() + this.offset + 12, parent.getX() + 3,
                         parent.getY() + this.offset + ((this.subcomponents.size() + 1) * 12), new Color(0, 208, 255, 191).getRGB());
+                DrawableHelper.fill(matrixStack, parent.getX() + parent.getWidth() - 3, parent.getY() + this.offset + 12,
+                        parent.getX() + parent.getWidth() - 2, parent.getY() + this.offset + ((this.subcomponents.size() + 1) * 12),
+                        new Color(0, 208, 255, 191).getRGB());
             }
         }
     }
