@@ -6,8 +6,7 @@
   "name": "Zyklon",
   "description": "Based",
   "authors": [
-    "Vp",
-    "egirl"
+    "Vili"
   ],
 
   "contact": {
@@ -21,7 +20,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "me.vp.zyklon.Zyklon"
+      "dev.vili.zyklon.Zyklon"
     ]
   },
   "mixins": [
