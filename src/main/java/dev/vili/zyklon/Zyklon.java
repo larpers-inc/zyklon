@@ -48,7 +48,7 @@ public final class Zyklon implements ModInitializer {
     ╱╱╱╱╱╭━╯┃
     ╱╱╱╱╱╰━━╯
 
-        ~ written by Vili.
+        ~ by Vili.
         """);
 
         settingManager = new SettingManager();

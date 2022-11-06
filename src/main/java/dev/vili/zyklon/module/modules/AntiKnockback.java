@@ -19,7 +19,7 @@ public class AntiKnockback extends Module {
 	}
 
     @Subscribe
-    public void playerPushed(PlayerPushedEvent event) {
+    public void onPlayerPushed(PlayerPushedEvent event) {
         double amount = x.getValue() / 100d;
         event.setPushX(event.getPushX() * amount);
         event.setPushY(event.getPushY() * amount);
@@ -31,9 +31,8 @@ public class AntiKnockback extends Module {
         if (mc.player == null)
 			return;
 
-		if (event.getPacket() instanceof EntityVelocityUpdateS2CPacket) {
-			EntityVelocityUpdateS2CPacket packet = (EntityVelocityUpdateS2CPacket) event.getPacket();
-            if (packet.getId() == mc.player.getId()) {
+		if (event.getPacket() instanceof EntityVelocityUpdateS2CPacket packet) {
+			if (packet.getId() == mc.player.getId()) {
 				double velXZ = x.getValue() / 100;
 				double velY = y.getValue() / 100;
 
@@ -45,8 +44,7 @@ public class AntiKnockback extends Module {
 				packet.velocityY = (int) (pvelY * 8000 + mc.player.getVelocity().y * 8000);
 				packet.velocityZ = (int) (pvelZ * 8000 + mc.player.getVelocity().z * 8000);
 			}
-		} else if (event.getPacket() instanceof ExplosionS2CPacket) {
-			ExplosionS2CPacket packet = (ExplosionS2CPacket) event.getPacket();
+		} else if (event.getPacket() instanceof ExplosionS2CPacket packet) {
 
 			double velX = x.getValue() / 100;
 			double velY = y.getValue() / 100;
