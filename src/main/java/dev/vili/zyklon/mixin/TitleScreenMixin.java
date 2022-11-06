@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class TitleScreenMixin {
     @Inject(method = "render", at = @At("RETURN"), cancellable = true)
     private void render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        DrawableHelper.drawStringWithShadow(matrices, Zyklon.mc.textRenderer, Zyklon.name + " " + Zyklon.version + " written by Vp", 1, 1, getRainbow(1f, 1f, 2, 5));
+        DrawableHelper.drawStringWithShadow(matrices, Zyklon.mc.textRenderer, Zyklon.name + " " + Zyklon.version + " by Vili", 1, 1, getRainbow(1f, 1f, 2, 5));
         ci.cancel();
     }
 

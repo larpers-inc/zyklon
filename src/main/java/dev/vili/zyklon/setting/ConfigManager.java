@@ -6,7 +6,6 @@ import dev.vili.zyklon.module.Module;
 import dev.vili.zyklon.setting.settings.*;
 import dev.vili.zyklon.util.ZLogger;
 import dev.vili.zyklon.Zyklon;
-import me.vp.zyklon.setting.settings.*;
 import net.minecraft.client.MinecraftClient;
 
 import java.io.*;

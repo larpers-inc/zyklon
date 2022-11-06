@@ -10,7 +10,6 @@ import dev.vili.zyklon.module.modules.Freecam;
 import dev.vili.zyklon.module.modules.NoOverlay;
 import dev.vili.zyklon.module.modules.NoSlow;
 import dev.vili.zyklon.Zyklon;
-import me.vp.zyklon.event.events.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.AbstractClientPlayerEntity;

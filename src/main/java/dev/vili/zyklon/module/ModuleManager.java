@@ -32,6 +32,7 @@ public class ModuleManager {
         modules.add(new AutoStaircase());
         modules.add(new AutoTNT());
         modules.add(new AutoWalk());
+        modules.add(new BetterChat());
         modules.add(new BlockEsp());
         modules.add(new BlockHighlight());
         modules.add(new BreadCrumbs());
@@ -64,6 +65,7 @@ public class ModuleManager {
         modules.add(new PortalGui());
         modules.add(new Reach());
         modules.add(new SafeWalk());
+        modules.add(new Scaffold());
         modules.add(new SkinBlinker());
         modules.add(new Sneak());
         modules.add(new Speed());

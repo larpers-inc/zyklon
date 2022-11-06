@@ -9,7 +9,6 @@ import dev.vili.zyklon.module.modules.Clickgui;
 import dev.vili.zyklon.Zyklon;
 import dev.vili.zyklon.clickgui.component.Component;
 import dev.vili.zyklon.clickgui.component.Frame;
-import me.vp.zyklon.clickgui.component.components.sub.*;
 import dev.vili.zyklon.module.modules.ToggleSound;
 import dev.vili.zyklon.setting.Setting;
 import dev.vili.zyklon.setting.settings.BooleanSetting;

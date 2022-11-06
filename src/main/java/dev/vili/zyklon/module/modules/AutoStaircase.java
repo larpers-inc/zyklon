@@ -36,20 +36,15 @@ public class AutoStaircase extends Module {
         if (!mc.player.isOnGround() || !(mc.player.getInventory().getMainHandStack().getItem() instanceof BlockItem)) return;
         BlockPos pos = mc.player.getBlockPos().offset(mc.player.getMovementDirection());
         switch (mc.player.getMovementDirection()) {
-            case NORTH:
-                mc.player.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, new Vec3d(mc.player.getX(), mc.player.getY(), mc.player.getZ() - 1));
-                break;
-            case EAST:
-                mc.player.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, new Vec3d(mc.player.getX() + 1, mc.player.getY(), mc.player.getZ()));
-                break;
-            case SOUTH:
-                mc.player.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, new Vec3d(mc.player.getX(), mc.player.getY(), mc.player.getZ() + 1));
-                break;
-            case WEST:
-                mc.player.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, new Vec3d(mc.player.getX() - 1, mc.player.getY(), mc.player.getZ()));
-                break;
-            default:
-                break;
+            case NORTH ->
+                    mc.player.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, new Vec3d(mc.player.getX(), mc.player.getY(), mc.player.getZ() - 1));
+            case EAST ->
+                    mc.player.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, new Vec3d(mc.player.getX() + 1, mc.player.getY(), mc.player.getZ()));
+            case SOUTH ->
+                    mc.player.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, new Vec3d(mc.player.getX(), mc.player.getY(), mc.player.getZ() + 1));
+            case WEST ->
+                    mc.player.lookAt(EntityAnchorArgumentType.EntityAnchor.EYES, new Vec3d(mc.player.getX() - 1, mc.player.getY(), mc.player.getZ()));
+            default -> {}
         }
         if (mc.player.getBlockStateAtPos().getMaterial().isReplaceable()) {
             mc.options.forwardKey.setPressed(false);
@@ -58,6 +53,7 @@ public class AutoStaircase extends Module {
             mc.player.swingHand(Hand.MAIN_HAND);
         }
         if (!mc.world.getBlockState(pos).getMaterial().isReplaceable()) {
+            if (!(mc.player.getInventory().getMainHandStack().getItem() instanceof BlockItem)) return;
             mc.options.forwardKey.setPressed(true);
             mc.player.jump();
         }

@@ -16,7 +16,6 @@ public class ZLogger {
     public static int INFO_COLOR = 0x64b9fa;
 	public static int WARN_COLOR = Formatting.YELLOW.getColorValue();
 	public static int ERROR_COLOR = Formatting.RED.getColorValue();
-	public static SystemTray tray = SystemTray.getSystemTray();
 
 	// Info
 
@@ -80,6 +79,7 @@ public class ZLogger {
 
 	public static void trayMessage(String title, String message, TrayIcon.MessageType type) {
 		if (SystemTray.isSupported()) {
+			SystemTray tray = SystemTray.getSystemTray();
 			Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
 			TrayIcon trayIcon = new TrayIcon(image, "Zyklon");
 			trayIcon.setImageAutoSize(true);

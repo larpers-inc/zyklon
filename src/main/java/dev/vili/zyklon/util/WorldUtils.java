@@ -182,6 +182,14 @@ public class WorldUtils {
         return false;
     }
 
+    public static boolean placeBlock(final BlockPos pos, final Direction d) {
+        if (!mc.world.isInBuildLimit(pos) || !isBlockEmpty(pos)) return false;
+
+        mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, new BlockHitResult(Vec3d.ofCenter(pos).add(Vec3d.of(d.getVector()).multiply(0.5)),
+                d.getOpposite(), pos.offset(d), false));
+        return true;
+    }
+
     public static Vec3d getLegitLookPos(BlockPos pos, Direction dir, boolean raycast, int res) {
         return getLegitLookPos(new Box(pos), dir, raycast, res, 0.01);
     }
