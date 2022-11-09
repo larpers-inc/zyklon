@@ -3,6 +3,7 @@ package dev.vili.zyklon.module.modules;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import dev.vili.zyklon.Zyklon;
+import dev.vili.zyklon.event.events.PacketEvent;
 import dev.vili.zyklon.event.events.RenderEntityEvent;
 import dev.vili.zyklon.event.events.RenderIngameHudEvent;
 import dev.vili.zyklon.module.Module;
@@ -16,6 +17,7 @@ import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -33,6 +35,7 @@ public class Hud extends Module {
     public final BooleanSetting welcomer = new BooleanSetting("Welcomer", this, true);
     public final BooleanSetting fps = new BooleanSetting("Fps", this, false);
     public final BooleanSetting ping = new BooleanSetting("Ping", this, false);
+    public final BooleanSetting tps = new BooleanSetting("Tps", this, false);
     public final BooleanSetting speed = new BooleanSetting("Speed", this, false);
     public final BooleanSetting coords = new BooleanSetting("Coords", this, true);
     public final BooleanSetting netherCoords = new BooleanSetting("NetherCoords", this, true);
@@ -47,10 +50,13 @@ public class Hud extends Module {
     private boolean found;
     float temp = 10000;
     private int y;
+    public long lastPacket = 0;
+    private long prevTime = 0;
+    private double tpss = 0;
 
     public Hud() {
         super("Hud", "Renders stuff on screen.", GLFW.GLFW_KEY_UNKNOWN, Category.CLIENT);
-        this.addSettings(watermark, arraylist, welcomer, fps, ping, speed, coords, netherCoords, facing, durability, paperDoll, targetHud, inventory, armor, rainbow);
+        this.addSettings(watermark, arraylist, welcomer, fps, ping, tps, speed, coords, netherCoords, facing, durability, paperDoll, targetHud, inventory, armor, rainbow);
     }
 
     @Subscribe
@@ -86,6 +92,13 @@ public class Hud extends Module {
 
         if (ping.isEnabled()) {
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, "Ping [" + latency + "ms]", 1, y,
+                    rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
+            y += 10;
+        }
+
+        // Tps
+        if (tps.isEnabled()) {
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, "TPS [" + new DecimalFormat("#.#").format(tpss) + "]", 1, y,
                     rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
             y += 10;
         }
@@ -268,6 +281,18 @@ public class Hud extends Module {
         if (!found) target = null;
         else found = false;
         temp = 10000;
+    }
+
+    @Subscribe
+    public void onPacket(PacketEvent.Receive event) {
+        lastPacket = System.currentTimeMillis();
+
+        if (event.getPacket() instanceof WorldTimeUpdateS2CPacket) {
+            long time = System.currentTimeMillis();
+            long timeOffset = Math.abs(1000 - (time-prevTime)) + 1000;
+            tpss = (MathHelper.clamp(20 / (timeOffset /1000d), 0, 20) * 100d)/100d;
+            prevTime = time;
+        }
     }
 
     private Color getColor(float max, float value) {
