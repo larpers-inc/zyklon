@@ -231,9 +231,7 @@ public class Hud extends Module {
 
             int x = mc.getWindow().getScaledWidth() - 280;
             int y = mc.getWindow().getScaledHeight() - 65;
-            PlayerListEntry playerListEntry = mc.getNetworkHandler().getPlayerListEntry(target.getUuid());
-            int targetLatency = playerListEntry == null ? 0 : playerListEntry.getLatency();
-            String info = target.getEntityName() + " | " + targetLatency + "ms";
+            String info = target.getEntityName() + " | " + EntityUtils.getEntityPing(target) + "ms";
             String health = String.format("%.1f", target.getHealth() + target.getAbsorptionAmount()) + " health";
             String location = String.format("%.1f", mc.player.distanceTo(target)) + "m";
 
