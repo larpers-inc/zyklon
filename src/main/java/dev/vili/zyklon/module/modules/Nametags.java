@@ -2,7 +2,10 @@ package dev.vili.zyklon.module.modules;
 
 import dev.vili.zyklon.module.Module;
 import dev.vili.zyklon.setting.settings.BooleanSetting;
+import dev.vili.zyklon.util.EntityUtils;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -10,23 +13,54 @@ import org.lwjgl.glfw.GLFW;
 
 public class Nametags extends Module {
     public final BooleanSetting health = new BooleanSetting("Health", this, true);
+    public final BooleanSetting distance = new BooleanSetting("Distance", this, true);
+    public final BooleanSetting gamemode = new BooleanSetting("Gamemode", this, false);
 
     public Nametags() {
-        super("Nametags", "Shows nametags through walls.", GLFW.GLFW_KEY_UNKNOWN, Category.RENDER);
-        this.addSettings(health);
+        super("Nametags", "Better nametags.", GLFW.GLFW_KEY_UNKNOWN, Category.RENDER);
+        this.addSettings(health, distance, gamemode);
     }
 
     /* EntityRendererMixin */
 
 
-    public Text addHealth(LivingEntity entity, Text nametag) {
+    public Text addHealth(Entity entity, Text nametag) {
         if (!health.isEnabled())
             return nametag;
 
-        int health = (int) entity.getHealth();
+        if (entity instanceof LivingEntity) {
+            int health = (int) ((LivingEntity) entity).getHealth();
 
-        MutableText formattedHealth = Text.literal(" ").append(Integer.toString(health)).formatted(getColor(health));
-        return ((MutableText)nametag).append(formattedHealth);
+            MutableText formattedHealth = Text.literal(" ").append(Integer.toString(health)).formatted(getColor(health));
+            return ((MutableText) nametag).append(formattedHealth);
+        }
+
+        return null;
+    }
+
+    public Text addDistance(Entity entity, Text nametag) {
+        if (!distance.isEnabled())
+            return nametag;
+
+        double distance = mc.player.distanceTo(entity);
+        String formattedDistance = String.format("%.1f", distance);
+        MutableText formattedDistanceText = Text.literal(" ").append(formattedDistance + "m").formatted(Formatting.GRAY);
+
+        return ((MutableText) nametag).append(formattedDistanceText);
+    }
+
+    public Text addGamemode(Entity entity, Text nametag) {
+        if (!gamemode.isEnabled())
+            return nametag;
+
+        if (entity instanceof PlayerEntity) {
+            String gamemode = String.valueOf(EntityUtils.getEntityGamemode((PlayerEntity) entity));
+            MutableText formattedGamemode = Text.literal(" ").append(gamemode).formatted(Formatting.GRAY);
+
+            return ((MutableText) nametag).append(formattedGamemode);
+        }
+
+        return null;
     }
 
     private Formatting getColor(int health) {

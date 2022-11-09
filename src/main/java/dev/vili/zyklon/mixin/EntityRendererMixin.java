@@ -9,6 +9,7 @@ import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
@@ -31,7 +32,12 @@ public class EntityRendererMixin<T extends Entity> {
         Nametags nametags = (Nametags) Zyklon.INSTANCE.moduleManager.getModule("Nametags");
 
         if (nametags.health.isEnabled() && entity instanceof LivingEntity)
-            text = nametags.addHealth((LivingEntity) entity, text);
+                text = nametags.addHealth(entity, text);
+        if (nametags.distance.isEnabled() && entity instanceof LivingEntity)
+                text = nametags.addDistance(entity, text);
+        if (nametags.gamemode.isEnabled() && entity instanceof PlayerEntity)
+                text = nametags.addGamemode(entity, text);
+        else if (!nametags.isEnabled()) return;
 
         ZRenderLabel(entity, text, matrixStack, vertexConsumerProvider, light);
 
@@ -48,7 +54,7 @@ public class EntityRendererMixin<T extends Entity> {
 
         boolean bl = !entity.isSneaky() || nametags.isEnabled();
         float f = entity.getHeight() + 0.5F;
-        int j = "deadmau5".equals(text.getString()) ? -10 : 0;
+        int j = "deadmau5".equals(text.getString()) ? - 10 : 0;
 
         matrixStack.push();
         matrixStack.translate(0.0D, f, 0.0D);
