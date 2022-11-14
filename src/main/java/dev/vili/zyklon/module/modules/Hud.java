@@ -105,10 +105,11 @@ public class Hud extends Module {
 
         // Speed
         if (speed.isEnabled()) {
-            final DecimalFormat decimalFormat = new DecimalFormat("#.#");
+            final DecimalFormat decimalFormat = new DecimalFormat("#.##");
             Vec3d vec = new Vec3d(mc.player.getX() - mc.player.prevX, 0, mc.player.getZ() - mc.player.prevZ).multiply(20);
             final double speed = Math.abs(vec.length());
-            final String speedString = "Speed [" + decimalFormat.format((speed)) + "km/h]";
+            final double kmh = speed * 3.6;
+            final String speedString = "Speed [" + decimalFormat.format((kmh)) + "km/h]";
 
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, speedString, 1, y,
                     rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());

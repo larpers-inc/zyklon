@@ -3,6 +3,7 @@ package dev.vili.zyklon.mixin;
 import dev.vili.zyklon.Zyklon;
 import dev.vili.zyklon.module.modules.Nametags;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
