@@ -26,6 +26,7 @@ public class CommandManager {
         commands.add(new HClipCmd());
         commands.add(new HelpCmd());
         commands.add(new ServerCmd());
+        commands.add(new ToggleCmd());
         commands.add(new TpCmd());
         commands.add(new VClipCmd());
         commands.add(new XrayCmd());

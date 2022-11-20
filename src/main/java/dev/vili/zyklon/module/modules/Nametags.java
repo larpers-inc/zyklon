@@ -6,6 +6,7 @@ import dev.vili.zyklon.util.EntityUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -13,12 +14,13 @@ import org.lwjgl.glfw.GLFW;
 
 public class Nametags extends Module {
     public final BooleanSetting health = new BooleanSetting("Health", this, true);
+    public final BooleanSetting ping = new BooleanSetting("Ping", this, true);
     public final BooleanSetting distance = new BooleanSetting("Distance", this, true);
     public final BooleanSetting gamemode = new BooleanSetting("Gamemode", this, false);
 
     public Nametags() {
         super("Nametags", "Better nametags.", GLFW.GLFW_KEY_UNKNOWN, Category.RENDER);
-        this.addSettings(health, distance, gamemode);
+        this.addSettings(health, ping, distance, gamemode);
     }
 
     /* EntityRendererMixin */
@@ -33,6 +35,20 @@ public class Nametags extends Module {
 
             MutableText formattedHealth = Text.literal(" ").append(Integer.toString(health)).formatted(getColor(health));
             return ((MutableText) nametag).append(formattedHealth);
+        }
+
+        return null;
+    }
+
+    public Text addPing(Entity entity, Text nametag) {
+        if (!ping.isEnabled())
+            return nametag;
+
+        if (entity instanceof PlayerEntity) {
+            int ping = EntityUtils.getEntityPing((PlayerEntity) entity);
+
+            MutableText formattedPing = Text.literal(" ").append(Integer.toString(ping)).formatted(getColor(ping));
+            return ((MutableText) nametag).append(formattedPing);
         }
 
         return null;

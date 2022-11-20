@@ -11,7 +11,7 @@ public class FastRegen extends Module {
     public final ModeSetting mode = new ModeSetting("Mode", this, "BruteForce", "BruteForce", "Potion");
 
     public FastRegen() {
-        super("FastRegen", "Regenerates health faster.", GLFW.GLFW_KEY_UNKNOWN, Category.PLAYER);
+        super("FastRegen", "Regenerates health faster. (Single player)", GLFW.GLFW_KEY_UNKNOWN, Category.PLAYER);
         this.addSettings(mode);
     }
 

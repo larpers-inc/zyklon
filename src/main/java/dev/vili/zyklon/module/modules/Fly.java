@@ -1,24 +1,26 @@
 package dev.vili.zyklon.module.modules;
 
 import dev.vili.zyklon.event.events.TickEvent;
+import dev.vili.zyklon.eventbus.Subscribe;
 import dev.vili.zyklon.module.Module;
+import dev.vili.zyklon.setting.settings.BooleanSetting;
 import dev.vili.zyklon.setting.settings.ModeSetting;
 import dev.vili.zyklon.setting.settings.NumberSetting;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.glfw.GLFW;
-import dev.vili.zyklon.eventbus.Subscribe;
 
 public class Fly extends Module {
-    public final ModeSetting mode = new ModeSetting("Mode", this, "Static", "Static", "JetPack", "Vanilla");
-    public final ModeSetting bypass = new ModeSetting("Bypass", this, "Off", "Off", "Packet", "Fall");
+    public final ModeSetting mode = new ModeSetting("Mode", this, "Vanilla", "Vanilla", "Static", "Jetpack");
+    public final BooleanSetting antikick = new BooleanSetting("AntiKick", this, true);
     public final NumberSetting speed = new NumberSetting("Speed", this, 2, 1, 10, 0.1);
+
+    int antiKickTimer = 0;
     public Fly() {
         super("Fly", "Allows you to fly.", GLFW.GLFW_KEY_UNKNOWN, Category.MOVEMENT);
-        this.addSettings(mode, bypass, speed);
+        this.addSettings(mode, antikick, speed);
     }
 
     @Override
@@ -69,10 +71,13 @@ public class Fly extends Module {
             mc.player.getAbilities().setFlySpeed(flySpeed / 10f);
         }
 
-        if (bypass.is("Packet")) {
-            mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() - 0.069, mc.player.getZ(), true));
-            mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.069, mc.player.getZ(), true));
+        if (antikick.isEnabled()) {
+            if (antiKickTimer >= 20) {
+                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.05, mc.player.getZ(), true));
+                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), true));
+                antiKickTimer = 0;
+            }
+            antiKickTimer++;
         }
-        else if (bypass.is("Fall")) mc.world.getBlockState(new BlockPos(new BlockPos(mc.player.getPos().add(0, -0.069, 0)))).getMaterial();
     }
 }

@@ -34,6 +34,8 @@ public class EntityRendererMixin<T extends Entity> {
 
         if (nametags.health.isEnabled() && entity instanceof LivingEntity)
                 text = nametags.addHealth(entity, text);
+        if (nametags.ping.isEnabled() && entity instanceof PlayerEntity)
+                text = nametags.addPing(entity, text);
         if (nametags.distance.isEnabled() && entity instanceof LivingEntity)
                 text = nametags.addDistance(entity, text);
         if (nametags.gamemode.isEnabled() && entity instanceof PlayerEntity)

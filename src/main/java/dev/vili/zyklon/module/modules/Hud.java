@@ -108,8 +108,8 @@ public class Hud extends Module {
             final DecimalFormat decimalFormat = new DecimalFormat("#.##");
             Vec3d vec = new Vec3d(mc.player.getX() - mc.player.prevX, 0, mc.player.getZ() - mc.player.prevZ).multiply(20);
             final double speed = Math.abs(vec.length());
-            final double kmh = speed * 3.6;
-            final String speedString = "Speed [" + decimalFormat.format((kmh)) + "km/h]";
+            //final double kmh = speed * 3.6;
+            final String speedString = "Speed [" + decimalFormat.format((speed)) + "m/s]";
 
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, speedString, 1, y,
                     rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
@@ -177,9 +177,9 @@ public class Hud extends Module {
                     String txt2 = mod.getName();
 
                     DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, mod.getKey() == GLFW.GLFW_KEY_UNKNOWN ? txt2 : txt,
-                                                        mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(mod.getKey() == GLFW.GLFW_KEY_UNKNOWN ? txt2 : txt),
+                            mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(mod.getKey() == GLFW.GLFW_KEY_UNKNOWN ? txt2 : txt),
                             1 + (iteration * 10),
-                            rainbow.isEnabled() ? getRainbow() : 0x64b9fa);
+                            rainbow.isEnabled() ? getRainbow() : new Color(183, 183, 183).getRGB());
                     iteration++;
                 }
             }
@@ -305,7 +305,7 @@ public class Hud extends Module {
     }
 
     private static int getRainbow() {
-        double rainbowState = Math.ceil((System.currentTimeMillis() + 5) / 2) % 360;
+        double rainbowState = Math.ceil((System.currentTimeMillis() + 5) / 10) % 360;
         return 0xff000000 | MathHelper.hsvToRgb((float) (rainbowState / 360.0), 1f, 1f);
     }
 

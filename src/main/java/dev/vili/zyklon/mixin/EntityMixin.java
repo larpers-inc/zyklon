@@ -39,7 +39,7 @@ public class EntityMixin {
 	@Inject(method = "isGlowing", at = @At("HEAD"), cancellable = true)
 	private void overrideIsGlowing(CallbackInfoReturnable<Boolean> cir) {
 		EntityEsp entityEsp = (EntityEsp) Zyklon.INSTANCE.moduleManager.getModule("EntityEsp");
-		if (entityEsp.mode.is("Glow"))
+		if (entityEsp.isEnabled() && entityEsp.mode.is("Glow"))
 			cir.setReturnValue(true);
 		else cir.setReturnValue(false);
 	}
