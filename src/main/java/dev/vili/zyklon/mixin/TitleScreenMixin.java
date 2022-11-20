@@ -25,6 +25,7 @@ public class TitleScreenMixin {
             int finalHue = hue;
             drawText.append(Text.literal(Character.toString(c)).styled(s -> s.withColor(MathHelper.hsvToRgb(finalHue / 360.0F, 1.0F, 1.0F))));
             hue += 100 / drawString.length();
+            if (hue >= 360) hue %= 360;
         }
         Zyklon.mc.textRenderer.draw(matrices, drawText, 1, 1, 0);
         ci.cancel();
