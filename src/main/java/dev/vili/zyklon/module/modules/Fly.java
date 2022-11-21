@@ -9,12 +9,13 @@ import dev.vili.zyklon.setting.settings.NumberSetting;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.glfw.GLFW;
 
 public class Fly extends Module {
     public final ModeSetting mode = new ModeSetting("Mode", this, "Vanilla", "Vanilla", "Static", "Jetpack");
-    public final BooleanSetting antikick = new BooleanSetting("AntiKick", this, true);
+    public final ModeSetting antikick = new ModeSetting("AntiKick", this, "Vanilla", "Vanilla", "Packet", "None");
     public final NumberSetting speed = new NumberSetting("Speed", this, 2, 1, 10, 0.1);
 
     int antiKickTimer = 0;
@@ -73,13 +74,21 @@ public class Fly extends Module {
             mc.player.getAbilities().setFlySpeed(flySpeed / 10f);
         }
 
-        if (antikick.isEnabled()) {
-            if (antiKickTimer >= 20) {
-                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.05, mc.player.getZ(), true));
-                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY(), mc.player.getZ(), true));
-                antiKickTimer = 0;
-            }
+        if (antikick.is("Vanilla")) {
             antiKickTimer++;
+            if (antiKickTimer > 20 && mc.player.world.getBlockState(new BlockPos(mc.player.getPos().subtract(0, 0.0433D, 0))).isAir()) {
+                antiKickTimer = 0;
+                mc.player.setPos(mc.player.getX(), mc.player.getY() - 0.0433D, mc.player.getZ());
+            }
+        } else if (antikick.is("Packet")) {
+            antiKickTimer++;
+            if (antiKickTimer > 20) {
+                antiKickTimer = 0;
+                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.0433D, mc.player.getZ(), true));
+                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() - 0.0433D, mc.player.getZ(), true));
+            }
+        } else if (antikick.is("None")) {
+            antiKickTimer = 0;
         }
     }
 }
