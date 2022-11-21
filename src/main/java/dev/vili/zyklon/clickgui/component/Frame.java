@@ -1,5 +1,6 @@
 package dev.vili.zyklon.clickgui.component;
 
+import dev.vili.zyklon.clickgui.Clickgui;
 import dev.vili.zyklon.clickgui.component.components.Button;
 import dev.vili.zyklon.module.Module;
 import dev.vili.zyklon.Zyklon;
@@ -28,8 +29,6 @@ public class Frame {
 		this.components = new ArrayList<>();
 		this.category = cat;
 		this.width = 88;
-        this.x = 5;
-        this.y = 5;
 		this.barHeight = 13;
 		this.dragX = 0;
 		this.open = false;
@@ -101,6 +100,9 @@ public class Frame {
 			comp.setOff(off);
 			off += comp.getHeight();
 		}
+
+		// load settings
+		Zyklon.INSTANCE.configManager.loadClickgui();
 	}
 
 	public int getX() {
@@ -120,6 +122,9 @@ public class Frame {
 			this.setX(mouseX - dragX);
 			this.setY(mouseY - dragY);
 		}
+
+		// save
+		Zyklon.INSTANCE.configManager.saveClickgui();
 	}
 
 	public boolean isWithinHeader(int x, int y) {

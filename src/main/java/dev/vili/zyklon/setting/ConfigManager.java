@@ -2,6 +2,7 @@ package dev.vili.zyklon.setting;
 
 import dev.vili.zyklon.clickgui.Clickgui;
 import dev.vili.zyklon.clickgui.component.Frame;
+import dev.vili.zyklon.command.CommandManager;
 import dev.vili.zyklon.module.Module;
 import dev.vili.zyklon.setting.settings.*;
 import dev.vili.zyklon.util.ZLogger;
@@ -71,19 +72,19 @@ public class ConfigManager {
                         toSave.add(mod.getName() + ":" + setting.name + ":" + ((BooleanSetting) setting).isEnabled());
                     }
 
-                    if (setting instanceof NumberSetting) {
+                    else if (setting instanceof NumberSetting) {
                         toSave.add(mod.getName() + ":" + setting.name + ":" + ((NumberSetting) setting).getValue());
                     }
 
-                    if (setting instanceof ModeSetting) {
+                    else if (setting instanceof ModeSetting) {
                         toSave.add(mod.getName() + ":" + setting.name + ":" + ((ModeSetting) setting).getMode());
                     }
 
-                    if (setting instanceof ColorSetting) {
+                    else if (setting instanceof ColorSetting) {
                         toSave.add(mod.getName() + ":" + setting.name + ":" + ((ColorSetting) setting).toInteger() + ":" + ((ColorSetting) setting).getRainbow());
                     }
 
-                    if (setting instanceof KeybindSetting) {
+                    else if (setting instanceof KeybindSetting) {
                         toSave.add(mod.getName() + ":" + setting.name + ":" + mod.getKey());
                     }
                 }
@@ -100,7 +101,7 @@ public class ConfigManager {
             File file = new File(MainDirectory, "prefix.txt");
             ArrayList<String> toSave = new ArrayList<>();
 
-            toSave.add(Zyklon.INSTANCE.commandManager.prefix);
+            toSave.add(CommandManager.prefix);
 
             writeFile(toSave, file);
         } catch (Exception e) {
@@ -176,17 +177,17 @@ public class ConfigManager {
                         if (setting instanceof BooleanSetting) {
                             ((BooleanSetting) setting).setEnabled(Boolean.parseBoolean(value));
                         }
-                        if (setting instanceof NumberSetting) {
+                        else if (setting instanceof NumberSetting) {
                             ((NumberSetting) setting).setValue(Double.parseDouble(value));
                         }
-                        if (setting instanceof ModeSetting && ((ModeSetting) setting).modes.toString().contains(value)) {
+                        else if (setting instanceof ModeSetting && ((ModeSetting) setting).modes.toString().contains(value)) {
                             ((ModeSetting) setting).setMode(value);
                         }
-                        if (setting instanceof ColorSetting) {
+                        else if (setting instanceof ColorSetting) {
                             ((ColorSetting) setting).setRainbow(Boolean.parseBoolean(curLine.split(":")[3]));
                             ((ColorSetting) setting).fromInteger(Integer.parseInt(value));
                         }
-                        if (setting instanceof KeybindSetting) {
+                        else if (setting instanceof KeybindSetting) {
                             ((KeybindSetting) setting).setKeyCode(Integer.parseInt(value));
                         }
                     } else module.setKey(Integer.parseInt(value));
