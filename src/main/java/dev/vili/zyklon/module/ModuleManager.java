@@ -25,6 +25,7 @@ public class ModuleManager {
         modules.add(new AutoBedbomb());
         modules.add(new AutoCritical());
         modules.add(new AutoEat());
+        modules.add(new AutoFarm());
         modules.add(new AutoFish());
         modules.add(new AutoIgnite());
         modules.add(new AutoParkour());
@@ -48,6 +49,7 @@ public class ModuleManager {
         modules.add(new Freecam());
         modules.add(new Fullbright());
         modules.add(new GameWindowTitle());
+        modules.add(new GhostHand());
         modules.add(new Hud());
         modules.add(new Jesus());
         modules.add(new Magnet());

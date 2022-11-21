@@ -6,12 +6,11 @@ import org.lwjgl.glfw.GLFW;
 
 public class BetterChat extends Module {
     public final BooleanSetting timestamps = new BooleanSetting("Timestamps", this, true);
-    //public final BooleanSetting selfColor = new BooleanSetting("SelfColor", this, true);
-    //public final BooleanSetting friendColor = new BooleanSetting("FriendColor", this, true);
+    public final BooleanSetting mentionSound = new BooleanSetting("MentionSound", this, true);
 
     public BetterChat() {
         super("BetterChat", "Makes chat better.", GLFW.GLFW_KEY_UNKNOWN, Category.CLIENT);
-        this.addSettings(timestamps);
+        this.addSettings(timestamps, mentionSound);
     }
 
     /* ChatHudMixin.java */

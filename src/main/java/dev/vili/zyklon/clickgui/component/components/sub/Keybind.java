@@ -65,7 +65,7 @@ public class Keybind extends Component {
     @Override
     public void keyTyped(int keyCode, int scanCode, int modifiers) {
         if (this.binding) {
-            if (keyCode == GLFW.GLFW_KEY_BACKSPACE || keyCode == GLFW.GLFW_KEY_DELETE) this.parent.mod.setKey(-1);
+            if (keyCode == GLFW.GLFW_KEY_BACKSPACE || keyCode == GLFW.GLFW_KEY_DELETE || keyCode == GLFW.GLFW_KEY_ESCAPE) this.parent.mod.setKey(-1);
 
             else this.parent.mod.setKey(keyCode);
             this.binding = false;

@@ -7,6 +7,7 @@
     "accessor.MinecraftClientAccessor",
     "accessor.PlayerMoveC2SPacketAccessor",
     "AbstractBlockMixin",
+    "AbstractBlockStateMixin",
     "AdvancementToastMixin",
     "ArmorFeatureRendererMixin",
     "BackgroundRendererMixin",

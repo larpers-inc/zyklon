@@ -85,6 +85,10 @@ public class Clickgui extends Screen {
                 snowList.add(snow);
             }
         }
+
+        // Draw vili.dev watermark at the bottom right
+        DrawableHelper.fill(matrixStack, mc.getWindow().getScaledWidth() - 100, mc.getWindow().getScaledHeight() - 10, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), 0x80000000);
+        textRenderer.drawWithShadow(matrixStack, "vili.dev", mc.getWindow().getScaledWidth() - 95, mc.getWindow().getScaledHeight() - 9, 0xFFFFFFFF);
     }
 
 

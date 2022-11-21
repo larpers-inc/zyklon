@@ -5,6 +5,7 @@ import dev.vili.zyklon.setting.Setting;
 import dev.vili.zyklon.setting.settings.KeybindSetting;
 import dev.vili.zyklon.util.ZLogger;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.util.Formatting;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,7 +103,7 @@ public abstract class Module {
         onEnable();
         setEnabled(true);
         if (Zyklon.INSTANCE.moduleManager.isModuleEnabled("ToggleInfo") && !this.getName().equalsIgnoreCase("Clickgui"))
-            ZLogger.info(this.getName() + " enabled!");
+            ZLogger.info(Formatting.GREEN + this.getName() + " enabled!");
     }
 
     public void disable() {
@@ -110,7 +111,7 @@ public abstract class Module {
         onDisable();
         setEnabled(false);
         if (Zyklon.INSTANCE.moduleManager.isModuleEnabled("ToggleInfo") && !this.getName().equalsIgnoreCase("Clickgui"))
-            ZLogger.warn(this.getName() + " disabled!");
+            ZLogger.info(Formatting.RED + this.getName() + " disabled!");
     }
 
     public void onTick() {

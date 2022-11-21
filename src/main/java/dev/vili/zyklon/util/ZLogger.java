@@ -110,7 +110,7 @@ public class ZLogger {
 	}
 
     private static MutableText getText(int color) {
-        return Text.literal("[" + Formatting.WHITE + "zyklon" + Formatting.RESET + "] ").styled(s -> s.withColor(color));
+        return Text.literal("[zyklon] ").styled(s -> s.withColor(color));
     }
 
 }

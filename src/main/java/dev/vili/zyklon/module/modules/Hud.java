@@ -120,9 +120,12 @@ public class Hud extends Module {
 
         // Yaw & Pitch
         if (yawPitch.isEnabled()) {
+            final DecimalFormat decimalFormat = new DecimalFormat("#.##");
             String yawPitch =
-                    "Yaw [" + Formatting.WHITE + MathHelper.wrapDegrees(mc.player.getYaw()) + Formatting.RESET
-                            + "] Pitch [" + Formatting.WHITE + MathHelper.wrapDegrees(mc.player.getPitch()) + Formatting.RESET + "]";
+                    "Yaw [" + Formatting.WHITE + decimalFormat.format(mc.player.getYaw())
+                            + Formatting.RESET + "] Pitch ["
+                            + Formatting.WHITE + decimalFormat.format(mc.player.getPitch())
+                            + Formatting.RESET + "]";
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, yawPitch, 1, y, rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
             y += 10;
         }
@@ -261,14 +264,12 @@ public class Hud extends Module {
             int y = mc.getWindow().getScaledHeight() - 65;
             String info = target.getEntityName() + " | " + EntityUtils.getEntityPing(target) + "ms";
             String health = String.format("%.1f", target.getHealth() + target.getAbsorptionAmount()) + " health";
-            String ping = EntityUtils.getEntityPing(target) + "ms";
             String location = String.format("%.1f", mc.player.distanceTo(target)) + "m";
 
             if (target != null) {
                 DrawableHelper.fill(event.getMatrix(), x, y, x + 150, y + 70, new Color(0, 0, 0, 100).getRGB());
                 DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, info, x + 10, y + 9, Color.WHITE.getRGB());
                 DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, health, x + 10, y + 20, Color.WHITE.getRGB());
-                DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, ping, x + 10, y + 31, Color.WHITE.getRGB());
                 DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, location, x + 90, y + 20, Color.WHITE.getRGB());
 
                 int i = 1;
