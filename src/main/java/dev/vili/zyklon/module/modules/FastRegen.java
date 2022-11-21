@@ -15,6 +15,11 @@ public class FastRegen extends Module {
         this.addSettings(mode);
     }
 
+    @Override
+    public void onDisable() {
+        if (mc.player != null) mc.player.removeStatusEffect(StatusEffects.REGENERATION);
+    }
+
     @Subscribe
     public void onTick() {
         if (mode.is("BruteForce") && mc.player.getHealth() < mc.player.getMaxHealth())

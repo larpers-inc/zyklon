@@ -36,7 +36,8 @@ public class Slider extends Component {
 		DrawableHelper.fill(matrixStack, parent.parent.getX() + 2, parent.parent.getY() + offset, parent.parent.getX() + parent.parent.getWidth(), parent.parent.getY() + offset + 12, this.hovered
         ? new Color(20, 20, 20, 191).getRGB() : new Color(0, 0, 0, 191).getRGB());
 
-		DrawableHelper.fill(matrixStack, parent.parent.getX() + 2, parent.parent.getY() + offset, parent.parent.getX() + (int) renderWidth, parent.parent.getY() + offset + 12, new Color(150, 150, 150, 128).getRGB());
+		DrawableHelper.fill(matrixStack, parent.parent.getX() + 2, parent.parent.getY() + offset, parent.parent.getX()
+				+ (int) renderWidth, parent.parent.getY() + offset + 12, new Color(62, 99, 105, 191).getRGB());
 		DrawableHelper.fill(matrixStack, parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + 2, parent.parent.getY() + offset + 12, new Color(0, 0, 0, 191).getRGB());
 		DrawableHelper.drawStringWithShadow(matrixStack, textRenderer, Formatting.WHITE + this.setting.name + ": "+ Formatting.RESET + this.setting.getValue() , (parent.parent.getX() + 6),
                                             (parent.parent.getY() + offset) + 3, new Color(255, 255, 255, 255).getRGB());

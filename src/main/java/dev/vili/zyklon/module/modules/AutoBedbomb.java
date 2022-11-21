@@ -33,7 +33,7 @@ public class AutoBedbomb extends Module {
     int ticksPassed;
     int currentSlot;
     public AutoBedbomb() {
-        super("AutoBedbomb", "Automatically places beds and explodes them.", GLFW.GLFW_KEY_UNKNOWN, Category.COMBAT);
+        super("AutoBedbomb", "Automatically places beds on players and explodes them.", GLFW.GLFW_KEY_UNKNOWN, Category.COMBAT);
         this.addSettings(delay, range, deathDisable);
     }
 

@@ -13,7 +13,7 @@ import java.awt.*;
 public class ZLogger {
     public static final Logger logger = LogManager.getFormatterLogger("zyklon");
 
-    public static int INFO_COLOR = 0x64b9fa;
+    public static int INFO_COLOR = Formatting.GRAY.getColorValue();
 	public static int WARN_COLOR = Formatting.YELLOW.getColorValue();
 	public static int ERROR_COLOR = Formatting.RED.getColorValue();
 
@@ -79,24 +79,38 @@ public class ZLogger {
 
 	public static void trayMessage(String title, String message, TrayIcon.MessageType type) {
 		if (SystemTray.isSupported()) {
-			SystemTray tray = SystemTray.getSystemTray();
-			Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
-			TrayIcon trayIcon = new TrayIcon(image, "Zyklon");
-			trayIcon.setImageAutoSize(true);
-			trayIcon.setToolTip("Zyklon");
-			try {
-				tray.add(trayIcon);
-			} catch (AWTException e) {
-				e.printStackTrace();
-			}
-			trayIcon.displayMessage(title, message, type);
+			ZLogger z = new ZLogger();
+			z.displayTray(title, message, type);
 		} else {
-			logger.error("System tray not supported!");
+			System.err.println("System tray not supported!");
 		}
 	}
 
+	private void displayTray(String title, String message, TrayIcon.MessageType type) {
+		//Obtain only one instance of the SystemTray object
+		SystemTray tray = SystemTray.getSystemTray();
+
+		//If the icon is a file
+		//Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
+		//Alternative (if the icon is on the classpath):
+		Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("icon.png"));
+
+		TrayIcon trayIcon = new TrayIcon(image, "Zyklon");
+		//Let the system resize the image if needed
+		trayIcon.setImageAutoSize(true);
+		//Set tooltip text for the tray icon
+		trayIcon.setToolTip("Zyklon");
+		try {
+			tray.add(trayIcon);
+		} catch (AWTException e) {
+			System.err.println(e);
+		}
+
+		trayIcon.displayMessage(title, message, type);
+	}
+
     private static MutableText getText(int color) {
-        return Text.literal("[zyklon] ").styled(s -> s.withColor(color));
+        return Text.literal("[" + Formatting.WHITE + "zyklon" + Formatting.RESET + "] ").styled(s -> s.withColor(color));
     }
 
 }

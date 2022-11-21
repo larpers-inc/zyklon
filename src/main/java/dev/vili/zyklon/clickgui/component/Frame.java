@@ -83,7 +83,7 @@ public class Frame {
 		DrawableHelper.drawCenteredText(matrixStack, textRenderer, this.category.name(), (this.x + 40) + 3, (int) ((this.y + 0.0f) * 1 + 4), new Color(255, 255, 255, 255).getRGB());
 		if (!this.components.isEmpty()) {
 			DrawableHelper.drawStringWithShadow(matrixStack, textRenderer,
-					this.open ? "." : "...", (this.x + this.width - 10),
+					this.open ? "." : "...", (this.x + this.width - 9),
 					(this.y) + 4, new Color(255, 255, 255, 255).getRGB());
 		}
 		if (this.open) {

@@ -13,11 +13,13 @@ import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.client.MinecraftClient;
 
+import java.awt.*;
+
 
 public final class Zyklon implements ModInitializer {
     public static Zyklon INSTANCE;
     public static String name = "Zyklon";
-    public static final String version = "0.3.5";
+    public static final String version = "0.3.5+";
     public static final MinecraftClient mc = MinecraftClient.getInstance();
 
     public Zyklon() {
@@ -87,5 +89,6 @@ public final class Zyklon implements ModInitializer {
 
         long finishTime = System.currentTimeMillis() - startTime;
         ZLogger.logger.info("phase 2 of zyklon initialized in " + finishTime + "ms.");
+        ZLogger.trayMessage("Zyklon", "Welcome, " + mc.getSession().getUsername(), TrayIcon.MessageType.INFO);
     }
 }

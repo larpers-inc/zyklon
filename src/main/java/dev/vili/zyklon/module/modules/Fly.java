@@ -33,6 +33,8 @@ public class Fly extends Module {
     public void onTick(TickEvent event) {
         float flySpeed = (int) speed.getValue();
 
+        mc.player.setOnGround(mc.interactionManager.isBreakingBlock());
+
         if (mode.is("Static")) {
             if (mc.player.isRiding()) {
                 Entity riding = mc.player.getRootVehicle();

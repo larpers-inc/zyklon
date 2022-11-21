@@ -73,8 +73,8 @@ public class Button extends Component {
         // Draw the button
         DrawableHelper.fill(matrixStack, parent.getX(), this.parent.getY() + this.offset, parent.getX() + parent.getWidth(), this.parent.getY()
                 + 12 + this.offset, this.isHovered
-                ? (this.mod.isEnabled() ? new Color(43, 43, 43, 191).darker().getRGB()
-                : new Color(15, 15, 15, 191).getRGB()) : (this.mod.isEnabled() ? new Color(73, 73, 73, 191).getRGB()
+                ? (this.mod.isEnabled() ? new Color(62, 99, 105, 191).darker().getRGB()
+                : new Color(15, 15, 15, 191).getRGB()) : (this.mod.isEnabled() ? new Color(62, 99, 105, 191).getRGB()
                 : new Color(43, 43, 43, 191).getRGB()));
 
         // Draw outline of the button
@@ -91,7 +91,7 @@ public class Button extends Component {
                 (parent.getY() + offset + 2) + 1, new Color(255, 255, 255).getRGB());
 
         if (this.subcomponents.size() > 1)
-            DrawableHelper.drawStringWithShadow(matrixStack, textRenderer, this.open ? "." : "...", (parent.getX() + parent.getWidth() - 10),
+            DrawableHelper.drawStringWithShadow(matrixStack, textRenderer, this.open ? "." : "...", (parent.getX() + parent.getWidth() - 9),
                     (parent.getY() + offset) + 4, new Color(255, 255, 255, 255).getRGB());
 
         Clickgui clickgui = (Clickgui) Zyklon.INSTANCE.moduleManager.getModule("ClickGui");

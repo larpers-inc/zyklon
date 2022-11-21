@@ -29,6 +29,8 @@ public class Sneak extends Module {
 
     @Subscribe
     public void onTick(TickEvent event) {
+        if (mc.player.isTouchingWater()) return;
+
         if (mode.is("Legit")) mc.options.sneakKey.setPressed(true);
         else if (mode.is("Packet") && !packetSent) {
             mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY));

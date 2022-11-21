@@ -14,7 +14,7 @@ public class Checkbox extends Component {
 
 	private boolean hovered;
 	private final BooleanSetting setting;
-	private Button parent;
+	private final Button parent;
 	private int offset;
 	private int x;
 	private int y;
@@ -37,7 +37,7 @@ public class Checkbox extends Component {
 		DrawableHelper.drawStringWithShadow(matrixStack, textRenderer, setting.name, (parent.parent.getX()) + 17, (parent.parent.getY() + offset + 2) + 1, new Color(255, 255, 255, 255).getRGB());
 		if (setting.isEnabled()) {
 			DrawableHelper.fill(matrixStack, parent.parent.getX() + 1 + 5, parent.parent.getY() + offset + 3,
-					parent.parent.getX() + 9 + 3, parent.parent.getY() + offset + 9,  new Color(255, 255, 255, 191).getRGB());
+					parent.parent.getX() + 9 + 3, parent.parent.getY() + offset + 9,  new Color(62, 99, 105, 191).getRGB());
 		}
 	}
 
