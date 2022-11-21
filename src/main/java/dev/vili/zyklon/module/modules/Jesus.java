@@ -39,6 +39,7 @@ public class Jesus extends Module {
 
     @Subscribe
     public void onBlockShape(BlockShapeEvent event) {
+        if (mc.world == null || mc.player == null) return;
         if (!mc.world.getFluidState(event.getPos()).isEmpty()
 			&& !mc.player.isSneaking()
 			&& !mc.player.isTouchingWater()

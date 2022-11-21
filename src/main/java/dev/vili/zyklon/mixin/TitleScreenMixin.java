@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class TitleScreenMixin {
     @Inject(method = "render", at = @At("RETURN"), cancellable = true)
     private void render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        String drawString = Zyklon.name + " " + Zyklon.version + " by Vili";
+        String drawString = Zyklon.name + " " + Zyklon.version + " | vili.dev";
         MutableText drawText = Text.literal("");
         int hue = MathHelper.floor((System.currentTimeMillis() % 5000L) / 5000.0F * 360.0F);
         for (char c: drawString.toCharArray()) {

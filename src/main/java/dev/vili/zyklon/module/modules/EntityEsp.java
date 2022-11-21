@@ -49,7 +49,9 @@ public class EntityEsp extends Module {
                     RenderUtils.drawOutline(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(255, 255, 255), 0.2f);
                 else if (entity instanceof EndCrystalEntity && endCrystals.isEnabled())
                     RenderUtils.drawOutline(event.getMatrix(), RenderUtils.smoothen(entity, entity.getBoundingBox()), new Color(50, 0, 125), 0.2f);
-            } else if (mode.is("Glow")) {
+            }
+
+            else if (mode.is("Glow")) {
                 if (EntityUtils.isOtherServerPlayer(entity) && !EntityUtils.isFriend(entity) && players.isEnabled())
                     entity.setGlowing(true);
                 else if (EntityUtils.isFriend(entity) && friends.isEnabled())

@@ -10,6 +10,7 @@ import dev.vili.zyklon.module.Module;
 import dev.vili.zyklon.setting.settings.BooleanSetting;
 
 import dev.vili.zyklon.util.EntityUtils;
+import dev.vili.zyklon.util.MathUtil;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -122,9 +123,9 @@ public class Hud extends Module {
         if (yawPitch.isEnabled()) {
             final DecimalFormat decimalFormat = new DecimalFormat("#.##");
             String yawPitch =
-                    "Yaw [" + Formatting.WHITE + decimalFormat.format(mc.player.getYaw())
+                    "Yaw [" + Formatting.WHITE + decimalFormat.format(MathUtil.roundToPlace(mc.player.getYaw(), 1))
                             + Formatting.RESET + "] Pitch ["
-                            + Formatting.WHITE + decimalFormat.format(mc.player.getPitch())
+                            + Formatting.WHITE + decimalFormat.format(MathUtil.roundToPlace(mc.player.getPitch(), 1))
                             + Formatting.RESET + "]";
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, yawPitch, 1, y, rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
             y += 10;
@@ -157,14 +158,15 @@ public class Hud extends Module {
         if (facing.isEnabled()) {
             String facing = mc.player.getHorizontalFacing().name().substring(0, 1).toUpperCase()
                             + mc.player.getHorizontalFacing().name().substring(1).toLowerCase();
-            String axis = "";
+            String axis = switch (facing) {
+                case "North" -> "-Z";
+                case "South" -> "+Z";
+                case "East" -> "+X";
+                case "West" -> "-X";
+                default -> "?";
+            };
 
-            if (facing.equals("North")) axis = "-Z";
-            else if (facing.equals("South")) axis = "+Z";
-            else if (facing.equals("East")) axis = "+X";
-            else if (facing.equals("West")) axis = "-X";
-
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, facing + " " + "[" + Formatting.WHITE + axis + "]" + Formatting.RESET, 1, coords.enabled ? mc.getWindow().getScaledHeight() - 20
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, facing + " " + "[" + Formatting.WHITE + axis + Formatting.RESET + "]", 1, coords.enabled ? mc.getWindow().getScaledHeight() - 20
             : mc.getWindow().getScaledHeight() - 10,
                     rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
         }
