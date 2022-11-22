@@ -5,6 +5,7 @@ import dev.vili.zyklon.eventbus.Subscribe;
 import dev.vili.zyklon.module.Module;
 import dev.vili.zyklon.setting.settings.BooleanSetting;
 import dev.vili.zyklon.util.ZLogger;
+import dev.vili.zyklon.util.ZNotification;
 import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
@@ -29,7 +30,7 @@ public class AutoWalk extends Module {
             ZLogger.error("You are stuck in a block!");
 
             if (stuckCheck.isEnabled())
-                ZLogger.trayMessage("Zyklon", "You are stuck in a block!", TrayIcon.MessageType.WARNING);
+                ZNotification.sendNotification("You are stuck in a block!", TrayIcon.MessageType.WARNING);
             return;
         }
 

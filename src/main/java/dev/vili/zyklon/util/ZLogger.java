@@ -1,5 +1,6 @@
 package dev.vili.zyklon.util;
 
+import dev.vili.zyklon.Zyklon;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -75,38 +76,6 @@ public class ZLogger {
 		} catch (Exception e) {
 			logger.log(Level.INFO, text.getString());
 		}
-	}
-
-	public static void trayMessage(String title, String message, TrayIcon.MessageType type) {
-		if (SystemTray.isSupported()) {
-			ZLogger z = new ZLogger();
-			z.displayTray(title, message, type);
-		} else {
-			System.err.println("System tray not supported!");
-		}
-	}
-
-	private void displayTray(String title, String message, TrayIcon.MessageType type) {
-		//Obtain only one instance of the SystemTray object
-		SystemTray tray = SystemTray.getSystemTray();
-
-		//If the icon is a file
-		//Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
-		//Alternative (if the icon is on the classpath):
-		Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("icon.png"));
-
-		TrayIcon trayIcon = new TrayIcon(image, "Zyklon");
-		//Let the system resize the image if needed
-		trayIcon.setImageAutoSize(true);
-		//Set tooltip text for the tray icon
-		trayIcon.setToolTip("Zyklon");
-		try {
-			tray.add(trayIcon);
-		} catch (AWTException e) {
-			System.err.println(e);
-		}
-
-		trayIcon.displayMessage(title, message, type);
 	}
 
     private static MutableText getText(int color) {

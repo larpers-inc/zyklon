@@ -9,6 +9,7 @@ import dev.vili.zyklon.setting.XRayManager;
 import dev.vili.zyklon.util.ZLogger;
 import dev.vili.zyklon.setting.SettingManager;
 
+import dev.vili.zyklon.util.ZNotification;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.client.MinecraftClient;
@@ -89,6 +90,5 @@ public final class Zyklon implements ModInitializer {
 
         long finishTime = System.currentTimeMillis() - startTime;
         ZLogger.logger.info("phase 2 of zyklon initialized in " + finishTime + "ms.");
-        ZLogger.trayMessage("Zyklon", "Welcome, " + mc.getSession().getUsername(), TrayIcon.MessageType.INFO);
     }
 }

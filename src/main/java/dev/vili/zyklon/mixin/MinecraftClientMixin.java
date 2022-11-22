@@ -3,6 +3,7 @@ package dev.vili.zyklon.mixin;
 import dev.vili.zyklon.Zyklon;
 import dev.vili.zyklon.util.ZLogger;
 
+import dev.vili.zyklon.util.ZNotification;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.RunArgs;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,7 +39,7 @@ public abstract class MinecraftClientMixin {
             Zyklon.INSTANCE.configManager.save();
             ZLogger.logger.info("saved configs on exit.");
             ZLogger.logger.info("Good bye, " + Zyklon.mc.getSession().getUsername() + " !");
-            ZLogger.trayMessage("Zyklon", "Good bye, " + Zyklon.mc.getSession().getUsername(), TrayIcon.MessageType.INFO);
+            ZNotification.sendNotification("Good bye, " + Zyklon.mc.getSession().getUsername(), TrayIcon.MessageType.INFO);
         } catch (Exception e) {
             e.printStackTrace();
         }

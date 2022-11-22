@@ -1,10 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "zyklon",
-  "version": "0.3.5",
-
+  "version": "0.3.6",
   "name": "Zyklon",
-  "description": "Based",
+  "description": "Based utility mod for Minecraft 1.19.2",
   "authors": [
     "Vili"
   ],
@@ -14,8 +13,8 @@
     "sources": "https://github.com/larpers-inc/zyklon"
   },
 
-  "license": "licences :clown:",
-  "icon": "assets/zyklon/zyklonwaifu.png",
+  "license": "All rights reserved",
+  "icon": "assets/zyklon/zyklon_64x64.png",
 
   "environment": "*",
   "entrypoints": {

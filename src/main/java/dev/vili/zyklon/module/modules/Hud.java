@@ -11,6 +11,8 @@ import dev.vili.zyklon.setting.settings.BooleanSetting;
 
 import dev.vili.zyklon.util.EntityUtils;
 import dev.vili.zyklon.util.MathUtil;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -20,6 +22,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
@@ -38,6 +43,7 @@ public class Hud extends Module {
     public final BooleanSetting ping = new BooleanSetting("Ping", this, false);
     public final BooleanSetting tps = new BooleanSetting("Tps", this, false);
     public final BooleanSetting speed = new BooleanSetting("Speed", this, false);
+    public final BooleanSetting lookingAt = new BooleanSetting("LookingAt", this, true);
     public final BooleanSetting coords = new BooleanSetting("Coords", this, true);
     public final BooleanSetting netherCoords = new BooleanSetting("NetherCoords", this, true);
     public final BooleanSetting facing = new BooleanSetting("Facing", this, false);
@@ -58,7 +64,7 @@ public class Hud extends Module {
 
     public Hud() {
         super("Hud", "Renders stuff on screen.", GLFW.GLFW_KEY_UNKNOWN, Category.CLIENT);
-        this.addSettings(watermark, arraylist, welcomer, fps, ping, tps, speed, coords, netherCoords, yawPitch, facing, durability, paperDoll, targetHud, inventory, armor, rainbow);
+        this.addSettings(watermark, arraylist, welcomer, fps, ping, tps, speed, lookingAt, coords, netherCoords, yawPitch, facing, durability, paperDoll, targetHud, inventory, armor, rainbow);
     }
 
     @Subscribe
@@ -254,6 +260,21 @@ public class Hud extends Module {
                 mc.getItemRenderer().renderGuiItemOverlay(mc.textRenderer, itemStack, offSetX, offSetY);
             }
             mc.getItemRenderer().zOffset = 0.0F;
+        }
+
+        // LookingAt
+        if (lookingAt.isEnabled()) {
+            if (mc.crosshairTarget != null) {
+                if (mc.crosshairTarget.getType() == HitResult.Type.BLOCK) {
+                    BlockPos pos = ((BlockHitResult) mc.crosshairTarget).getBlockPos();
+                    BlockState state = mc.world.getBlockState(pos);
+                    Block block = state.getBlock();
+                    String name = block.getName().getString();
+                    // Draw text in top center of screen
+                    DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, name, mc.getWindow().getScaledWidth() / 2 - mc.textRenderer.getWidth(name) / 2, 1, rainbow.isEnabled() ? getRainbow() : Color.WHITE.getRGB());
+                    DrawableHelper.fill(event.getMatrix(), mc.getWindow().getScaledWidth() / 2 - mc.textRenderer.getWidth(name) / 2 - 1, 1, mc.getWindow().getScaledWidth() / 2 + mc.textRenderer.getWidth(name) / 2 + 1, 11, new Color(0, 0, 0, 100).getRGB());
+                }
+            }
         }
 
         // TargetHud

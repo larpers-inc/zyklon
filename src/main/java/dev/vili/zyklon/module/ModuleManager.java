@@ -33,7 +33,6 @@ public class ModuleManager {
         modules.add(new AutoStaircase());
         modules.add(new AutoTNT());
         modules.add(new AutoWalk());
-        modules.add(new BetterChat());
         modules.add(new BlockEsp());
         modules.add(new BlockHighlight());
         modules.add(new BreadCrumbs());

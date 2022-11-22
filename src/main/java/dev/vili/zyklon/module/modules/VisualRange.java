@@ -6,6 +6,7 @@ import dev.vili.zyklon.event.events.TickEvent;
 import dev.vili.zyklon.eventbus.Subscribe;
 import dev.vili.zyklon.setting.settings.BooleanSetting;
 import dev.vili.zyklon.util.ZLogger;
+import dev.vili.zyklon.util.ZNotification;
 import net.minecraft.entity.player.PlayerEntity;
 
 import org.lwjgl.glfw.GLFW;
@@ -40,7 +41,7 @@ public class VisualRange extends Module {
 
                 ZLogger.warn(player.getName().getString() + " has entered your visual range!");
                 if (trayMessage.isEnabled() && !mc.isWindowFocused()) {
-                    ZLogger.trayMessage("Zyklon", player.getName().getString() + " has entered your visual range!", MessageType.INFO);
+                    ZNotification.sendNotification(player.getName().getString() + " has entered your visual range!", MessageType.INFO);
                 }
             }
         });
@@ -55,7 +56,7 @@ public class VisualRange extends Module {
 
                 ZLogger.warn(player.getName().getString() + " has left your visual range!");
                 if (trayMessage.isEnabled() && !mc.isWindowFocused()) {
-                    ZLogger.trayMessage("Zyklon", player.getName().getString() + " has left your visual range!", MessageType.INFO);
+                    ZNotification.sendNotification(player.getName().getString() + " has left your visual range!", MessageType.INFO);
                 }
             }
         });

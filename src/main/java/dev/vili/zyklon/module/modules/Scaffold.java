@@ -3,18 +3,12 @@ package dev.vili.zyklon.module.modules;
 import dev.vili.zyklon.event.events.TickEvent;
 import dev.vili.zyklon.eventbus.Subscribe;
 import dev.vili.zyklon.module.Module;
-import dev.vili.zyklon.setting.settings.BooleanSetting;
 import dev.vili.zyklon.util.WorldUtils;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.*;
 import org.lwjgl.glfw.GLFW;
 
 public class Scaffold extends Module {
