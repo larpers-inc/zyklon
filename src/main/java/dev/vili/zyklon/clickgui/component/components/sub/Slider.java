@@ -8,9 +8,9 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Formatting;
 
-import java.awt.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.awt.Color;
 
 public class Slider extends Component {
 	private boolean hovered;

@@ -30,6 +30,6 @@ public class BlockHighlight extends Module {
 
         if (state.getMaterial() == Material.AIR || !mc.world.getWorldBorder().contains(pos)) return;
 
-        RenderUtils.drawOutline(event.getMatrix(), new Box(pos), new Color(0, 10, 140), 0.05f);
+        RenderUtils.drawOutlineBox(event.getMatrix(), new Box(pos), new Color(0, 10, 140), 0.05f);
     }
 }

@@ -8,7 +8,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class ModeButton extends Component {
     private boolean hovered;

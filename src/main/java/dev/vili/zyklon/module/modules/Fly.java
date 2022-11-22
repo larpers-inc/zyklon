@@ -3,10 +3,8 @@ package dev.vili.zyklon.module.modules;
 import dev.vili.zyklon.event.events.TickEvent;
 import dev.vili.zyklon.eventbus.Subscribe;
 import dev.vili.zyklon.module.Module;
-import dev.vili.zyklon.setting.settings.BooleanSetting;
 import dev.vili.zyklon.setting.settings.ModeSetting;
 import dev.vili.zyklon.setting.settings.NumberSetting;
-import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.BlockPos;
@@ -14,8 +12,8 @@ import net.minecraft.util.math.Vec3d;
 import org.lwjgl.glfw.GLFW;
 
 public class Fly extends Module {
-    public final ModeSetting mode = new ModeSetting("Mode", this, "Vanilla", "Vanilla", "Static", "Jetpack");
-    public final ModeSetting antikick = new ModeSetting("AntiKick", this, "Vanilla", "Vanilla", "Packet", "None");
+    public final ModeSetting mode = new ModeSetting("Mode", this, "Vanilla", "Vanilla", "Static");
+    public final ModeSetting antikick = new ModeSetting("AntiKick", this, "Fall", "Fall", "Packet", "OnGround", "None");
     public final NumberSetting speed = new NumberSetting("Speed", this, 2, 1, 10, 0.1);
 
     int antiKickTimer = 0;
@@ -59,22 +57,12 @@ public class Fly extends Module {
             }
         }
 
-        else if (mode.is("JetPack")) {
-            if (InputUtil.isKeyPressed(mc.getWindow().getHandle(), InputUtil.fromTranslationKey(mc.options.jumpKey.getBoundKeyTranslationKey()).getCode())) {
-				mc.player.jump();
-			} else {
-				if (InputUtil.isKeyPressed(mc.getWindow().getHandle(), InputUtil.fromTranslationKey(mc.options.jumpKey.getBoundKeyTranslationKey()).getCode())) {
-					mc.player.updatePosition(mc.player.getX(), mc.player.getY() - flySpeed / 10f, mc.player.getZ());
-				}
-			}
-        }
-
         else if (mode.is("Vanilla")) {
             mc.player.getAbilities().flying = true;
             mc.player.getAbilities().setFlySpeed(flySpeed / 10f);
         }
 
-        if (antikick.is("Vanilla")) {
+        if (antikick.is("Fall")) {
             antiKickTimer++;
             if (antiKickTimer > 20 && mc.player.world.getBlockState(new BlockPos(mc.player.getPos().subtract(0, 0.0433D, 0))).isAir()) {
                 antiKickTimer = 0;
@@ -84,9 +72,11 @@ public class Fly extends Module {
             antiKickTimer++;
             if (antiKickTimer > 20) {
                 antiKickTimer = 0;
-                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.0433D, mc.player.getZ(), true));
+                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.0433D, mc.player.getZ(), false));
                 mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() - 0.0433D, mc.player.getZ(), true));
             }
+        } else if (antikick.is("OnGround")) {
+            mc.player.setOnGround(true);
         } else if (antikick.is("None")) {
             antiKickTimer = 0;
         }

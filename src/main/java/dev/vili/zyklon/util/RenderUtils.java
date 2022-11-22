@@ -3,13 +3,15 @@ package dev.vili.zyklon.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.*;
+import net.minecraft.client.render.entity.LivingEntityRenderer;
+import net.minecraft.client.render.entity.PlayerEntityRenderer;
+import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.*;
 
 import java.awt.*;
 
@@ -112,7 +114,7 @@ public class RenderUtils {
         clean3D();
     }
 
-    public static void drawOutline(MatrixStack stack, Box box, Color color, float alpha) {
+    public static void drawOutlineBox(MatrixStack stack, Box box, Color color, float alpha) {
         float minX = (float) (box.minX - mc.getEntityRenderDispatcher().camera.getPos().getX());
         float minY = (float) (box.minY - mc.getEntityRenderDispatcher().camera.getPos().getY());
         float minZ = (float) (box.minZ - mc.getEntityRenderDispatcher().camera.getPos().getZ());
@@ -162,6 +164,49 @@ public class RenderUtils {
         tessellator.draw();
         clean3D();
     }
+
+    /* TODO
+    public static void drawPlayerSkeleton(MatrixStack matrixStack, float partialTicks,  PlayerEntity entity, Color color) {
+        PlayerEntityRenderer livingEntityRenderer = (PlayerEntityRenderer)(LivingEntityRenderer<?, ?>) mc.getEntityRenderDispatcher().getRenderer(entity);
+        PlayerEntityModel playerEntityModel = livingEntityRenderer.getModel();
+        Vec3d feetPos = entity.getPos();
+        int x = (int) feetPos.x - (int) mc.getEntityRenderDispatcher().camera.getPos().x;
+        int y = (int) feetPos.y - (int) mc.getEntityRenderDispatcher().camera.getPos().y;
+        int z = (int) feetPos.z - (int) mc.getEntityRenderDispatcher().camera.getPos().z;
+        float h = MathHelper.lerpAngleDegrees(partialTicks, entity.prevBodyYaw, entity.bodyYaw);
+        float j = MathHelper.lerpAngleDegrees(partialTicks, entity.prevHeadYaw, entity.headYaw);
+        float q = entity.limbAngle - entity.limbDistance * (1.0F - partialTicks);
+        float p = MathHelper.lerp(partialTicks, entity.lastLimbDistance, entity.limbDistance);
+        float o = (float) entity.age + partialTicks;
+        float k = j - h;
+        float m = entity.getPitch();
+        playerEntityModel.animateModel(entity, q, p, partialTicks);
+        playerEntityModel.setAngles(entity, q, p, o, k, m);
+
+
+        ModelPart head = playerEntityModel.head;
+        ModelPart leftArm = playerEntityModel.leftArm;
+        ModelPart rightArm = playerEntityModel.rightArm;
+        ModelPart leftLeg = playerEntityModel.leftLeg;
+        ModelPart rightLeg = playerEntityModel.rightLeg;
+
+        Matrix4f matrix = matrixStack.peek().getPositionMatrix();
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferBuilder = tessellator.getBuffer();
+
+        setup3D();
+        RenderSystem.setShader(GameRenderer::getPositionShader);
+        RenderSystem.setShaderColor(color.getRed(), color.getGreen(), color.getBlue(), 1.0f);
+
+        bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION);
+        {
+
+        }
+        tessellator.draw();
+        clean3D();
+    }
+
+     */
 
     public static void drawRect(float x, float y, float w, float h, Color color) {
         Tessellator tessellator = Tessellator.getInstance();

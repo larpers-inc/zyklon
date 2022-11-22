@@ -271,8 +271,8 @@ public class Hud extends Module {
                     Block block = state.getBlock();
                     String name = block.getName().getString();
                     // Draw text in top center of screen
-                    DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, name, mc.getWindow().getScaledWidth() / 2 - mc.textRenderer.getWidth(name) / 2, 1, rainbow.isEnabled() ? getRainbow() : Color.WHITE.getRGB());
                     DrawableHelper.fill(event.getMatrix(), mc.getWindow().getScaledWidth() / 2 - mc.textRenderer.getWidth(name) / 2 - 1, 1, mc.getWindow().getScaledWidth() / 2 + mc.textRenderer.getWidth(name) / 2 + 1, 11, new Color(0, 0, 0, 100).getRGB());
+                    DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, name, mc.getWindow().getScaledWidth() / 2 - mc.textRenderer.getWidth(name) / 2, 1, rainbow.isEnabled() ? getRainbow() : Color.WHITE.getRGB());
                 }
             }
         }
