@@ -128,11 +128,10 @@ public class Hud extends Module {
         // Yaw & Pitch
         if (yawPitch.isEnabled()) {
             final DecimalFormat decimalFormat = new DecimalFormat("#.##");
-            String yawPitch =
-                    "Yaw [" + Formatting.WHITE + decimalFormat.format(MathUtil.roundToPlace(mc.player.getYaw(), 1))
-                            + Formatting.RESET + "] Pitch ["
-                            + Formatting.WHITE + decimalFormat.format(MathUtil.roundToPlace(mc.player.getPitch(), 1))
-                            + Formatting.RESET + "]";
+            int yaw = (int) MathUtil.roundToPlace(mc.player.getYaw(), 1);
+            int pitch = (int) MathUtil.roundToPlace(mc.player.getPitch(), 1);
+
+            String yawPitch = "Yaw [" + Formatting.WHITE + yaw + Formatting.RESET + "] Pitch [" + Formatting.WHITE + pitch + Formatting.RESET + "]";
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, yawPitch, 1, y, rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
             y += 10;
         }

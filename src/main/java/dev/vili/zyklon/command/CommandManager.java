@@ -25,6 +25,7 @@ public class CommandManager {
         commands.add(new FriendCmd());
         commands.add(new HClipCmd());
         commands.add(new HelpCmd());
+        commands.add(new ReconnectCmd());
         commands.add(new ServerCmd());
         commands.add(new ToggleCmd());
         commands.add(new TpCmd());

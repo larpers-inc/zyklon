@@ -29,6 +29,7 @@ public class ModuleManager {
         modules.add(new AutoFish());
         modules.add(new AutoIgnite());
         modules.add(new AutoParkour());
+        modules.add(new AutoPiglinTrade());
         modules.add(new AutoRespawn());
         modules.add(new AutoStaircase());
         modules.add(new AutoTNT());
