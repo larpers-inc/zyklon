@@ -183,7 +183,7 @@ public class Hud extends Module {
             int damage = itemStack.getDamage();
             int durability = maxDamage - damage;
             int percent = (int) Math.round((double) durability / (double) maxDamage * 100);
-            String text = "Durability [" + Formatting.WHITE + percent + "%]" + Formatting.RESET;
+            String text = "Durability [" + Formatting.WHITE + percent + "%" + Formatting.RESET + "]";
 
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, text, 1, y,
                     rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());

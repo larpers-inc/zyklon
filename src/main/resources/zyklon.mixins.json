@@ -13,6 +13,7 @@
     "BackgroundRendererMixin",
     "BlockCollisionSpliteratorMixin",
     "BlockMixin",
+    "BlockOcclusionCacheMixin",
     "BossBarHudMixin",
     "CameraMixin",
     "ClientBrandRetrieverMixin",

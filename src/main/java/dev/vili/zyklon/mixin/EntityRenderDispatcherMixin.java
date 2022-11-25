@@ -16,7 +16,7 @@ public class EntityRenderDispatcherMixin {
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     public void render(Entity entity, double x, double y, double z, float yaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
-        RenderEntityEvent event = new RenderEntityEvent(entity);
+        RenderEntityEvent event = new RenderEntityEvent();
         Zyklon.INSTANCE.EVENT_BUS.post(event);
         if (event.isCancelled()) ci.cancel();
     }

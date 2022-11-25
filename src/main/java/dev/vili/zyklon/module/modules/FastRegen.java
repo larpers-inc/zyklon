@@ -26,7 +26,7 @@ public class FastRegen extends Module {
             mc.player.setHealth(mc.player.getHealth() + 1);
 
         else if (mode.is("Potion") && mc.player.getHealth() < mc.player.getMaxHealth()) {
-            mc.player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 1, 1));
+            mc.player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 1, 3));
         }
     }
 }
