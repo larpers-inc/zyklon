@@ -16,6 +16,7 @@ public class ModuleManager {
     public ModuleManager() {
         modules = new ArrayList<>();
 
+        modules.add(new AimAssist());
         modules.add(new AirPlace());
         modules.add(new AntiHunger());
         modules.add(new AntiInvis());
@@ -77,6 +78,7 @@ public class ModuleManager {
         modules.add(new Timer());
         modules.add(new ToggleInfo());
         modules.add(new ToggleSound());
+        modules.add(new TpAura());
         modules.add(new Tracers());
         modules.add(new Twerk());
         modules.add(new UnfocusedCPU());
