@@ -24,8 +24,14 @@ import org.lwjgl.glfw.GLFW;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AutoBedbomb extends Module {
+    public final BooleanSetting players = new BooleanSetting("Players", this, true);
+    public final BooleanSetting friends = new BooleanSetting("Friends", this, false);
+    public final BooleanSetting hostiles = new BooleanSetting("Hostiles", this, false);
+    public final BooleanSetting friendly = new BooleanSetting("Friendly", this, false);
     public final NumberSetting delay = new NumberSetting("Delay", this, 4, 0.1, 10, 0.1);
     public final NumberSetting range = new NumberSetting("Range", this, 5, 1, 10, 1);
     public final BooleanSetting deathDisable = new BooleanSetting("DeathDisable", this, true);
@@ -34,7 +40,7 @@ public class AutoBedbomb extends Module {
     int currentSlot;
     public AutoBedbomb() {
         super("AutoBedbomb", "Automatically places beds on players and explodes them.", GLFW.GLFW_KEY_UNKNOWN, Category.COMBAT);
-        this.addSettings(delay, range, deathDisable);
+        this.addSettings(players, friends, hostiles, friendly, delay, range, deathDisable);
     }
 
     @Override
@@ -50,73 +56,69 @@ public class AutoBedbomb extends Module {
 
     @Override
     public void onTick() {
-        if (mc.player == null || mc.world == null) {
-            this.setEnabled(false);
-            return;
-        }
-
-        if (mc.player.getHealth() <= 0 && deathDisable.isEnabled()) {
-            this.setEnabled(false);
-            return;
-        }
-
-        if (!mc.player.isAlive()) return;
+        if (mc.player == null || mc.world == null) this.setEnabled(false);
+        if (mc.player.getHealth() <= 0 && deathDisable.isEnabled()) this.setEnabled(false);
+        if (!mc.world.getDimension().respawnAnchorWorks()) return;
 
         ticksPassed++;
-        if (ticksPassed < delay.getValue())
-            return;
+        if (ticksPassed < delay.getValue()) return;
         ticksPassed = 0;
 
         currentSlot = mc.player.getInventory().selectedSlot;
-        List<Entity> targets = Streams.stream(mc.world.getEntities())
-                .filter(e -> EntityUtils.isOtherServerPlayer(e))
-                .filter(e -> e != mc.player || !EntityUtils.isFriend(e))
-                .filter(e -> e.getBlockPos() != mc.player.getBlockPos())
-                .filter(e -> mc.player.distanceTo(e) < range.getValue())
-                .filter(e -> !((PlayerEntity) e).isDead())
-                .filter(e -> (mc.world.getBlockState((e).getBlockPos()).getBlock() == Blocks.AIR || mc.world.getBlockState((e).getBlockPos()).getBlock() == Blocks.LAVA))
-                .min((a, b) -> Float.compare(a.distanceTo(mc.player), b.distanceTo(mc.player))).stream().toList();
 
-        if (targets.isEmpty()) return;
 
-        Entity target = targets.get(0);
-        if (target.isInvulnerable()) {
-            ZLogger.warn("Target is invulnerable!");
-            return;
-        }
+        for (Entity entity : getTargets()) {
+            if (entity.isInvulnerable()) ZLogger.warn("Target is invulnerable!");
 
-        ArrayList<Pair<BlockPos, Direction>> positions = new ArrayList<>();
-        positions.add(new Pair<>(target.getBlockPos().north().up(), Direction.SOUTH));
-        positions.add(new Pair<>(target.getBlockPos().east().up(), Direction.WEST));
-        positions.add(new Pair<>(target.getBlockPos().south().up(), Direction.NORTH));
-        positions.add(new Pair<>(target.getBlockPos().west().up(), Direction.EAST));
-        positions.sort(Comparator.comparing(object -> object.getLeft().getSquaredDistance(mc.player.getX(), mc.player.getY(), mc.player.getZ())));
-        for (Pair<BlockPos, Direction> pair : positions) {
-            BlockPos blockPos = pair.getLeft();
-            Direction direction = pair.getRight();
-            currentSlot = mc.player.getInventory().selectedSlot;
-            int bedSlot = InventoryUtils.getSlot(true, i -> mc.player.getInventory().getStack(i).getItem() instanceof BedItem);
-            if (bedSlot == -1) return;
+            ArrayList<Pair<BlockPos, Direction>> positions = new ArrayList<>();
+            positions.add(new Pair<>(entity.getBlockPos().north().up(), Direction.SOUTH));
+            positions.add(new Pair<>(entity.getBlockPos().east().up(), Direction.WEST));
+            positions.add(new Pair<>(entity.getBlockPos().south().up(), Direction.NORTH));
+            positions.add(new Pair<>(entity.getBlockPos().west().up(), Direction.EAST));
+            positions.sort(Comparator.comparing(object -> object.getLeft().getSquaredDistance(mc.player.getX(), mc.player.getY(), mc.player.getZ())));
+            for (Pair<BlockPos, Direction> pair : positions) {
+                BlockPos blockPos = pair.getLeft();
+                Direction direction = pair.getRight();
+                currentSlot = mc.player.getInventory().selectedSlot;
+                int bedSlot = InventoryUtils.getSlot(true, i -> mc.player.getInventory().getStack(i).getItem() instanceof BedItem);
+                if (bedSlot == -1) return;
 
-            mc.player.getInventory().selectedSlot = bedSlot;
-            if (!(mc.world.getBlockState(blockPos)).getMaterial().isReplaceable()) continue;
-            if (mc.world.getBlockState(blockPos.offset(direction)).getBlock() instanceof BedBlock)
-                mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, new BlockHitResult(Vec3d.of(blockPos.offset(direction)), Direction.DOWN, blockPos.offset(direction), true));
-            if (!(mc.world.getBlockState(blockPos).getBlock() instanceof BedBlock)) {
-                if (direction == Direction.NORTH)
-                    mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(-180f, mc.player.getPitch(), true));
-                if (direction == Direction.EAST)
-                    mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(-90f, mc.player.getPitch(), true));
-                if (direction == Direction.SOUTH)
-                    mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(0f, mc.player.getPitch(), true));
-                if (direction == Direction.WEST)
-                    mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(90f, mc.player.getPitch(), true));
-                mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, new BlockHitResult(Vec3d.of(blockPos), Direction.DOWN, blockPos, false));
+                mc.player.getInventory().selectedSlot = bedSlot;
+                if (!(mc.world.getBlockState(blockPos)).getMaterial().isReplaceable()) continue;
+                if (mc.world.getBlockState(blockPos.offset(direction)).getBlock() instanceof BedBlock)
+                    mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, new BlockHitResult(Vec3d.of(blockPos.offset(direction)), Direction.DOWN, blockPos.offset(direction), true));
+                if (!(mc.world.getBlockState(blockPos).getBlock() instanceof BedBlock)) {
+                    if (direction == Direction.NORTH) mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(-180f, mc.player.getPitch(), true));
+                    if (direction == Direction.EAST) mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(-90f, mc.player.getPitch(), true));
+                    if (direction == Direction.SOUTH) mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(0f, mc.player.getPitch(), true));
+                    if (direction == Direction.WEST) mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(90f, mc.player.getPitch(), true));
+                    mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, new BlockHitResult(Vec3d.of(blockPos), Direction.DOWN, blockPos, false));
+                }
+                if (mc.world.getBlockState(blockPos).getBlock() instanceof BedBlock)
+                    mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, new BlockHitResult(Vec3d.of(blockPos), Direction.DOWN, blockPos, true));
+                mc.player.getInventory().selectedSlot = currentSlot;
+                break;
             }
-            if (mc.world.getBlockState(blockPos).getBlock() instanceof BedBlock)
-                mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, new BlockHitResult(Vec3d.of(blockPos), Direction.DOWN, blockPos, true));
-            mc.player.getInventory().selectedSlot = currentSlot;
-            break;
         }
+    }
+
+    private List<Entity> getTargets() {
+        Stream<Entity> targets;
+        targets = Streams.stream(mc.world.getEntities());
+        Comparator<Entity> comparator;
+        comparator = Comparator.comparing(mc.player::distanceTo);
+
+        return targets
+                .filter(e -> EntityUtils.isAttackable(e, true))
+                .filter(e -> (EntityUtils.isOtherServerPlayer(e) && players.isEnabled())
+                        || (EntityUtils.isFriend(e) && friends.isEnabled())
+                        || (EntityUtils.isMob(e) && hostiles.isEnabled())
+                        || (EntityUtils.isAnimal(e) && friendly.isEnabled()))
+                .filter(e -> (mc.world.getBlockState((e).getBlockPos()).getBlock() == Blocks.AIR
+                        || mc.world.getBlockState((e).getBlockPos()).getBlock() == Blocks.LAVA))
+                .filter(e -> mc.player.distanceTo(e) < range.getValue())
+                .sorted(comparator)
+                .limit(1L)
+                .collect(Collectors.toList());
     }
 }

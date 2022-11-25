@@ -8,8 +8,6 @@ import dev.vili.zyklon.setting.settings.BooleanSetting;
 import dev.vili.zyklon.setting.settings.NumberSetting;
 import dev.vili.zyklon.util.EntityUtils;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.projectile.AbstractFireballEntity;
-import net.minecraft.entity.projectile.ShulkerBulletEntity;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Comparator;

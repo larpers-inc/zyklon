@@ -34,6 +34,7 @@ public class ModuleManager {
         modules.add(new AutoRespawn());
         modules.add(new AutoStaircase());
         modules.add(new AutoTNT());
+        modules.add(new AutoTotem());
         modules.add(new AutoWalk());
         modules.add(new BlockEsp());
         modules.add(new BlockHighlight());
@@ -42,6 +43,7 @@ public class ModuleManager {
         modules.add(new Clickgui());
         modules.add(new DeathLocation());
         modules.add(new Derp());
+        modules.add(new ElytraBoost());
         modules.add(new EntityControl());
         modules.add(new EntityEsp());
         modules.add(new FakePlayer());
@@ -65,6 +67,7 @@ public class ModuleManager {
         modules.add(new NoWeather());
         modules.add(new Nuker());
         modules.add(new PacketFly());
+        modules.add(new PopCounter());
         modules.add(new PortalGui());
         modules.add(new Reach());
         modules.add(new SafeWalk());
