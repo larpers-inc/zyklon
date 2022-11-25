@@ -1,7 +1,10 @@
 package dev.vili.zyklon.command.commands;
 
 import dev.vili.zyklon.command.Command;
-import net.minecraft.item.ItemStack;
+import dev.vili.zyklon.util.InventoryUtils;
+import dev.vili.zyklon.util.ZLogger;
+
+import static dev.vili.zyklon.command.CommandManager.prefix;
 
 public class ClearInventoryCmd extends Command {
 
@@ -15,13 +18,7 @@ public class ClearInventoryCmd extends Command {
         if (mc.player.isCreativeLevelTwoOp()) {
             mc.player.getInventory().clear();
         } else {
-            // If player is not operator, get items from inventory and drop them.
-            for (int i = 0; i < 36; i++) {
-                ItemStack itemStack = mc.player.getInventory().getStack(i);
-                if (!itemStack.isEmpty()) {
-                    mc.player.dropItem(itemStack, false);
-                }
-            }
+            InventoryUtils.dropInventory();
         }
 
     }

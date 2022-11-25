@@ -10,7 +10,7 @@ import java.io.File;
 
 public class XrayCmd extends Command {
     public XrayCmd() {
-        super("xray", "Opens xray.txt file.", "xray", "");
+        super("xray", "Opens xray.txt file.", "xray");
     }
 
     private final File MainDirectory = new File(MinecraftClient.getInstance().runDirectory, Zyklon.name);
@@ -22,9 +22,8 @@ public class XrayCmd extends Command {
             ZLogger.error("Desktop is not supported.");
         else
             try {
-                Desktop desktop = Desktop.getDesktop();
                 if (file.exists())
-                    desktop.open(file);
+                    Desktop.getDesktop().open(file);
             } catch (Exception e) {
                 e.printStackTrace();
                 ZLogger.error("Could not open the file.");

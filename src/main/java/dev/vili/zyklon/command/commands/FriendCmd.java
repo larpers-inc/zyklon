@@ -14,7 +14,7 @@ public class FriendCmd extends Command {
     @Override
     public void onCommand(String[] args, String command) {
         if (args.length == 0) {
-            ZLogger.error("Usage: " + prefix + "friend <add/remove/list>");
+            ZLogger.error("Usage: " + prefix + syntax);
             return;
         }
 

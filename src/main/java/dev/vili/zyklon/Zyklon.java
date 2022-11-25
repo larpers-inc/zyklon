@@ -20,7 +20,7 @@ import java.awt.*;
 public final class Zyklon implements ModInitializer {
     public static Zyklon INSTANCE;
     public static String name = "Zyklon";
-    public static final String version = "0.3.6";
+    public static final String version = "0.3.7";
     public static final MinecraftClient mc = MinecraftClient.getInstance();
 
     public Zyklon() {

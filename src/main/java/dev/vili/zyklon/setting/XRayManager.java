@@ -96,7 +96,26 @@ public class XRayManager {
         blocks.add(Blocks.ENDER_CHEST.getTranslationKey());
         blocks.add(Blocks.ANVIL.getTranslationKey());
         blocks.add(Blocks.BARREL.getTranslationKey());
-        blocks.add(Blocks.SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.BLACK_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.BLUE_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.BROWN_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.CYAN_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.GRAY_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.GREEN_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.LIGHT_BLUE_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.LIGHT_GRAY_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.LIME_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.MAGENTA_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.ORANGE_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.PINK_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.PURPLE_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.RED_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.WHITE_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.YELLOW_SHULKER_BOX.getTranslationKey());
+        blocks.add(Blocks.CRAFTING_TABLE.getTranslationKey());
+        blocks.add(Blocks.FURNACE.getTranslationKey());
+        blocks.add(Blocks.BEDROCK.getTranslationKey());
+        blocks.add(Blocks.OBSIDIAN.getTranslationKey());
 
         for (String block : blocks) {
             return block;

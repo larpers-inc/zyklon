@@ -3,6 +3,8 @@ package dev.vili.zyklon.command.commands;
 import dev.vili.zyklon.command.Command;
 import dev.vili.zyklon.util.ZLogger;
 
+import static dev.vili.zyklon.command.CommandManager.prefix;
+
 public class TpCmd extends Command {
 
     public TpCmd() {
@@ -21,7 +23,7 @@ public class TpCmd extends Command {
                 ZLogger.error("Invalid coordinates.");
             }
         } else {
-            ZLogger.error("Invalid arguments.");
+            ZLogger.error("Usage: " + prefix + syntax);
         }
     }
 }

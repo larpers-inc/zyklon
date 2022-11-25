@@ -9,13 +9,13 @@ import static dev.vili.zyklon.command.CommandManager.prefix;
 public class VClipCmd extends Command {
 
     public VClipCmd() {
-        super("vclip", "Clip vertically.", "vclip <amount>", "");
+        super("vclip", "Clip vertically.", "vclip <amount>");
     }
 
     @Override
     public void onCommand(String[] args, String command) {
         if (args.length == 0) {
-            ZLogger.error("Usage: " + prefix + "vclip <amount>");
+            ZLogger.error("Usage: " + prefix + syntax);
             return;
         }
 

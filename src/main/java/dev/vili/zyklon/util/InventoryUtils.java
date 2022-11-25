@@ -2,6 +2,7 @@ package dev.vili.zyklon.util;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.Hand;
 
@@ -93,5 +94,22 @@ public class InventoryUtils {
         }
 
         return i;
+    }
+
+    public static void dropInventory() {
+        for (int i = 0; i < mc.player.getInventory().size(); i++) {
+            mc.interactionManager.clickSlot(mc.player.currentScreenHandler.syncId, i, 1, SlotActionType.THROW, mc.player);
+        }
+    }
+
+    public static void dropHotbar() {
+        for (int i = 0; i < 9; i++) {
+            mc.interactionManager.clickSlot(mc.player.currentScreenHandler.syncId, i, 0, SlotActionType.THROW, mc.player);
+        }
+    }
+
+    public static void dropHand() {
+        if (!mc.player.currentScreenHandler.getCursorStack().isEmpty())
+            mc.interactionManager.clickSlot(mc.player.currentScreenHandler.syncId, ScreenHandler.EMPTY_SPACE_SLOT_INDEX, 0, SlotActionType.PICKUP, mc.player);
     }
 }

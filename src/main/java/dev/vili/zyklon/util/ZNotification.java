@@ -10,7 +10,7 @@ public final class ZNotification {
     private static TrayIcon icon;
 
     public static void sendNotification(String message, TrayIcon.MessageType type) {
-        if (!SystemTray.isSupported()) {
+        if (!tray.isSupported()) {
             ZLogger.logger.error("System notifications are not supported on your computer.");
         } else {
             icon = new TrayIcon(image, Zyklon.name);

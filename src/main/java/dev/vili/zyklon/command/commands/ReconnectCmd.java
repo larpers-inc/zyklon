@@ -23,7 +23,7 @@ public class ReconnectCmd extends Command {
         mc.getNetworkHandler().getConnection().disconnect(Text.of("Reconnecting..."));
         while (timer < 10) {
             timer++;
+            mc.getNetworkHandler().sendPacket(new HandshakeC2SPacket(ip, 25565, NetworkState.STATUS));
         }
-        mc.getNetworkHandler().sendPacket(new HandshakeC2SPacket(ip, 25565, NetworkState.STATUS));
     }
 }

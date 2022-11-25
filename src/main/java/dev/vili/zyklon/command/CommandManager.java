@@ -22,7 +22,11 @@ public class CommandManager {
 
         commands.add(new ClearChatCmd());
         commands.add(new ClearInventoryCmd());
+        commands.add(new DeathsCmd());
+        commands.add(new FakePlayerCmd());
+        commands.add(new FOVCmd());
         commands.add(new FriendCmd());
+        commands.add(new GmCmd());
         commands.add(new HClipCmd());
         commands.add(new HelpCmd());
         commands.add(new ReconnectCmd());

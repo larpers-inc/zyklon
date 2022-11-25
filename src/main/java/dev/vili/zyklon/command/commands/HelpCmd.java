@@ -14,6 +14,16 @@ public class HelpCmd extends Command {
 
     @Override
     public void onCommand(String[] args, String command) {
-        ZLogger.info("Commands (" + CommandManager.commands.size() + "): " + CommandManager.commands.stream().map(Command::getName).collect(Collectors.joining(", ")));
+        if (args.length == 0) {
+            ZLogger.info("Commands: " + CommandManager.commands.stream().map(Command::getName).collect(Collectors.joining(", ")));
+        } else {
+            for (Command cmd : CommandManager.commands) {
+                if (cmd.getName().equalsIgnoreCase(args[0])) {
+                    ZLogger.info(cmd.getSyntax());
+                    return;
+                }
+            }
+            ZLogger.error("Command not found.");
+        }
 	}
 }
