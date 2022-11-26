@@ -26,7 +26,7 @@ import java.util.Map;
 
 /* Credits @BleachDev , My beloved */
 public class AutoFarm extends Module {
-    public final NumberSetting range = new NumberSetting("Range", this, 3.5, 4, 6, 0.1);
+    public final NumberSetting range = new NumberSetting("Range", this, 3, 1, 6, 1);
     public final BooleanSetting till = new BooleanSetting("Till", this, false);
     public final BooleanSetting replant = new BooleanSetting("Replant", this, true);
     public final BooleanSetting harvest = new BooleanSetting("Harvest", this, true);
