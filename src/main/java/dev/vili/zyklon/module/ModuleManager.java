@@ -85,6 +85,7 @@ public class ModuleManager {
         modules.add(new ToggleSound());
         modules.add(new TpAura());
         modules.add(new Tracers());
+        modules.add(new TriggerBot());
         modules.add(new Twerk());
         modules.add(new UnfocusedCPU());
         modules.add(new VanillaSpoof());
