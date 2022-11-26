@@ -23,6 +23,7 @@ public class ModuleManager {
         modules.add(new AntiKnockback());
         modules.add(new ArrowDodge());
         modules.add(new Aura());
+        modules.add(new AutoArmor());
         modules.add(new AutoBedbomb());
         modules.add(new AutoCritical());
         modules.add(new AutoEat());
