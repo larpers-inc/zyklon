@@ -15,7 +15,9 @@ import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Clickgui extends Screen {
     MinecraftClient mc = MinecraftClient.getInstance();
@@ -159,7 +161,7 @@ public class Clickgui extends Screen {
         return true;
     }
 
-    public static ArrayList<dev.vili.zyklon.clickgui.component.Frame> getFrames() {
+    public static List<Frame> getFrames() {
         return frames;
     }
 

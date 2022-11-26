@@ -73,8 +73,8 @@ public class Button extends Component {
         // Draw the button
         DrawableHelper.fill(matrixStack, parent.getX(), this.parent.getY() + this.offset, parent.getX() + parent.getWidth(), this.parent.getY()
                 + 12 + this.offset, this.isHovered
-                ? (this.mod.isEnabled() ? new Color(62, 99, 105, 191).darker().getRGB()
-                : new Color(15, 15, 15, 191).getRGB()) : (this.mod.isEnabled() ? new Color(62, 99, 105, 191).getRGB()
+                ? (this.mod.isEnabled() ? new Color(0x16733695).darker().getRGB()
+                : new Color(15, 15, 15, 191).getRGB()) : (this.mod.isEnabled() ? new Color(0x16733695).getRGB()
                 : new Color(43, 43, 43, 191).getRGB()));
 
         // Draw outline of the button

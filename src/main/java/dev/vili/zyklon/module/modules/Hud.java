@@ -9,6 +9,7 @@ import dev.vili.zyklon.event.events.RenderIngameHudEvent;
 import dev.vili.zyklon.module.Module;
 import dev.vili.zyklon.setting.settings.BooleanSetting;
 
+import dev.vili.zyklon.setting.settings.ModeSetting;
 import dev.vili.zyklon.util.EntityUtils;
 import dev.vili.zyklon.util.MathUtil;
 import net.minecraft.block.Block;
@@ -21,6 +22,8 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -34,10 +37,14 @@ import dev.vili.zyklon.eventbus.Subscribe;
 
 import java.awt.*;
 import java.text.DecimalFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class Hud extends Module {
     public final BooleanSetting watermark = new BooleanSetting("Watermark", this, true);
     public final BooleanSetting arraylist = new BooleanSetting("ArrayList", this, true);
+    public final ModeSetting arrayListMode = new ModeSetting("Sort", this, "Reverse", "Reverse", "Normal", "ABC", "Category");
     public final BooleanSetting welcomer = new BooleanSetting("Welcomer", this, true);
     public final BooleanSetting fps = new BooleanSetting("Fps", this, false);
     public final BooleanSetting ping = new BooleanSetting("Ping", this, false);
@@ -64,7 +71,8 @@ public class Hud extends Module {
 
     public Hud() {
         super("Hud", "Renders stuff on screen.", GLFW.GLFW_KEY_UNKNOWN, Category.CLIENT);
-        this.addSettings(watermark, arraylist, welcomer, fps, ping, tps, speed, lookingAt, coords, netherCoords, yawPitch, facing, durability, paperDoll, targetHud, inventory, armor, rainbow);
+        this.addSettings(watermark, arraylist, arrayListMode, welcomer, fps, ping, tps, speed, lookingAt, coords, netherCoords, yawPitch, facing, durability,
+                paperDoll, targetHud, inventory, armor, rainbow);
     }
 
     @Subscribe
@@ -75,7 +83,7 @@ public class Hud extends Module {
         // Watermark
         if (watermark.isEnabled()) {
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, Zyklon.name + " " + Formatting.WHITE + Zyklon.version, 1, 1,
-                    rainbow.isEnabled() ? getRainbow() : 0x64b9fa);
+                    rainbow.isEnabled() ? getRainbow() : new Color(0x16733695).getRGB());
         }
 
         // Welcomer
@@ -193,19 +201,26 @@ public class Hud extends Module {
         // ArrayList
         int iteration = 0;
         if (arraylist.isEnabled()) {
-            for (int i = 0; i < Zyklon.INSTANCE.moduleManager.modules.size(); i++) {
-                Module mod = Zyklon.INSTANCE.moduleManager.modules.get(i);
-                if (mod.isEnabled()) {
-                    String key = InputUtil.fromKeyCode(mod.getKey(), -1).getLocalizedText().getString();
-                    String txt = mod.getName() + " [" + Formatting.WHITE + key + Formatting.RESET + "]";
-                    String txt2 = mod.getName();
+            List<Module> mod = Zyklon.INSTANCE.moduleManager.getEnabledModules();
+            if (arrayListMode.is("Reverse"))
+                mod.sort(Comparator.comparingInt(m -> mc.textRenderer.getWidth(((Module) m).getName())).reversed());
+            else if (arrayListMode.is("Normal"))
+                mod.sort(Comparator.comparingInt(m -> mc.textRenderer.getWidth(m.getName())));
+            else if (arrayListMode.is("ABC"))
+                mod.sort(Comparator.comparing(m -> ((Module) m).getName()));
+            else if (arrayListMode.is("Category"))
+                mod.sort(Comparator.comparing(m -> ((Module) m).getCategory().name()));
 
-                    DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, mod.getKey() == GLFW.GLFW_KEY_UNKNOWN ? txt2 : txt,
-                            mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(mod.getKey() == GLFW.GLFW_KEY_UNKNOWN ? txt2 : txt),
-                            1 + (iteration * 10),
-                            rainbow.isEnabled() ? getRainbow() : new Color(183, 183, 183).getRGB());
-                    iteration++;
-                }
+            for (Module m : mod) {
+                String key = InputUtil.fromKeyCode(m.getKey(), -1).getLocalizedText().getString();
+                String txt = m.getName() + " [" + Formatting.WHITE + key + Formatting.RESET + "]";
+                String txt2 = m.getName();
+
+                DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, m.getKey() == GLFW.GLFW_KEY_UNKNOWN ? txt2 : txt,
+                        mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(m.getKey() == GLFW.GLFW_KEY_UNKNOWN ? txt2 : txt),
+                        1 + (iteration * 10),
+                        rainbow.isEnabled() ? getRainbow() : new Color(0x16733695).brighter().getRGB());
+                iteration++;
             }
         }
 
@@ -215,7 +230,7 @@ public class Hud extends Module {
                 float yaw = MathHelper.wrapDegrees(mc.player.prevYaw + (mc.player.getYaw() - mc.player.prevYaw) * mc.getTickDelta());
                 float pitch = mc.player.getPitch();
                 event.getMatrix().push();
-                InventoryScreen.drawEntity(arraylist.enabled ? mc.getWindow().getScaledWidth() - 80 : mc.getWindow().getScaledWidth() - 20, 50, 25, -yaw, -pitch, mc.player);
+                InventoryScreen.drawEntity(arraylist.enabled ? mc.getWindow().getScaledWidth() - 85 : mc.getWindow().getScaledWidth() - 20, 50, 25, -yaw, -pitch, mc.player);
                 RenderSystem.enableDepthTest();
                 event.getMatrix().pop();
             }
@@ -271,7 +286,8 @@ public class Hud extends Module {
                     String name = block.getName().getString();
 
                     mc.getItemRenderer().renderGuiItemIcon(new ItemStack(block), mc.getWindow().getScaledWidth() / 2 - mc.textRenderer.getWidth(name) / 2 - 20, 4);
-                    DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, name, mc.getWindow().getScaledWidth() / 2 - mc.textRenderer.getWidth(name) / 2, 4, rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
+                    DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, name,
+                            mc.getWindow().getScaledWidth() / 2 - mc.textRenderer.getWidth(name) / 2, 4, rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
                 }
             }
         }
@@ -285,14 +301,13 @@ public class Hud extends Module {
             int x = mc.getWindow().getScaledWidth() - 280;
             int y = mc.getWindow().getScaledHeight() - 65;
             String info = target.getEntityName() + " | " + EntityUtils.getEntityPing(target) + "ms";
-            String health = String.format("%.1f", target.getHealth() + target.getAbsorptionAmount()) + " health";
-            String location = String.format("%.1f", mc.player.distanceTo(target)) + "m";
+            String info2 = String.format("%.1f", target.getHealth() + target.getAbsorptionAmount()) + " health"
+                    + " | " + String.format("%.1f", mc.player.distanceTo(target)) + "m";
 
             if (target != null) {
                 DrawableHelper.fill(event.getMatrix(), x, y, x + 150, y + 70, new Color(0, 0, 0, 100).getRGB());
                 DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, info, x + 10, y + 9, Color.WHITE.getRGB());
-                DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, health, x + 10, y + 20, Color.WHITE.getRGB());
-                DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, location, x + 90, y + 20, Color.WHITE.getRGB());
+                DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, info2, x + 10, y + 20, Color.WHITE.getRGB());
 
                 int i = 1;
                 for (ItemStack item : target.getArmorItems()) {
@@ -302,7 +317,7 @@ public class Hud extends Module {
 
                 mc.getItemRenderer().renderGuiItemIcon(target.getMainHandStack(), x + 80, y + 30);
                 mc.getItemRenderer().renderGuiItemIcon(target.getOffHandStack(), x + 100, y + 30);
-                InventoryScreen.drawEntity(x + 130, y + 62, 25, -MathHelper.wrapDegrees(target.prevYaw + (target.getYaw() - target.prevYaw) * mc.getTickDelta()), -target.getPitch(), target);
+                InventoryScreen.drawEntity(x + 125, y + 62, 25, -MathHelper.wrapDegrees(target.prevYaw + (target.getYaw() - target.prevYaw) * mc.getTickDelta()), -target.getPitch(), target);
                 DrawableHelper.fill(event.getMatrix(), x + 5, y + 50, x + getWidth(target.getAbsorptionAmount() + target.getHealth()) + 10, y + 60,
                                     getColor(36, 100 / 36f * target.getHealth() + target.getAbsorptionAmount()).getRGB());
             }
@@ -343,7 +358,7 @@ public class Hud extends Module {
         return null;
     }
 
-    private static int getRainbow() {
+    private int getRainbow() {
         int hue = MathHelper.floor((System.currentTimeMillis() % 5000L) / 5000.0F * 360.0F);
         return Color.HSBtoRGB(hue / 360.0F, 1.0F, 1.0F);
     }

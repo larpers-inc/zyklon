@@ -110,23 +110,21 @@ public class ModuleManager {
     }
 
     public List<Module> getEnabledModules() {
-        List<Module> modules = new ArrayList<>();
-
+        List<Module> enabledModules = new ArrayList<>();
         for (Module m : modules) {
             if (m.isEnabled())
-                modules.add(m);
+                enabledModules.add(m);
         }
-        return modules;
+        return enabledModules;
     }
 
     public List<Module> getModulesByCategory(Module.Category c) {
-        List<Module> modules = new ArrayList<>();
-
+        List<Module> asdf = new ArrayList<>();
         for (Module m : modules) {
             if (m.getCategory() == c)
-                modules.add(m);
+                asdf.add(m);
         }
-        return modules;
+        return asdf;
     }
 
     public void onTick() {

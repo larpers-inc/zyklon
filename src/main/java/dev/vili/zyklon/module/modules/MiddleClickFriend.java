@@ -8,6 +8,7 @@ import dev.vili.zyklon.util.ZLogger;
 import net.minecraft.client.render.debug.DebugRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Formatting;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Optional;
@@ -34,10 +35,10 @@ public class MiddleClickFriend extends Module {
 
                     if (Zyklon.INSTANCE.friendManager.isFriend(player.getName().getString())) {
                         Zyklon.INSTANCE.friendManager.removeFriend(player.getName().getString());
-                        ZLogger.info("Removed " + player.getName().getString() + " from your friends list.");
+                        ZLogger.info(Formatting.RED + "Removed " + player.getName().getString() + " from your friends list.");
                     } else {
                         Zyklon.INSTANCE.friendManager.addFriend(player.getName().getString());
-                        ZLogger.info("Added " + player.getName().getString() + " to your friends list.");
+                        ZLogger.info(Formatting.GREEN + "Added " + player.getName().getString() + " to your friends list.");
                     }
                 }
             }

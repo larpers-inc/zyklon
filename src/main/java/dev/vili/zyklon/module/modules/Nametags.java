@@ -11,6 +11,7 @@ import dev.vili.zyklon.event.events.WorldRenderEvent;
 import dev.vili.zyklon.eventbus.Subscribe;
 import dev.vili.zyklon.module.Module;
 import dev.vili.zyklon.setting.settings.BooleanSetting;
+import dev.vili.zyklon.util.EntityUtils;
 import dev.vili.zyklon.util.RenderUtils;
 import dev.vili.zyklon.util.WorldRenderUtils;
 import dev.vili.zyklon.util.ZLogger;
@@ -21,7 +22,11 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -42,15 +47,20 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class Nametags extends Module {
+    public final BooleanSetting players = new BooleanSetting("Players", this, true);
+    public final BooleanSetting friendly = new BooleanSetting("FriendlyEntities", this, false);
+    public final BooleanSetting hostile = new BooleanSetting("HostileEntities", this, false);
+    public final BooleanSetting items = new BooleanSetting("ItemEntities", this, false);
+    public final BooleanSetting projectiles = new BooleanSetting("ProjectileEntities", this, false);
+
     public final BooleanSetting health = new BooleanSetting("Health", this, true);
     public final BooleanSetting ping = new BooleanSetting("Ping", this, true);
     public final BooleanSetting distance = new BooleanSetting("Distance", this, true);
-    public final BooleanSetting entities = new BooleanSetting("Entities", this, false);
-    public final BooleanSetting items = new BooleanSetting("ItemEntities", this, true);
+    public final BooleanSetting armor = new BooleanSetting("Armor", this, true);
+    public final BooleanSetting babyStatus = new BooleanSetting("BabyStatus", this, false);
 
     private ExecutorService uuidExecutor;
     private final Map<UUID, Future<String>> uuidFutures = new HashMap<>();
-
     private final Queue<UUID> uuidQueue = new ArrayDeque<>();
     private final Map<UUID, String> uuidCache = new HashMap<>();
     private final Set<UUID> failedUUIDs = new HashSet<>();
@@ -58,7 +68,7 @@ public class Nametags extends Module {
 
     public Nametags() {
         super("Nametags", "Better nametags.", GLFW.GLFW_KEY_UNKNOWN, Category.RENDER);
-        this.addSettings(health, ping, distance, entities, items);
+        this.addSettings(players, friendly, hostile, items, projectiles, health, ping, distance, armor, babyStatus);
     }
 
     @Override
@@ -114,20 +124,139 @@ public class Nametags extends Module {
             Vec3d rPos = entity.getPos().subtract(RenderUtils.getInterpolationOffset(entity)).add(0, entity.getHeight() + 0.25, 0);
             double scale = Math.max(3 * (mc.cameraEntity.distanceTo(entity) / 20), 1);
 
-            if (entity instanceof PlayerEntity) {
+            if (players.isEnabled() && entity instanceof PlayerEntity) {
                 List<Text> lines = getPlayerNametags((PlayerEntity) entity);
                 drawLines(rPos.x, rPos.y, rPos.z, scale, lines);
             }
-            else if (entity instanceof LivingEntity) {
-                List<Text> lines = getLivingEntityNametags((LivingEntity) entity);
+            else if (friendly.isEnabled() && entity instanceof AnimalEntity) {
+                List<Text> lines = getFriendlyEntityNametags((AnimalEntity) entity);
                 drawLines(rPos.x, rPos.y, rPos.z, scale, lines);
             }
-            else if (entity instanceof ItemEntity) {
+            else if (hostile.isEnabled() && entity instanceof HostileEntity) {
+                List<Text> lines = getHostileEntityNametags((HostileEntity) entity);
+                drawLines(rPos.x, rPos.y, rPos.z, scale, lines);
+            }
+            else if (items.isEnabled() && entity instanceof ItemEntity) {
                 List<Text> lines = getItemEntityNametags((ItemEntity) entity);
+                drawLines(rPos.x, rPos.y, rPos.z, scale, lines);
+            }
+            else if (projectiles.isEnabled() && entity instanceof ProjectileEntity) {
+                List<Text> lines = getProjectileEntityNametags((ProjectileEntity) entity);
                 drawLines(rPos.x, rPos.y, rPos.z, scale, lines);
             }
         }
     }
+
+    public List<Text> getPlayerNametags(PlayerEntity player) {
+        if (!players.isEnabled()) return null;
+        List<Text> lines = new ArrayList<>();
+        List<Text> mainText = new ArrayList<>();
+        PlayerListEntry playerEntry = mc.player.networkHandler.getPlayerListEntry(player.getGameProfile().getId());
+        double scale = Math.max(3 * (mc.cameraEntity.distanceTo(player) / 20), 1);
+
+        if (playerEntry != null && ping.isEnabled()) mainText.add(Text.literal(playerEntry.getLatency() + "ms").formatted(Formatting.GRAY));
+
+        mainText.add(((MutableText) player.getName()).formatted(EntityUtils.isFriend(player) ? Formatting.BLUE : Formatting.WHITE));
+
+        if (health.isEnabled()) mainText.add(getHealthText(player));
+        if (distance.isEnabled()) mainText.add(getDistanceText(player));
+        if (armor.isEnabled()) drawItems(player.getX(), player.getY() + player.getHeight() + 0.75, player.getZ(), scale, getMainEquipment(player));
+
+        lines.add(Texts.join(mainText, Text.literal(" ")));
+
+        return lines;
+    }
+
+    public List<Text> getFriendlyEntityNametags(AnimalEntity entity) {
+        if (!friendly.isEnabled()) return null;
+        List<Text> lines = new ArrayList<>();
+        List<Text> mainText = new ArrayList<>();
+
+        mainText.add(((MutableText) entity.getName()).formatted(Formatting.WHITE));
+
+        if (babyStatus.isEnabled()) mainText.add(getBabyStatusText(entity));
+        if (health.isEnabled()) mainText.add(getHealthText(entity));
+        if (distance.isEnabled()) mainText.add(getDistanceText(entity));
+
+        lines.add(Texts.join(mainText, Text.literal(" ")));
+
+        return lines;
+    }
+
+    public List<Text> getHostileEntityNametags(HostileEntity entity) {
+        if (!hostile.isEnabled()) return null;
+        List<Text> lines = new ArrayList<>();
+        List<Text> mainText = new ArrayList<>();
+        double scale = Math.max(3 * (mc.cameraEntity.distanceTo(entity) / 20), 1);
+
+        mainText.add(((MutableText) entity.getName()).formatted(Formatting.WHITE));
+
+        if (health.isEnabled()) mainText.add(getHealthText(entity));
+        if (distance.isEnabled()) mainText.add(getDistanceText(entity));
+        if (armor.isEnabled()) drawItems(entity.getX(), entity.getY() + entity.getHeight() + 0.75, entity.getZ(), scale, getMainEquipment(entity));
+
+        lines.add(Texts.join(mainText, Text.literal(" ")));
+
+        return lines;
+    }
+
+    public List<Text> getItemEntityNametags(ItemEntity entity) {
+        if (!items.isEnabled()) return null;
+        List<Text> lines = new ArrayList<>();
+        List<Text> mainText = new ArrayList<>();
+
+        mainText.add(((MutableText) entity.getName()).formatted(Formatting.WHITE));
+
+        if (distance.isEnabled()) mainText.add(getDistanceText(entity));
+
+        lines.add(Texts.join(mainText, Text.literal(" ")));
+
+        return lines;
+    }
+
+    public List<Text> getProjectileEntityNametags(ProjectileEntity entity) {
+        if (!projectiles.isEnabled()) return null;
+        List<Text> lines = new ArrayList<>();
+        List<Text> mainText = new ArrayList<>();
+
+        mainText.add(((MutableText) entity.getName()).formatted(Formatting.WHITE));
+
+        if (distance.isEnabled()) mainText.add(getDistanceText(entity));
+
+        lines.add(Texts.join(mainText, Text.literal(" ")));
+
+        return lines;
+    }
+
+    /* -------------- Text ------------------ */
+
+    private Text getHealthText(LivingEntity entity) {
+        int totalHealth = (int) (entity.getHealth() + entity.getAbsorptionAmount());
+        return Text.literal(Integer.toString(totalHealth)).styled(s -> s.withColor(getHealthColor(entity)));
+    }
+
+    private int getHealthColor(LivingEntity entity) {
+        if (entity.getHealth() + entity.getAbsorptionAmount() > entity.getMaxHealth()) {
+            return Formatting.YELLOW.getColorValue();
+        } else {
+            return MathHelper.hsvToRgb((entity.getHealth() + entity.getAbsorptionAmount()) / (entity.getMaxHealth() * 3), 1f, 1f);
+        }
+    }
+
+    private Text getDistanceText(Entity entity) {
+        double distance = mc.player.distanceTo(entity);
+        return Text.literal(String.format("%.1f", distance) + "m").formatted(Formatting.GRAY);
+    }
+
+    private Text getBabyStatusText(AnimalEntity entity) {
+        if (entity != null) {
+            return Text.literal((entity).isBaby() ? "Baby" : "Adult").formatted(Formatting.GRAY);
+        }
+        return null;
+    }
+
+
+    /*--------------- Rendering stuff -----------------*/
 
     private void drawLines(double x, double y, double z, double scale, List<Text> lines) {
         double offset = lines.size() * 0.25 * scale;
@@ -176,80 +305,6 @@ public class Nametags extends Module {
         List<ItemStack> list = Lists.newArrayList(e.getItemsEquipped());
         list.add(list.remove(1));
         return list;
-    }
-
-    public List<Text> getPlayerNametags(PlayerEntity player) {
-        List<Text> lines = new ArrayList<>();
-        List<Text> mainText = new ArrayList<>();
-
-        PlayerListEntry playerEntry = mc.player.networkHandler.getPlayerListEntry(player.getGameProfile().getId());
-
-        if (playerEntry != null && ping.isEnabled()) { // Ping
-            mainText.add(Text.literal(playerEntry.getLatency() + "ms").formatted(Formatting.GRAY));
-        }
-
-        mainText.add(((MutableText) player.getName()).formatted(Formatting.WHITE));
-
-        if (health.isEnabled())
-            mainText.add(getHealthText(player));
-
-        if (distance.isEnabled())
-            mainText.add(getDistanceText(player));
-
-        lines.add(Texts.join(mainText, Text.literal(" ")));
-
-        return lines;
-    }
-
-    public List<Text> getLivingEntityNametags(LivingEntity entity) {
-        List<Text> lines = new ArrayList<>();
-        List<Text> mainText = new ArrayList<>();
-        if (!entities.isEnabled()) return null;
-
-        mainText.add(((MutableText) entity.getName()).formatted(Formatting.WHITE));
-
-        if (health.isEnabled())
-            mainText.add(getHealthText(entity));
-
-        if (distance.isEnabled())
-            mainText.add(getDistanceText(entity));
-
-        lines.add(Texts.join(mainText, Text.literal(" ")));
-
-        return lines;
-    }
-
-    public List<Text> getItemEntityNametags(ItemEntity entity) {
-        List<Text> lines = new ArrayList<>();
-        List<Text> mainText = new ArrayList<>();
-        if (!items.isEnabled()) return null;
-
-        mainText.add(((MutableText) entity.getName()).formatted(Formatting.WHITE));
-
-        if (distance.isEnabled())
-            mainText.add(getDistanceText(entity));
-
-        lines.add(Texts.join(mainText, Text.literal(" ")));
-
-        return lines;
-    }
-
-    private Text getHealthText(LivingEntity e) {
-        int totalHealth = (int) (e.getHealth() + e.getAbsorptionAmount());
-        return Text.literal(Integer.toString(totalHealth)).styled(s -> s.withColor(getHealthColor(e)));
-    }
-
-    private int getHealthColor(LivingEntity entity) {
-        if (entity.getHealth() + entity.getAbsorptionAmount() > entity.getMaxHealth()) {
-            return Formatting.YELLOW.getColorValue();
-        } else {
-            return MathHelper.hsvToRgb((entity.getHealth() + entity.getAbsorptionAmount()) / (entity.getMaxHealth() * 3), 1f, 1f);
-        }
-    }
-
-    private Text getDistanceText(Entity e) {
-        double distance = mc.player.distanceTo(e);
-        return Text.literal(String.format("%.1f", distance) + "m").formatted(Formatting.GRAY);
     }
 
     private void addUUIDFuture(UUID uuid) {

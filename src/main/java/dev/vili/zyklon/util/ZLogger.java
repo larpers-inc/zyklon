@@ -14,11 +14,11 @@ import java.awt.*;
 public class ZLogger {
     public static final Logger logger = LogManager.getFormatterLogger("zyklon");
 
-    public static int INFO_COLOR = Formatting.GRAY.getColorValue();
+    public static int INFO_COLOR = Formatting.LIGHT_PURPLE.getColorValue();
 	public static int WARN_COLOR = Formatting.YELLOW.getColorValue();
 	public static int ERROR_COLOR = Formatting.RED.getColorValue();
 
-	// Info
+	/* Info */
 
 	public static void info(String s) {
 		info(Text.literal(s));
@@ -34,7 +34,7 @@ public class ZLogger {
 		}
 	}
 
-	// Warn
+	/* Warn */
 
 	public static void warn(String s) {
 		warn(Text.literal(s));
@@ -50,7 +50,7 @@ public class ZLogger {
 		}
 	}
 
-	// Error
+	/* Error */
 
 	public static void error(String s) {
 		error(Text.literal(s));

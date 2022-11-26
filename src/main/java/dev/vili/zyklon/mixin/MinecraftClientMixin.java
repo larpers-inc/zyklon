@@ -56,7 +56,6 @@ public abstract class MinecraftClientMixin {
             Zyklon.INSTANCE.configManager.save();
             ZLogger.logger.info("saved configs on exit.");
             ZLogger.logger.info("Good bye, " + Zyklon.mc.getSession().getUsername() + " !");
-            ZNotification.sendNotification("Good bye, " + Zyklon.mc.getSession().getUsername(), TrayIcon.MessageType.INFO);
         } catch (Exception e) {
             e.printStackTrace();
         }
