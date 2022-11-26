@@ -78,7 +78,7 @@ public class Aura extends Module {
                 .filter(e -> EntityUtils.isAttackable(e, true)
                         && mc.player.distanceTo(e) <= range.getValue()
                         && (mc.player.canSee(e) || !raycast.isEnabled()))
-                .filter(e -> (EntityUtils.isOtherServerPlayer(e) && players.isEnabled())
+                .filter(e -> (EntityUtils.isOtherServerPlayer(e) && !EntityUtils.isFriend(e) && players.isEnabled())
                         || (EntityUtils.isFriend(e) && friends.isEnabled())
                         || (EntityUtils.isMob(e) && hostiles.isEnabled())
                         || (EntityUtils.isAnimal(e) && friendly.isEnabled())

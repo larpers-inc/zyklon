@@ -38,7 +38,7 @@ public class AimAssist extends Module {
             for (Entity entity : getTargets()) {
                 if (entity != null) {
                     if (entity.isLiving() && entity.isAttackable()) {
-                        Vec3d pos = entity.getPos();
+                        Vec3d pos = entity.getEyePos();
                         EntityAnchorArgumentType.EntityAnchor anchor = EntityAnchorArgumentType.EntityAnchor.EYES;
 
                         mc.player.lookAt(anchor, pos);

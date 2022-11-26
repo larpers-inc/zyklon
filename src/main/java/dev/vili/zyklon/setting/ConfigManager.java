@@ -67,23 +67,18 @@ public class ConfigManager {
 
             Zyklon.INSTANCE.moduleManager.getModules().forEach(mod -> {
                 for (Setting setting : mod.settings) {
-
                     if (setting instanceof BooleanSetting) {
                         toSave.add(mod.getName() + ":" + setting.name + ":" + ((BooleanSetting) setting).isEnabled());
                     }
-
                     else if (setting instanceof NumberSetting) {
                         toSave.add(mod.getName() + ":" + setting.name + ":" + ((NumberSetting) setting).getValue());
                     }
-
                     else if (setting instanceof ModeSetting) {
                         toSave.add(mod.getName() + ":" + setting.name + ":" + ((ModeSetting) setting).getMode());
                     }
-
                     else if (setting instanceof ColorSetting) {
                         toSave.add(mod.getName() + ":" + setting.name + ":" + ((ColorSetting) setting).toInteger() + ":" + ((ColorSetting) setting).getRainbow());
                     }
-
                     else if (setting instanceof KeybindSetting) {
                         toSave.add(mod.getName() + ":" + setting.name + ":" + mod.getKey());
                     }
