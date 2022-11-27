@@ -21,8 +21,7 @@ public class AutoCritical extends Module {
 
     @Subscribe
     public void onPacket(PacketEvent.Send event) {
-        if (event.getPacket() instanceof PlayerInteractEntityC2SPacket) {
-			PlayerInteractEntityC2SPacket packet = (PlayerInteractEntityC2SPacket) event.getPacket();
+        if (event.getPacket() instanceof PlayerInteractEntityC2SPacket packet) {
 			if (PlayerUtils.getInteractType(packet) == PlayerUtils.InteractType.ATTACK
 					&& PlayerUtils.getEntity(packet) instanceof LivingEntity) {
 				sendCritPackets();
@@ -49,7 +48,7 @@ public class AutoCritical extends Module {
 			if (mode.is("Strict")) {
 				mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(x, y + 0.0633, z, false));
 				mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(x, y, z, false));
-			} else {
+			} else if (mode.is("Jump")) {
 				mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(x, y + 0.42, z, false));
 				mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(x, y + 0.65, z, false));
 				mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(x, y + 0.72, z, false));
