@@ -69,7 +69,7 @@ public class ModuleManager {
         modules.add(new NoWeather());
         modules.add(new Nuker());
         modules.add(new PacketFly());
-        modules.add(new PopCounter());
+        modules.add(new PopNotifier());
         modules.add(new PortalGui());
         modules.add(new Reach());
         modules.add(new SafeWalk());

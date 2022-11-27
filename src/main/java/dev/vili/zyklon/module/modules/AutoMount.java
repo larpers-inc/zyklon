@@ -4,7 +4,6 @@ import dev.vili.zyklon.event.events.TickEvent;
 import dev.vili.zyklon.eventbus.Subscribe;
 import dev.vili.zyklon.module.Module;
 import dev.vili.zyklon.setting.settings.BooleanSetting;
-import dev.vili.zyklon.setting.settings.NumberSetting;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.SkeletonHorseEntity;
 import net.minecraft.entity.passive.*;

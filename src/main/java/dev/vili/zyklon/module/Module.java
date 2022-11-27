@@ -2,6 +2,7 @@ package dev.vili.zyklon.module;
 
 import dev.vili.zyklon.Zyklon;
 import dev.vili.zyklon.setting.Setting;
+import dev.vili.zyklon.setting.settings.BooleanSetting;
 import dev.vili.zyklon.setting.settings.KeybindSetting;
 import dev.vili.zyklon.util.ZLogger;
 import net.minecraft.client.MinecraftClient;
@@ -18,6 +19,7 @@ public abstract class Module {
     public Module parent;
     public KeybindSetting keyCode = new KeybindSetting(0);
     public Category category;
+    public BooleanSetting hided = new BooleanSetting("Hided", this, false);
     public boolean enabled;
     public List<Setting> settings = new ArrayList<>();
 
@@ -29,6 +31,8 @@ public abstract class Module {
         addSettings(keyCode);
         this.category = category;
         enabled = false;
+        boolean hided = this.hided.enabled;
+        addSettings(this.hided);
     }
 
 
@@ -73,6 +77,13 @@ public abstract class Module {
 
     public void setKey(int key) {
         this.keyCode.code = key;
+
+        if (Zyklon.INSTANCE.configManager != null)
+            Zyklon.INSTANCE.configManager.save();
+    }
+
+    public void setHided(boolean hided) {
+        this.hided.enabled = hided;
 
         if (Zyklon.INSTANCE.configManager != null)
             Zyklon.INSTANCE.configManager.save();

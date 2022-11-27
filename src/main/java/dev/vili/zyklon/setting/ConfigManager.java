@@ -186,6 +186,8 @@ public class ConfigManager {
                             ((KeybindSetting) setting).setKeyCode(Integer.parseInt(value));
                         }
                     } else module.setKey(Integer.parseInt(value));
+
+                    module.setHided(module.hided.isEnabled());
                 }
             }
             br.close();

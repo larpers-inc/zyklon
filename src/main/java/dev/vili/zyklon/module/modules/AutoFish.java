@@ -6,8 +6,6 @@ import dev.vili.zyklon.module.Module;
 import dev.vili.zyklon.setting.settings.NumberSetting;
 import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.item.Items;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;

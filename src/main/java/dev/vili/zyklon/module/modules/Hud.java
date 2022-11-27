@@ -22,8 +22,6 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -37,7 +35,6 @@ import dev.vili.zyklon.eventbus.Subscribe;
 
 import java.awt.*;
 import java.text.DecimalFormat;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -212,15 +209,17 @@ public class Hud extends Module {
                 mod.sort(Comparator.comparing(m -> ((Module) m).getCategory().name()));
 
             for (Module m : mod) {
-                String key = InputUtil.fromKeyCode(m.getKey(), -1).getLocalizedText().getString();
-                String txt = m.getName() + " [" + Formatting.WHITE + key + Formatting.RESET + "]";
-                String txt2 = m.getName();
+                if (m.hided.isEnabled()) continue; {
+                    String key = InputUtil.fromKeyCode(m.getKey(), -1).getLocalizedText().getString();
+                    String txt = m.getName() + " [" + Formatting.WHITE + key + Formatting.RESET + "]";
+                    String txt2 = m.getName();
 
-                DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, m.getKey() == GLFW.GLFW_KEY_UNKNOWN ? txt2 : txt,
-                        mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(m.getKey() == GLFW.GLFW_KEY_UNKNOWN ? txt2 : txt),
-                        1 + (iteration * 10),
-                        rainbow.isEnabled() ? getRainbow() : new Color(0x16733695).brighter().getRGB());
-                iteration++;
+                    DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, m.getKey() == GLFW.GLFW_KEY_UNKNOWN ? txt2 : txt,
+                            mc.getWindow().getScaledWidth() - mc.textRenderer.getWidth(m.getKey() == GLFW.GLFW_KEY_UNKNOWN ? txt2 : txt),
+                            1 + (iteration * 10),
+                            rainbow.isEnabled() ? getRainbow() : new Color(0x16733695).brighter().getRGB());
+                    iteration++;
+                }
             }
         }
 
@@ -285,9 +284,9 @@ public class Hud extends Module {
                     Block block = state.getBlock();
                     String name = block.getName().getString();
 
-                    mc.getItemRenderer().renderGuiItemIcon(new ItemStack(block), mc.getWindow().getScaledWidth() / 2 - mc.textRenderer.getWidth(name) / 2 - 20, 4);
+                    mc.getItemRenderer().renderGuiItemIcon(new ItemStack(block), mc.getWindow().getScaledWidth() / 2 - mc.textRenderer.getWidth(name) / 2 - 20, 10);
                     DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, name,
-                            mc.getWindow().getScaledWidth() / 2 - mc.textRenderer.getWidth(name) / 2, 4, rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
+                            mc.getWindow().getScaledWidth() / 2 - mc.textRenderer.getWidth(name) / 2, 10, rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
                 }
             }
         }
@@ -300,7 +299,7 @@ public class Hud extends Module {
 
             int x = mc.getWindow().getScaledWidth() - 280;
             int y = mc.getWindow().getScaledHeight() - 65;
-            String info = target.getEntityName() + " | " + EntityUtils.getEntityPing(target) + "ms";
+            String info = target.getEntityName() + " | " + EntityUtils.getEntityPing(target) + "ms" + " | " + EntityUtils.getEntityGamemode(target);
             String info2 = String.format("%.1f", target.getHealth() + target.getAbsorptionAmount()) + " health"
                     + " | " + String.format("%.1f", mc.player.distanceTo(target)) + "m";
 
@@ -317,7 +316,7 @@ public class Hud extends Module {
 
                 mc.getItemRenderer().renderGuiItemIcon(target.getMainHandStack(), x + 80, y + 30);
                 mc.getItemRenderer().renderGuiItemIcon(target.getOffHandStack(), x + 100, y + 30);
-                InventoryScreen.drawEntity(x + 125, y + 62, 25, -MathHelper.wrapDegrees(target.prevYaw + (target.getYaw() - target.prevYaw) * mc.getTickDelta()), -target.getPitch(), target);
+                InventoryScreen.drawEntity(x + 130, y + 62, 25, -MathHelper.wrapDegrees(target.prevYaw + (target.getYaw() - target.prevYaw) * mc.getTickDelta()), -target.getPitch(), target);
                 DrawableHelper.fill(event.getMatrix(), x + 5, y + 50, x + getWidth(target.getAbsorptionAmount() + target.getHealth()) + 10, y + 60,
                                     getColor(36, 100 / 36f * target.getHealth() + target.getAbsorptionAmount()).getRGB());
             }

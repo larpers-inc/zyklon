@@ -24,6 +24,7 @@ public class Fly extends Module {
 
     @Override
     public void onDisable() {
+        mc.player.getAbilities().allowFlying = false;
         mc.player.getAbilities().flying = false;
         mc.player.getAbilities().setFlySpeed(0.05f);
     }
@@ -58,6 +59,7 @@ public class Fly extends Module {
         }
 
         else if (mode.is("Vanilla")) {
+            mc.player.getAbilities().allowFlying = true;
             mc.player.getAbilities().flying = true;
             mc.player.getAbilities().setFlySpeed(flySpeed / 10f);
         }
@@ -76,7 +78,11 @@ public class Fly extends Module {
                 mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() - 0.0433D, mc.player.getZ(), true));
             }
         } else if (antikick.is("OnGround")) {
-            mc.player.setOnGround(true);
+            antiKickTimer++;
+            if (antiKickTimer > 20) {
+                antiKickTimer = 0;
+                mc.player.setOnGround(true);
+            }
         } else if (antikick.is("None")) {
             antiKickTimer = 0;
         }

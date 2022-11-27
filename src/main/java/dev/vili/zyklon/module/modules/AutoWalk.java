@@ -1,17 +1,13 @@
 package dev.vili.zyklon.module.modules;
 
-import dev.vili.zyklon.Zyklon;
 import dev.vili.zyklon.event.events.TickEvent;
 import dev.vili.zyklon.eventbus.Subscribe;
 import dev.vili.zyklon.module.Module;
 import dev.vili.zyklon.setting.settings.BooleanSetting;
 import dev.vili.zyklon.util.ZLogger;
-import dev.vili.zyklon.util.ZNotification;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.sound.SoundEvents;
 import org.lwjgl.glfw.GLFW;
-
-import java.awt.*;
 
 public class AutoWalk extends Module {
     public final BooleanSetting stuckCheck = new BooleanSetting("StuckCheck", this, true);

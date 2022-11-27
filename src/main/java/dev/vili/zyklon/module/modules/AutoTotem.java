@@ -6,10 +6,7 @@ import dev.vili.zyklon.module.Module;
 import dev.vili.zyklon.setting.settings.NumberSetting;
 import dev.vili.zyklon.util.InventoryUtils;
 import net.minecraft.item.Items;
-import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import org.lwjgl.glfw.GLFW;
 
 public class AutoTotem extends Module {

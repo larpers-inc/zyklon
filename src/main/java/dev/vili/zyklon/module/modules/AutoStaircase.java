@@ -5,7 +5,6 @@ import dev.vili.zyklon.eventbus.Subscribe;
 import dev.vili.zyklon.module.Module;
 import dev.vili.zyklon.setting.settings.BooleanSetting;
 import dev.vili.zyklon.util.InventoryUtils;
-import net.minecraft.command.argument.EntityAnchorArgumentType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;

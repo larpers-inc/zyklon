@@ -9,12 +9,9 @@ import dev.vili.zyklon.setting.settings.ModeSetting;
 import dev.vili.zyklon.setting.settings.NumberSetting;
 import dev.vili.zyklon.util.InventoryUtils;
 import dev.vili.zyklon.util.WorldUtils;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.util.math.*;
 import org.lwjgl.glfw.GLFW;
 
@@ -53,13 +50,7 @@ public class Scaffold extends Module {
         }
 
         double r = range.getValue();
-        int area = 0;
-
-        if (mode.is("Single")) area = 0;
-        else if (mode.is("3x3")) area = 1;
-        else if (mode.is("5x5")) area = 2;
-        else if (mode.is("7x7")) area = 3;
-        
+        int area = mode.index;
 
         Vec3d placeVec = mc.player.getPos().add(0, -0.85, 0);
         Set<BlockPos> blocks = area == 0

@@ -90,7 +90,7 @@ public class Button extends Component {
         DrawableHelper.drawTextWithShadow(matrixStack, textRenderer, Text.of(this.mod.getName()), (parent.getX() + 2) + 2,
                 (parent.getY() + offset + 2) + 1, new Color(255, 255, 255).getRGB());
 
-        if (this.subcomponents.size() > 1)
+        if (this.subcomponents.size() > 2)
             DrawableHelper.drawStringWithShadow(matrixStack, textRenderer, this.open ? "." : "...", (parent.getX() + parent.getWidth() - 9),
                     (parent.getY() + offset) + 4, new Color(255, 255, 255, 255).getRGB());
 
