@@ -19,6 +19,8 @@ import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
@@ -47,6 +49,7 @@ public class Hud extends Module {
     public final BooleanSetting ping = new BooleanSetting("Ping", this, false);
     public final BooleanSetting tps = new BooleanSetting("Tps", this, false);
     public final BooleanSetting speed = new BooleanSetting("Speed", this, false);
+    public final BooleanSetting effects = new BooleanSetting("Effects", this, true);
     public final BooleanSetting lookingAt = new BooleanSetting("LookingAt", this, true);
     public final BooleanSetting coords = new BooleanSetting("Coords", this, true);
     public final BooleanSetting netherCoords = new BooleanSetting("NetherCoords", this, true);
@@ -68,7 +71,7 @@ public class Hud extends Module {
 
     public Hud() {
         super("Hud", "Renders stuff on screen.", GLFW.GLFW_KEY_UNKNOWN, Category.CLIENT);
-        this.addSettings(watermark, arraylist, arrayListMode, welcomer, fps, ping, tps, speed, lookingAt, coords, netherCoords, yawPitch, facing, durability,
+        this.addSettings(watermark, arraylist, arrayListMode, welcomer, fps, ping, tps, speed, effects, lookingAt, coords, netherCoords, yawPitch, facing, durability,
                 paperDoll, targetHud, inventory, armor, rainbow);
     }
 
@@ -192,6 +195,28 @@ public class Hud extends Module {
 
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, text, 1, y,
                     rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
+            y += 10;
+        }
+
+        // Effects
+        if (effects.isEnabled()) {
+            int x = 1;
+            for (StatusEffectInstance effectInstance : mc.player.getStatusEffects()) {
+                StatusEffect effect = effectInstance.getEffectType();
+                String name = effect.getName().getString();
+                String amplifier = String.valueOf(effectInstance.getAmplifier() + 1);
+                String duration = effectInstance.getDuration() / 20 + "s";
+                int color = effect.getColor();
+                int r = (color >> 16) & 0xFF;
+                int g = (color >> 8) & 0xFF;
+                int b = color & 0xFF;
+
+                String text = name + " " + amplifier + " " + duration;
+
+                DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, text, x, y,
+                        rainbow.isEnabled() ? getRainbow() : new Color(r, g, b).getRGB());
+                    y += 10;
+            }
             y += 10;
         }
 

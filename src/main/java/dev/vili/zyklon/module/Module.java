@@ -29,10 +29,9 @@ public abstract class Module {
         this.description = description;
         keyCode.code = key;
         addSettings(keyCode);
+        addSettings(hided);
         this.category = category;
         enabled = false;
-        boolean hided = this.hided.enabled;
-        addSettings(this.hided);
     }
 
 
