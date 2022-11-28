@@ -18,6 +18,7 @@ public class PopNotifier extends Module {
 
     @Subscribe
     public void onPacket(PacketEvent.Receive event) {
+        if (mc.world == null || mc.player == null) return;
         if (event.getPacket() instanceof EntityStatusS2CPacket packet) {
             Entity entity = packet.getEntity(mc.world);
             if (entity != null && packet.getStatus() == EntityStatuses.USE_TOTEM_OF_UNDYING) {

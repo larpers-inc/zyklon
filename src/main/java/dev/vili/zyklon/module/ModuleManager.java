@@ -68,6 +68,7 @@ public class ModuleManager {
         modules.add(new NoSwing());
         modules.add(new NoWeather());
         modules.add(new Nuker());
+        modules.add(new OneTapVehicle());
         modules.add(new PacketFly());
         modules.add(new PopNotifier());
         modules.add(new PortalGui());

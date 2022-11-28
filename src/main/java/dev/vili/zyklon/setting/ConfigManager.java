@@ -111,7 +111,8 @@ public class ConfigManager {
             ArrayList<String> toSave = new ArrayList<>();
 
             Clickgui.getFrames().forEach(frame -> {
-                toSave.add(frame.category + ":" + frame.getX() + ":" + frame.getY() + ":" + frame.isOpen());
+                if (frame != null)
+                    toSave.add(frame.category + ":" + frame.getX() + ":" + frame.getY() + ":" + frame.isOpen());
             });
 
             writeFile(toSave, file);

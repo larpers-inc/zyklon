@@ -39,12 +39,14 @@ import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 public class Hud extends Module {
     public final BooleanSetting watermark = new BooleanSetting("Watermark", this, true);
     public final BooleanSetting arraylist = new BooleanSetting("ArrayList", this, true);
     public final ModeSetting arrayListMode = new ModeSetting("Sort", this, "Reverse", "Reverse", "Normal", "ABC", "Category");
     public final BooleanSetting welcomer = new BooleanSetting("Welcomer", this, true);
+    public final BooleanSetting players = new BooleanSetting("Players", this, true);
     public final BooleanSetting fps = new BooleanSetting("Fps", this, false);
     public final BooleanSetting ping = new BooleanSetting("Ping", this, false);
     public final BooleanSetting tps = new BooleanSetting("Tps", this, false);
@@ -71,7 +73,7 @@ public class Hud extends Module {
 
     public Hud() {
         super("Hud", "Renders stuff on screen.", GLFW.GLFW_KEY_UNKNOWN, Category.CLIENT);
-        this.addSettings(watermark, arraylist, arrayListMode, welcomer, fps, ping, tps, speed, effects, lookingAt, coords, netherCoords, yawPitch, facing, durability,
+        this.addSettings(watermark, arraylist, arrayListMode, welcomer, players, fps, ping, tps, speed, effects, lookingAt, coords, netherCoords, yawPitch, facing, durability,
                 paperDoll, targetHud, inventory, armor, rainbow);
     }
 
@@ -94,6 +96,14 @@ public class Hud extends Module {
             y += 10;
         }
 
+        // Players
+        if (players.isEnabled()) {
+            if (mc.player.getServer().getPlayerManager().getPlayerList() == null) return;
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer,
+                    "Players [" + Formatting.WHITE + Objects.requireNonNull(mc.player.getServer()).getPlayerManager().getPlayerList().size()
+                            + Formatting.RESET + "]", 1, y, rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
+            y += 10;
+        }
 
         // Fps
         if (fps.isEnabled()) {

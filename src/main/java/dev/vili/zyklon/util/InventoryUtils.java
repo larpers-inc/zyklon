@@ -105,7 +105,7 @@ public class InventoryUtils {
 
     public static void dropHotbar() {
         for (int i = 0; i < 9; i++) {
-            mc.interactionManager.clickSlot(mc.player.currentScreenHandler.syncId, i, 0, SlotActionType.THROW, mc.player);
+            mc.interactionManager.clickSlot(mc.player.currentScreenHandler.syncId, i, 1, SlotActionType.THROW, mc.player);
         }
     }
 

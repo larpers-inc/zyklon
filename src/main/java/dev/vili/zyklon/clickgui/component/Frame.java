@@ -1,6 +1,5 @@
 package dev.vili.zyklon.clickgui.component;
 
-import dev.vili.zyklon.clickgui.Clickgui;
 import dev.vili.zyklon.clickgui.component.components.Button;
 import dev.vili.zyklon.module.Module;
 import dev.vili.zyklon.Zyklon;

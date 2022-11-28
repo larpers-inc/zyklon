@@ -35,7 +35,7 @@ public class XRayManager {
 
             if (blocks.isEmpty())
                 toSave.add(initDefaultBlocks());
-            else blocks.forEach(block -> toSave.add(block));
+            else toSave.addAll(blocks);
 
             writeFile(toSave, file);
         } catch (Exception e) {
