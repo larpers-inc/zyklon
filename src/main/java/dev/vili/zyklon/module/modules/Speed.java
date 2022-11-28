@@ -11,37 +11,27 @@ import org.lwjgl.glfw.GLFW;
 
 public class Speed extends Module {
     public final NumberSetting speed = new NumberSetting("Speed", this, 1, 0.1, 10, 0.1);
-    public final NumberSetting strafeSpeed = new NumberSetting("StrafeSpeed", this, 0.25, 0.15, 0.55, 0.01);
-    public final ModeSetting mode = new ModeSetting("Mode", this, "Vanilla", "Vanilla", "Strafe", "Bhop");
+
+    public final ModeSetting mode = new ModeSetting("Mode", this, "Strafe", "Strafe", "Bhop");
 
     private boolean jumping;
     public Speed() {
         super("Speed", "Makes you go faster.", GLFW.GLFW_KEY_UNKNOWN, Category.MOVEMENT);
-        this.addSettings(speed, strafeSpeed, mode);
+        this.addSettings(speed, mode);
     }
 
     @Subscribe
     public void onTick(TickEvent event) {
         if (mc.player.isSneaking()) return;
 
-        if (mode.getMode().equalsIgnoreCase("Vanilla")) {
-            if (mc.options.jumpKey.isPressed() || mc.player.fallDistance > 0.25)
-                return;
-
-            double speeds = 0.85 + speed.getValue() / 30;
-            if (mc.player.forwardSpeed != 0 || mc.player.sidewaysSpeed != 0) {
-                if (mc.player.isOnGround())
-                    mc.player.setVelocity(mc.player.getVelocity().x * speeds, 0, mc.player.getVelocity().z * speeds);
-            }
-        }
-        else if (mode.getMode().equalsIgnoreCase("Strafe")) {
+        if (mode.getMode().equalsIgnoreCase("Strafe")) {
             if ((mc.player.forwardSpeed != 0 || mc.player.sidewaysSpeed != 0)) {
-                if (!mc.player.isSprinting()) {
-                    mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_SPRINTING));
-                }
+                if (!mc.player.isSprinting()) mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_SPRINTING));
+
+                float acceleration = (float) speed.getValue() / 10;
 
                 mc.player.setVelocity(new Vec3d(0, mc.player.getVelocity().y, 0));
-                mc.player.updateVelocity((float) strafeSpeed.getValue(), new Vec3d(mc.player.sidewaysSpeed, 0, mc.player.forwardSpeed));
+                mc.player.updateVelocity(acceleration, new Vec3d(mc.player.sidewaysSpeed, 0, mc.player.forwardSpeed));
 
                 double vel = Math.abs(mc.player.getVelocity().getX()) + Math.abs(mc.player.getVelocity().getZ());
 
@@ -53,9 +43,9 @@ public class Speed extends Module {
         }
         else if (mode.getMode().equalsIgnoreCase("Bhop")) {
             if (mc.player.forwardSpeed > 0 && mc.player.isOnGround()) {
-                double speeds = 0.65 + speed.getValue() / 30;
+                double acceleration = 0.65 + speed.getValue() / 30;
                 mc.player.jump();
-                mc.player.setVelocity(mc.player.getVelocity().x * speeds, 0.255556, mc.player.getVelocity().z * speeds);
+                mc.player.setVelocity(mc.player.getVelocity().x * acceleration, 0.255556, mc.player.getVelocity().z * acceleration);
                 mc.player.sidewaysSpeed += 3.0F;
                 mc.player.jump();
                 mc.player.setSprinting(true);
