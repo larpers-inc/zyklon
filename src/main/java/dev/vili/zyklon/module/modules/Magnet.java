@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Magnet extends Module {
-    public final NumberSetting range = new NumberSetting("Range",this, 5, 1, 10, 1);
+    public final NumberSetting range = new NumberSetting("Range",this, 5.5, 0.1, 8.5, 0.1);
 
     public Magnet() {
         super("Magnet", "Automatically picks up items.", GLFW.GLFW_KEY_UNKNOWN, Category.MISC);

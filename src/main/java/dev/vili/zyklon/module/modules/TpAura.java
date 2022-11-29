@@ -20,7 +20,7 @@ public class TpAura extends Module {
     public final BooleanSetting friends = new BooleanSetting("Friends", this, false);
     public final BooleanSetting hostiles = new BooleanSetting("Hostiles", this, false);
     public final BooleanSetting friendly = new BooleanSetting("Friendly", this, false);
-    public final NumberSetting range = new NumberSetting("Range", this, 3.5, 1, 10, 0.1);
+    public final NumberSetting range = new NumberSetting("Range", this, 3.5, 1, 8.5, 0.1);
     public final BooleanSetting deathDisable = new BooleanSetting("DeathDisable", this, true);
     public final BooleanSetting raycast = new BooleanSetting("Raycast", this, true);
 

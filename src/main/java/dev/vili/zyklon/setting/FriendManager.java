@@ -50,7 +50,7 @@ public class FriendManager {
             File file = new File(MainDirectory, "friends.txt");
             ArrayList<String> toSave = new ArrayList<>();
 
-            friends.forEach(toSave::add);
+            toSave.addAll(friends);
 
             writeFile(toSave, file);
         } catch (Exception e) {

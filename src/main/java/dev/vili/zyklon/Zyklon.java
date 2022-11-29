@@ -3,19 +3,12 @@ package dev.vili.zyklon;
 import dev.vili.zyklon.command.CommandManager;
 import dev.vili.zyklon.eventbus.EventBus;
 import dev.vili.zyklon.module.ModuleManager;
-import dev.vili.zyklon.setting.ConfigManager;
-import dev.vili.zyklon.setting.FriendManager;
-import dev.vili.zyklon.setting.XRayManager;
+import dev.vili.zyklon.setting.*;
 import dev.vili.zyklon.util.ZLogger;
-import dev.vili.zyklon.setting.SettingManager;
 
-import dev.vili.zyklon.util.ZNotification;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.client.MinecraftClient;
-
-import java.awt.*;
-
 
 public final class Zyklon implements ModInitializer {
     public static Zyklon INSTANCE;
