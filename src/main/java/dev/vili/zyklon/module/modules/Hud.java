@@ -98,10 +98,9 @@ public class Hud extends Module {
 
         // Players
         if (players.isEnabled()) {
-            if (mc.player.getServer().getPlayerManager().getPlayerList() == null) return;
-            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer,
-                    "Players [" + Formatting.WHITE + Objects.requireNonNull(mc.player.getServer()).getPlayerManager().getPlayerList().size()
-                            + Formatting.RESET + "]", 1, y, rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
+            int players = mc.getNetworkHandler().getPlayerList().size();
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, "Players [" + Formatting.WHITE + players + Formatting.RESET + "]", 1, y,
+                    rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
             y += 10;
         }
 
