@@ -13,7 +13,7 @@ import org.lwjgl.glfw.GLFW;
 public class PopNotifier extends Module {
 
     public PopNotifier() {
-        super("PopCounter", "Alerts you when someone pops a totem.", GLFW.GLFW_KEY_UNKNOWN, Category.COMBAT);
+        super("PopNotifier", "Alerts you when someone pops a totem.", GLFW.GLFW_KEY_UNKNOWN, Category.COMBAT);
     }
 
     @Subscribe

@@ -18,7 +18,7 @@ public class TpCmd extends Command {
                 double x = Double.parseDouble(args[0]);
                 double y = Double.parseDouble(args[1]);
                 double z = Double.parseDouble(args[2]);
-                mc.player.updatePosition(x, y, z);
+                mc.player.teleport(x, y, z);
             } catch (NumberFormatException e) {
                 ZLogger.error("Invalid coordinates.");
             }

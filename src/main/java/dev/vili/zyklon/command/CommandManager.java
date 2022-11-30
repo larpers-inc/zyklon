@@ -33,6 +33,7 @@ public class CommandManager {
         commands.add(new ServerCmd());
         commands.add(new ToggleCmd());
         commands.add(new TpCmd());
+        commands.add(new TpPlusCmd());
         commands.add(new VClipCmd());
         commands.add(new XrayCmd());
     }
