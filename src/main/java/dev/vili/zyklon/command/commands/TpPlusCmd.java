@@ -30,6 +30,18 @@ public class TpPlusCmd extends Command {
             Vec3d startPos = mc.player.getPos();
             Vec3d endPos = new Vec3d(x, y, z);
             Vec3d tempPos = Math.ceil(startPos.distanceTo(endPos) / 8.5) > 1 ? startPos.add(endPos.subtract(startPos).normalize().multiply(8.5)) : endPos;
+
+            // Move to tempPos until we reach endPos
+            while (Math.ceil(startPos.distanceTo(endPos)) > 0) {
+                mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(tempPos.x, tempPos.y, tempPos.z, mc.player.isOnGround()));
+                startPos = tempPos;
+                tempPos = Math.ceil(startPos.distanceTo(endPos) / 8.5) > 1 ? startPos.add(endPos.subtract(startPos).normalize().multiply(8.5)) : endPos;
+            }
+            
+            // Move to endPos
+            mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(endPos.x, endPos.y, endPos.z, mc.player.isOnGround()));
+
+            /* Test 2
             for (int i = 0; i < Math.ceil(startPos.distanceTo(endPos) / 8.5); i++) {
                 mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(tempPos.x, tempPos.y, tempPos.z, mc.player.isOnGround()));
                 tempPos = tempPos.add(endPos.subtract(startPos).normalize().multiply(8.5));
@@ -42,7 +54,9 @@ public class TpPlusCmd extends Command {
                 }
             }
 
-            /*
+             */
+
+            /* Test 1
             for (int i = 0; i <= 7.5; i++) {
                 mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(
                         mc.player.getX() + step.x,
