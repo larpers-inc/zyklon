@@ -20,9 +20,9 @@ public class OneTapVehicle extends Module {
     public void onTick(TickEvent event) {
         if (mc.world == null || mc.player == null) return;
 
-        if (mc.crosshairTarget != null && mc.crosshairTarget.getType() == HitResult.Type.ENTITY) {
+        if (mc.crosshairTarget != null && mc.crosshairTarget.getType() == HitResult.Type.ENTITY && mc.options.attackKey.isPressed()) {
             Entity entity = ((EntityHitResult) mc.crosshairTarget).getEntity();
-            if (entity instanceof BoatEntity || entity instanceof MinecartEntity && mc.options.attackKey.isPressed()) {
+            if (entity instanceof BoatEntity || entity instanceof MinecartEntity) {
                 // Send enough packets to kill the entity
                 for (int i = 0; i < 20; i++) {
                     mc.player.networkHandler.sendPacket(PlayerInteractEntityC2SPacket.attack(entity, mc.player.isSneaking()));

@@ -40,7 +40,6 @@ public class ModuleManager {
         modules.add(new AutoWalk());
         modules.add(new BlockEsp());
         modules.add(new BlockHighlight());
-        modules.add(new BreadCrumbs());
         modules.add(new CameraClip());
         modules.add(new Clickgui());
         modules.add(new ClickTp());

@@ -46,6 +46,7 @@ public class Hud extends Module {
     public final BooleanSetting arraylist = new BooleanSetting("ArrayList", this, true);
     public final ModeSetting arrayListMode = new ModeSetting("Sort", this, "Reverse", "Reverse", "Normal", "ABC", "Category");
     public final BooleanSetting welcomer = new BooleanSetting("Welcomer", this, true);
+    public final BooleanSetting server = new BooleanSetting("Server", this, true);
     public final BooleanSetting players = new BooleanSetting("Players", this, true);
     public final BooleanSetting fps = new BooleanSetting("Fps", this, false);
     public final BooleanSetting ping = new BooleanSetting("Ping", this, false);
@@ -92,6 +93,15 @@ public class Hud extends Module {
         if (welcomer.isEnabled()) {
             DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, "Welcome, " + Formatting.WHITE + mc.getSession().getUsername()
                             + Formatting.RESET + "!", 1, y,
+                    rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
+            y += 10;
+        }
+
+        // Server
+        if (server.isEnabled()) {
+            String ip = mc.getCurrentServerEntry() != null ? mc.getCurrentServerEntry().address : "Singleplayer";
+
+            DrawableHelper.drawStringWithShadow(event.getMatrix(), mc.textRenderer, "Server [" + Formatting.WHITE + ip + Formatting.RESET + "]", 1, y,
                     rainbow.isEnabled() ? getRainbow() : Color.LIGHT_GRAY.getRGB());
             y += 10;
         }
@@ -238,9 +248,9 @@ public class Hud extends Module {
             else if (arrayListMode.is("Normal"))
                 mod.sort(Comparator.comparingInt(m -> mc.textRenderer.getWidth(m.getName())));
             else if (arrayListMode.is("ABC"))
-                mod.sort(Comparator.comparing(m -> ((Module) m).getName()));
+                mod.sort(Comparator.comparing(m -> m.getName()));
             else if (arrayListMode.is("Category"))
-                mod.sort(Comparator.comparing(m -> ((Module) m).getCategory().name()));
+                mod.sort(Comparator.comparing(m -> m.getCategory().name()));
 
             for (Module m : mod) {
                 if (m.hided.isEnabled()) continue; {

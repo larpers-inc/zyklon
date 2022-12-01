@@ -151,7 +151,7 @@ public class Nametags extends Module {
         List<Text> lines = new ArrayList<>();
         List<Text> mainText = new ArrayList<>();
         PlayerListEntry playerEntry = mc.player.networkHandler.getPlayerListEntry(player.getGameProfile().getId());
-        double scale = Math.max(3 * (mc.cameraEntity.distanceTo(player) / 20), 1);
+        double scale = Math.max(3 * (mc.cameraEntity.distanceTo(player) / 10), 1);
 
         if (playerEntry != null && ping.isEnabled()) mainText.add(Text.literal(playerEntry.getLatency() + "ms").formatted(Formatting.GRAY));
 
@@ -186,7 +186,7 @@ public class Nametags extends Module {
         if (!hostile.isEnabled()) return null;
         List<Text> lines = new ArrayList<>();
         List<Text> mainText = new ArrayList<>();
-        double scale = Math.max(3 * (mc.cameraEntity.distanceTo(entity) / 20), 1);
+        double scale = Math.max(3 * (mc.cameraEntity.distanceTo(entity) / 10), 1);
 
         mainText.add(((MutableText) entity.getName()).formatted(Formatting.WHITE));
 
