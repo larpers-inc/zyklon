@@ -43,6 +43,7 @@ public class ModuleManager {
         modules.add(new BreadCrumbs());
         modules.add(new CameraClip());
         modules.add(new Clickgui());
+        modules.add(new ClickTp());
         modules.add(new DeathLocation());
         modules.add(new Derp());
         modules.add(new ElytraBoost());

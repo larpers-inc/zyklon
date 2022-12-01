@@ -15,7 +15,7 @@ import net.minecraft.util.Formatting;
 public class CommandManager {
 
     public static List<Command> commands;
-    public static String prefix = "+";
+    public static String prefix = ".";
 
     public CommandManager() {
         commands = new ArrayList<>();

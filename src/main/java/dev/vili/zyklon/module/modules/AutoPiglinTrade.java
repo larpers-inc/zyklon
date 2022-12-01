@@ -8,6 +8,7 @@ import dev.vili.zyklon.util.InventoryUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.item.Items;
+import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.util.Hand;
 
 import org.lwjgl.glfw.GLFW;
@@ -30,7 +31,8 @@ public class AutoPiglinTrade extends Module {
                         }
                     }
                 }
-                mc.interactionManager.interactEntity(mc.player, piglin, getHandWithGold());
+                if (((PiglinEntity) entity).getMainHandStack() == Items.GOLD_INGOT.getDefaultStack()) return;
+                else mc.getNetworkHandler().sendPacket(PlayerInteractEntityC2SPacket.interact(piglin, mc.player.isSneaking(), getHandWithGold()));
             }
         }
     }

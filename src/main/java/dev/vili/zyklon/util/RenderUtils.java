@@ -158,8 +158,6 @@ public class RenderUtils {
         {
             bufferBuilder.vertex(matrix, startX, startY, startZ).next();
             bufferBuilder.vertex(matrix, endX, endY, endZ).next();
-            bufferBuilder.vertex(matrix, startX, startY, startZ).next();
-            bufferBuilder.vertex(matrix, endX, endY, endZ).next();
         }
         tessellator.draw();
         clean3D();
