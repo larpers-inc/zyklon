@@ -3,6 +3,7 @@ package dev.vili.zyklon.module.modules;
 import dev.vili.zyklon.event.events.BlockShapeEvent;
 import dev.vili.zyklon.event.events.TickEvent;
 import dev.vili.zyklon.module.Module;
+import dev.vili.zyklon.setting.settings.BooleanSetting;
 import net.minecraft.entity.Entity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.util.math.BlockPos;
@@ -12,9 +13,11 @@ import org.lwjgl.glfw.GLFW;
 import dev.vili.zyklon.eventbus.Subscribe;
 
 public class Jesus extends Module {
+    public final BooleanSetting powderSnow = new BooleanSetting("PowderSnow", this, true);
 
     public Jesus() {
         super("Jesus", "Walk on water like the holy jesus christ.", GLFW.GLFW_KEY_UNKNOWN, Category.MOVEMENT);
+        this.addSettings(powderSnow);
     }
 
     @Subscribe

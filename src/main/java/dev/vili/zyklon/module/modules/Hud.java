@@ -39,7 +39,6 @@ import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 public class Hud extends Module {
     public final BooleanSetting watermark = new BooleanSetting("Watermark", this, true);

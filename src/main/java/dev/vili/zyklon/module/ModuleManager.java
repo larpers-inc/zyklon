@@ -35,6 +35,7 @@ public class ModuleManager {
         modules.add(new AutoPiglinTrade());
         modules.add(new AutoRespawn());
         modules.add(new AutoStaircase());
+        modules.add(new AutoSteal());
         modules.add(new AutoTNT());
         modules.add(new AutoTotem());
         modules.add(new AutoWalk());

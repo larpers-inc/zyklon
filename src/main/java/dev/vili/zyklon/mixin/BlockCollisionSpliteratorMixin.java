@@ -19,7 +19,7 @@ public class BlockCollisionSpliteratorMixin {
     @Redirect(method = "computeNext", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;getCollisionShape(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/ShapeContext;)Lnet/minecraft/util/shape/VoxelShape;"))
 	private VoxelShape computeNext_getCollisionShape(BlockState blockState, BlockView world, BlockPos pos, ShapeContext context) {
 		VoxelShape shape = blockState.getCollisionShape(world, pos, context);
-		BlockShapeEvent event = new BlockShapeEvent((BlockState) blockState, pos, shape);
+		BlockShapeEvent event = new BlockShapeEvent(blockState, pos, shape);
 		Zyklon.INSTANCE.EVENT_BUS.post(event);
 
 		if (event.isCancelled()) {
