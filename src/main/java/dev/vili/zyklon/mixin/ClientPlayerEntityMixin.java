@@ -137,6 +137,7 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 	@Override
 	protected float getJumpVelocity() {
 		HighJump highJump = (HighJump) Zyklon.INSTANCE.moduleManager.getModule("HighJump");
-		return (float) (super.getJumpVelocity() + highJump.strength.getValue());
+		if (highJump.isEnabled()) return (float) (super.getJumpVelocity() + highJump.strength.getValue());
+		return super.getJumpVelocity();
 	}
 }
