@@ -57,6 +57,7 @@ public class ModuleManager {
         modules.add(new GameWindowTitle());
         modules.add(new GhostHand());
         modules.add(new HackWalk());
+        modules.add(new HighJump());
         modules.add(new Hud());
         modules.add(new Jesus());
         modules.add(new Magnet());

@@ -133,4 +133,10 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 
 		if (freecam != null && freecam.isEnabled()) cir.setReturnValue(true);
 	}
+
+	@Override
+	protected float getJumpVelocity() {
+		HighJump highJump = (HighJump) Zyklon.INSTANCE.moduleManager.getModule("HighJump");
+		return (float) (super.getJumpVelocity() + highJump.strength.getValue());
+	}
 }
