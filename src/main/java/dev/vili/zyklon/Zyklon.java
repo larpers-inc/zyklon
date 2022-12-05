@@ -1,5 +1,6 @@
 package dev.vili.zyklon;
 
+import dev.vili.zyklon.clickgui.Clickgui;
 import dev.vili.zyklon.command.CommandManager;
 import dev.vili.zyklon.eventbus.EventBus;
 import dev.vili.zyklon.module.ModuleManager;
@@ -27,6 +28,7 @@ public final class Zyklon implements ModInitializer {
     public ConfigManager configManager;
     public FriendManager friendManager;
     public XRayManager xrayManager;
+    public Clickgui clickgui;
 
 
     @Override
@@ -71,6 +73,8 @@ public final class Zyklon implements ModInitializer {
     public void postInit() {
         long startTime = System.currentTimeMillis();
         ZLogger.logger.info("phase 2 of zyklon.");
+
+        clickgui = new Clickgui();
 
         configManager.load();
         ZLogger.logger.info("configs loaded.");

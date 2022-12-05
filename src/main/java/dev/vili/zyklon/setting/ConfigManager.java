@@ -1,6 +1,5 @@
 package dev.vili.zyklon.setting;
 
-import dev.vili.zyklon.clickgui.Clickgui;
 import dev.vili.zyklon.clickgui.component.Frame;
 import dev.vili.zyklon.command.CommandManager;
 import dev.vili.zyklon.module.Module;
@@ -110,9 +109,9 @@ public class ConfigManager {
             File file = new File(MainDirectory, "clickgui.txt");
             ArrayList<String> toSave = new ArrayList<>();
 
-            Clickgui.getFrames().forEach(frame -> {
+            Zyklon.INSTANCE.clickgui.getFrames().forEach(frame -> {
                 if (frame != null)
-                    toSave.add(frame.category + ":" + frame.getX() + ":" + frame.getY() + ":" + frame.isOpen());
+                    toSave.add(frame.category.name() + ":" + frame.getX() + ":" + frame.getY() + ":" + frame.isOpen());
             });
 
             writeFile(toSave, file);
@@ -212,7 +211,7 @@ public class ConfigManager {
                 String y = curLine.split(":")[2];
                 String open = curLine.split(":")[3];
 
-                Frame frame = Clickgui.getFrameByCategory(curLine.strip().split(":")[0]);
+                Frame frame = Zyklon.INSTANCE.clickgui.getFrameByCategory(curLine.split(":")[0]);
                 if (frame != null) {
                     frame.setX(Integer.parseInt(x));
                     frame.setY(Integer.parseInt(y));
