@@ -41,9 +41,10 @@ public abstract class Module {
         COMBAT("combat"),
         MOVEMENT("movement"),
         MISC("misc"),
-        CLIENT("client");
-        public final String name;
+        CLIENT("client"),
+        DUMMY("dummy");
 
+        public final String name;
         Category(String name) {
             this.name = name;
         }
