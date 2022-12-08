@@ -9,9 +9,9 @@ import java.util.UUID;
 
 public class FakePlayerUtil extends AbstractClientPlayerEntity {
     private static final MinecraftClient mc = MinecraftClient.getInstance();
-    private static final OtherClientPlayerEntity player = new OtherClientPlayerEntity(mc.world, new GameProfile(UUID.fromString(UUID.randomUUID().toString()), mc.getSession().getUsername()), mc.player.getPublicKey());
+    private static final OtherClientPlayerEntity player = new OtherClientPlayerEntity(mc.world, new GameProfile(UUID.fromString(UUID.randomUUID().toString()), mc.getSession().getUsername()));
     public FakePlayerUtil() {
-        super(mc.world, mc.player.getGameProfile(), mc.player.getPublicKey());
+        super(mc.world, mc.player.getGameProfile());
         if (mc.world == null && mc.player == null) return;
         player.setPos(mc.player.getX(), mc.player.getY(), mc.player.getZ());
     }

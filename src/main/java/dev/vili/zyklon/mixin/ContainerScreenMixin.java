@@ -3,10 +3,14 @@ package dev.vili.zyklon.mixin;
 import dev.vili.zyklon.Zyklon;
 import dev.vili.zyklon.module.modules.AutoSteal;
 import dev.vili.zyklon.util.ZLogger;
+import net.minecraft.client.gui.screen.GameModeSelectionScreen;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
+import net.minecraft.client.gui.widget.ButtonListWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.TexturedButtonWidget;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.slot.Slot;
@@ -35,11 +39,10 @@ public abstract class ContainerScreenMixin extends HandledScreen<GenericContaine
         super.init();
 
         if (autoSteal.buttons.isEnabled()) {
-            addDrawableChild(new ButtonWidget(x + backgroundWidth - 108, y + 4,
-                    50, 12, Text.literal("Steal"), b -> steal()));
-
-            addDrawableChild(new ButtonWidget(x + backgroundWidth - 56, y + 4,
-                    50, 12, Text.literal("Store"), b -> store()));
+            addDrawableChild(ButtonWidget.builder(Text.of("Steal"), (buttonWidget) -> steal()).dimensions(x + backgroundWidth - 108, y + 4,
+                    50, 12).build());
+            addDrawableChild(ButtonWidget.builder(Text.of("Store"), (buttonWidget) -> store()).dimensions(x + backgroundWidth - 54, y + 4,
+                    50, 12).build());
         }
 
         if (autoSteal.isEnabled()) steal();

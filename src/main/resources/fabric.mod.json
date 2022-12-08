@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "zyklon",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "name": "Zyklon",
-  "description": "Based utility mod for Minecraft 1.19.2",
+  "description": "Based utility mod for Minecraft 1.19.3",
   "authors": [
     "Vili"
   ],
@@ -28,7 +28,7 @@
 
   "depends": {
     "fabricloader": ">=0.14.9",
-    "minecraft": ">=1.19.2",
+    "minecraft": ">=1.19.3",
     "java": ">=17"
   },
   "suggests": {

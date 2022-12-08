@@ -39,7 +39,7 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 	private void autoJump(float dx, float dz) {}
 
 	private ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
-		super(world, profile, null);
+		super(world, profile);
 	}
 
 	@Inject(method = "sendMovementPackets", at = @At("HEAD"), cancellable = true)

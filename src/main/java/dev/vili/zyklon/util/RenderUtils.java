@@ -3,22 +3,18 @@ package dev.vili.zyklon.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.*;
-import net.minecraft.client.render.entity.LivingEntityRenderer;
-import net.minecraft.client.render.entity.PlayerEntityRenderer;
-import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.*;
+import org.joml.Matrix4f;
 
 import java.awt.*;
 
 public class RenderUtils {
     public static final MinecraftClient mc = MinecraftClient.getInstance();
 
-    /* TODO: rewrite */
+    /** Draws a 3D box **/
     public static void draw3DBox(MatrixStack matrixStack, Box box, Color color, float alpha) {
         float minX = (float) (box.minX - mc.getEntityRenderDispatcher().camera.getPos().getX());
         float minY = (float) (box.minY - mc.getEntityRenderDispatcher().camera.getPos().getY());
@@ -31,7 +27,7 @@ public class RenderUtils {
         BufferBuilder bufferBuilder = tessellator.getBuffer();
 
         setup3D();
-        RenderSystem.setShader(GameRenderer::getPositionShader);
+        RenderSystem.setShader(GameRenderer::getPositionProgram);
         RenderSystem.setShaderColor(color.getRed(), color.getGreen(), color.getBlue(), 1.0f);
 
         bufferBuilder.begin(VertexFormat.DrawMode.LINES, VertexFormats.POSITION);
@@ -114,6 +110,7 @@ public class RenderUtils {
         clean3D();
     }
 
+    /** Draws an outlined box **/
     public static void drawOutlineBox(MatrixStack stack, Box box, Color color, float alpha) {
         float minX = (float) (box.minX - mc.getEntityRenderDispatcher().camera.getPos().getX());
         float minY = (float) (box.minY - mc.getEntityRenderDispatcher().camera.getPos().getY());
@@ -127,7 +124,7 @@ public class RenderUtils {
         setup3D();
 
         RenderSystem.setShaderColor(color.getRed(), color.getGreen(), color.getBlue(), 1.0f);
-        RenderSystem.setShader(GameRenderer::getRenderTypeLinesShader);
+        RenderSystem.setShader(GameRenderer::getRenderTypeLinesProgram);
         RenderSystem.defaultBlendFunc();
 
         bufferBuilder.begin(VertexFormat.DrawMode.LINES, VertexFormats.LINES);
@@ -138,6 +135,7 @@ public class RenderUtils {
         clean3D();
     }
 
+    /** Draws a line **/
     public static void draw3DLine(MatrixStack matrixStack, Vec3d start, Vec3d end, Color color) {
         float startX = (float) start.x;
         float startY = (float) start.y;
@@ -151,7 +149,7 @@ public class RenderUtils {
         BufferBuilder bufferBuilder = tessellator.getBuffer();
 
         setup3D();
-        RenderSystem.setShader(GameRenderer::getPositionShader);
+        RenderSystem.setShader(GameRenderer::getPositionProgram);
         RenderSystem.setShaderColor(color.getRed(), color.getGreen(), color.getBlue(), 1.0f);
 
         bufferBuilder.begin(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION);
@@ -163,13 +161,13 @@ public class RenderUtils {
         clean3D();
     }
 
-
+    /** Draws a rect **/
     public static void drawRect(float x, float y, float w, float h, Color color) {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferbuilder = tessellator.getBuffer();
 
         setup3D();
-        RenderSystem.setShader(GameRenderer::getPositionShader);
+        RenderSystem.setShader(GameRenderer::getPositionProgram);
         RenderSystem.setShaderColor(color.getRed(), color.getGreen(), color.getBlue(), 1.0f);
         RenderSystem.defaultBlendFunc();
 
@@ -184,21 +182,24 @@ public class RenderUtils {
         clean3D();
     }
 
+    /** Get the interpolation offset **/
     public static Vec3d getInterpolationOffset(Entity e) {
         if (MinecraftClient.getInstance().isPaused()) return Vec3d.ZERO;
         double tickDelta = MinecraftClient.getInstance().getTickDelta();
         return new Vec3d(e.getX() - MathHelper.lerp(tickDelta, e.lastRenderX, e.getX()), e.getY() - MathHelper.lerp(tickDelta, e.lastRenderY, e.getY()), e.getZ() - MathHelper.lerp(tickDelta, e.lastRenderZ, e.getZ()));
     }
 
+    /** Smoothen the movement **/
     public static Vec3d smoothen(Entity e) {
         return e.getPos().subtract(RenderUtils.getInterpolationOffset(e));
     }
 
+    /** Smoothen the movement **/
     public static Box smoothen(Entity e, Box b) {
         return Box.of(RenderUtils.smoothen(e), b.getXLength(), b.getYLength(), b.getZLength()).offset(0, e.getHeight() / 2f, 0);
     }
 
-
+    /** Setup 3D **/
     public static void setup() {
         RenderSystem.disableTexture();
         RenderSystem.enableBlend();
@@ -212,6 +213,7 @@ public class RenderUtils {
         RenderSystem.disableCull();
     }
 
+    /** Clean 3D **/
     public static void clean() {
         RenderSystem.disableBlend();
         RenderSystem.enableTexture();

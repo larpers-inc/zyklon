@@ -35,7 +35,6 @@
     "RecipeToastMixin",
     "RenderTickCounterMixin",
     "SoundManagerMixin",
-    "TelemetrySenderMixin",
     "TitleScreenMixin",
     "WorldRendererMixin"
   ],

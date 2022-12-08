@@ -14,7 +14,7 @@ import net.minecraft.client.MinecraftClient;
 public final class Zyklon implements ModInitializer {
     public static Zyklon INSTANCE;
     public static String name = "Zyklon";
-    public static final String version = "0.3.8";
+    public static final String version = "0.3.9";
     public static final MinecraftClient mc = MinecraftClient.getInstance();
 
     public Zyklon() {
@@ -75,6 +75,7 @@ public final class Zyklon implements ModInitializer {
         ZLogger.logger.info("phase 2 of zyklon.");
 
         clickgui = new Clickgui();
+        ZLogger.logger.info("clickgui initialized.");
 
         configManager.load();
         ZLogger.logger.info("configs loaded.");

@@ -83,19 +83,14 @@ public class NoSlow extends Module {
     @Subscribe
     public void onRender(WorldRenderEvent event) {
         if (inventory.isEnabled() && shouldInvMove(mc.currentScreen))
-            mc.keyboard.setRepeatEvents(true);
+            mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.STOP_SPRINTING));
     }
 
     private boolean shouldInvMove(Screen screen) {
         if (screen == null) return false;
 
-        return !(screen instanceof ChatScreen
-                || screen instanceof BookEditScreen
-                || screen instanceof SignEditScreen
-                || screen instanceof JigsawBlockScreen
-                || screen instanceof StructureBlockScreen
-                || screen instanceof AnvilScreen
-                || (screen instanceof CreativeInventoryScreen
-                && ((CreativeInventoryScreen) screen).getSelectedTab() == ItemGroup.SEARCH.getIndex()));
+        return !(screen instanceof ChatScreen || screen instanceof BookEditScreen
+                || screen instanceof SignEditScreen || screen instanceof JigsawBlockScreen
+                || screen instanceof StructureBlockScreen || screen instanceof AnvilScreen);
     }
 }
