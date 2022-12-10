@@ -47,6 +47,7 @@ public class ModuleManager {
         modules.add(new DeathLocation());
         modules.add(new Derp());
         modules.add(new ElytraBoost());
+        modules.add(new ElytraPlus());
         modules.add(new EntityControl());
         modules.add(new EntityEsp());
         modules.add(new FakePlayer());
