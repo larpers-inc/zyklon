@@ -1,4 +1,6 @@
 # Zyklon
+[![wakatime](https://wakatime.com/badge/user/955593e3-2634-4ae3-95a1-d0192485ed24/project/de575faa-399e-4b32-bb48-1e38855576b7.svg)](https://wakatime.com/badge/user/955593e3-2634-4ae3-95a1-d0192485ed24/project/de575faa-399e-4b32-bb48-1e38855576b7)
+
 this was a private client for myself and some of my friends
 
 but made it public now because I got bored lol
