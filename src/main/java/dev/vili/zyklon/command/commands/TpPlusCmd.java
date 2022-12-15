@@ -57,18 +57,4 @@ public class TpPlusCmd extends Command {
             ZLogger.error("Invalid coordinates.");
         }
     }
-
-    private void clip(double yPos) {
-        if (!mc.player.isAlive()) return;
-
-        Vec3d pos = mc.player.getPos();
-
-        // loops to charge move packet
-        for (int i = 0; i < 19; i++) {
-            mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.Full(pos.x, pos.y, pos.z, mc.player.getYaw(), mc.player.getPitch(), false));
-        }
-
-        // final move packet
-        mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(pos.x, yPos, pos.z, false));
-    }
 }

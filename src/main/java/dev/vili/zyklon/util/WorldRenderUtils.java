@@ -33,12 +33,14 @@ public class WorldRenderUtils {
     /** Draws text in the world. **/
     public static void drawText(Text text, double x, double y, double z, double offX, double offY, double scale, boolean fill) {
         MatrixStack matrices = matrixFrom(x, y, z);
+        Camera camera = mc.gameRenderer.getCamera();
+        matrices.multiply(new Quaternionf().rotateY(-camera.getYaw()));
+        matrices.multiply(new Quaternionf().rotateX(camera.getPitch()));
+
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         matrices.translate(offX, offY, 0);
         matrices.scale(-0.025f * (float) scale, -0.025f * (float) scale, 1);
-        matrices.multiply(new Quaternionf().setAngleAxis(1, 0, 0, 180));
-        matrices.multiply(new Quaternionf().setAngleAxis(1, 0, 1, 0));
 
         int halfWidth = mc.textRenderer.getWidth(text) / 2;
 
@@ -66,10 +68,12 @@ public class WorldRenderUtils {
     public static void drawGuiItem(double x, double y, double z, double offX, double offY, double scale, ItemStack item) {
         if (item.isEmpty()) return;
         MatrixStack matrices = matrixFrom(x, y, z);
+        Camera camera = mc.gameRenderer.getCamera();
+        matrices.multiply(new Quaternionf().rotateY(-camera.getYaw()));
+        matrices.multiply(new Quaternionf().rotateX(camera.getPitch()));
         matrices.translate(offX, offY, 0);
         matrices.scale((float) scale, (float) scale, 0.001f);
-        matrices.multiply(new Quaternionf().setAngleAxis(1, 0, 0, 180));
-        matrices.multiply(new Quaternionf().setAngleAxis(1, 0, 1, 0));
+        matrices.multiply(new Quaternionf().rotateY(180f));
 
         mc.getBufferBuilders().getEntityVertexConsumers().draw();
 
@@ -89,18 +93,12 @@ public class WorldRenderUtils {
     }
 
     public static MatrixStack matrixFrom(double x, double y, double z) {
-        float cameraX = (float) mc.gameRenderer.getCamera().getPos().x;
-        float cameraY = (float) mc.gameRenderer.getCamera().getPos().y;
-        float cameraZ = (float) mc.gameRenderer.getCamera().getPos().z;
-        float endX = (float) (x - cameraX);
-        float endY = (float) (y - cameraY);
-        float endZ = (float) (z - cameraZ);
-
         MatrixStack matrices = new MatrixStack();
+        Camera camera = mc.gameRenderer.getCamera();
+        matrices.multiply(new Quaternionf().rotateY(-camera.getYaw() + 180f));
+        matrices.multiply(new Quaternionf().rotateX(camera.getPitch()));
 
-        matrices.translate(endX, endY, endZ);
-        matrices.multiply(mc.gameRenderer.getCamera().getRotation());
-
+        matrices.translate(x - camera.getPos().x, y - camera.getPos().y, z - camera.getPos().z);
         return matrices;
     }
 }

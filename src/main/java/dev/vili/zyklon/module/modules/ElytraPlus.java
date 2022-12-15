@@ -22,7 +22,7 @@ public class ElytraPlus extends Module {
     }
 
     @Subscribe
-    public void onClientMove(ClientMoveEvent event) {
+    public void onMove(ClientMoveEvent event) {
         if (this.mode.is("Control") && mc.player.isFallFlying()) {
             if (!mc.options.jumpKey.isPressed() && !mc.options.sneakKey.isPressed()) {
                 event.setVec(new Vec3d(event.getVec().x, -0.0001, event.getVec().z));
@@ -30,23 +30,15 @@ public class ElytraPlus extends Module {
 
             if (!mc.options.backKey.isPressed() && !mc.options.leftKey.isPressed()
                     && !mc.options.rightKey.isPressed() && !mc.options.forwardKey.isPressed()) {
-                event.setVec(new Vec3d(0, event.getVec().y-0.0001, 0));
+                event.setVec(new Vec3d(0, event.getVec().y - 0.0001, 0));
             }
         }
     }
 
     @Subscribe
     public void onTick(TickEvent event) {
-        Vec3d vec;
-        if (mc.world.getRegistryKey().getValue().getPath().equalsIgnoreCase("the_end"))
-            vec = new Vec3d(0, 0, speed.getValue()).rotateX(mode.is("Control") ? 0
-                    : -(float) Math.toRadians(mc.player.getPitch())).rotateY(-(float) Math.toRadians(mc.player.getYaw()));
-        else if (mc.world.getRegistryKey().getValue().getPath().equalsIgnoreCase("the_nether"))
-            vec = new Vec3d(0, 0, speed.getValue()).rotateX(mode.is("Control") ? 0
-                    : -(float) Math.toRadians(mc.player.getPitch())).rotateY(-(float) Math.toRadians(mc.player.getYaw()));
-        else
-            vec = new Vec3d(0, 0, speed.getValue()).rotateX(mode.is("Control") ? 0
-                    : -(float) Math.toRadians(mc.player.getPitch())).rotateY(-(float) Math.toRadians(mc.player.getYaw()));
+        Vec3d vec = new Vec3d(0, 0, speed.getValue()).rotateX(mode.is("Control") ? 0
+                : -(float) Math.toRadians(mc.player.getPitch())).rotateY(-(float) Math.toRadians(mc.player.getYaw()));
 
         if (!mc.player.isFallFlying() && !mc.player.isOnGround() && mode.is("Control") && mc.player.age % 10 == 0 && autoOpen.isEnabled())
             mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));

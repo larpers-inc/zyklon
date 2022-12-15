@@ -14,7 +14,7 @@ import net.minecraft.client.MinecraftClient;
 public final class Zyklon implements ModInitializer {
     public static Zyklon INSTANCE;
     public static String name = "Zyklon";
-    public static final String version = "0.3.9";
+    public static final String version = "0.3.9-public";
     public static final MinecraftClient mc = MinecraftClient.getInstance();
 
     public Zyklon() {

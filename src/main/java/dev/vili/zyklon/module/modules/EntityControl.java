@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.glfw.GLFW;
 
+/* Credits to @BleachDev, my beloved */
 public class EntityControl extends Module {
     public final NumberSetting entitySpeed = new NumberSetting("EntitySpeed", this, 1.2, 0, 5, 0.1);
     public final BooleanSetting entityFly = new BooleanSetting("EntityFly", this, false);

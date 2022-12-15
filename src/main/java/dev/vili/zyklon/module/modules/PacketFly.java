@@ -16,7 +16,7 @@ import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.glfw.GLFW;
 
-/* Credits to @BleachDev */
+/* Credits to @BleachDev, my beloved */
 public class PacketFly extends Module {
     public final ModeSetting mode = new ModeSetting("Mode", this, "Phase", "Phase", "Packet");
     public final NumberSetting vSpeed = new NumberSetting("VerticalSpeed", this, 1, 0.1, 2, 0.1);

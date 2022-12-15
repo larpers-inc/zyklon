@@ -58,7 +58,7 @@ public class EventBus implements IEventBus {
         }
     }
 
-    public synchronized void mutliThreadPost(Event event) {
+    public synchronized void multiThreadPost(Event event) {
         List<Listener> listenersList = listeners.get(event.getClass());
         if (listenersList != null) for (Listener listener : listenersList) {
             if (event.isCancelled()) return;
